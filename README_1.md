@@ -225,10 +225,10 @@ car_showroom_db
 - Tải git về máy, kết nối đến repo
  sau đó bật terminal trong vscode bằng cách gõ(ctrl + ~)
  sau đó gõ lệnh sau:
-    git config --global user.name "gõ tên của bạn"
-    git config --global user.email "gõ email của bạn" 
+    - git config --global user.name "gõ tên của bạn"
+    - git config --global user.email "gõ email của bạn" 
 sau đó clone repo bằng cách gõ câu lệnh sau:
-    git clone https://github.com/nambuuu/showroom-oto.git
+    - git clone https://github.com/nambuuu/showroom-oto.git
 sau khi clone về máy xong mọi người sẽ code các file được giao nhiệm vụ sau đó commit và push lên github
 
 ## 🔧 Cấu Hình
