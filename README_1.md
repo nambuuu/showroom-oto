@@ -93,7 +93,10 @@ car-showroom/
 │
 ├── assets/
 │   ├── css/style.css       # Stylesheet chính + responsive
-│   └── js/main.js          # JavaScript toàn cục
+│   ├── js/main.js            # JavaScript toàn cục
+│   └── images/
+│       ├── cars/           # Ảnh các mẫu xe (upload từ admin)
+│       └── brands/         # Logo các hãng xe
 │
 ├── database/
 │   ├── schema.sql          # Cấu trúc CSDL (CREATE TABLE)
@@ -204,7 +207,7 @@ car_showroom_db
 | password   | VARCHAR(255) | Mật khẩu đã mã hóa (Bcrypt) |
 | full_name  | VARCHAR(100) | Tên hiển thị                |
 | email      | VARCHAR(100) | Email quản trị viên         |
-| role       | ENUM         | superadmin, editor          |
+| role       | ENUM         | superadmin, customer          |
 | last_login | TIMESTAMP    | Lần đăng nhập gần nhất      |
 | created_at | TIMESTAMP    | Thời gian tạo tài khoản     |
 
@@ -219,28 +222,14 @@ car_showroom_db
 - Trình duyệt web (Chrome / Firefox khuyến nghị)
 
 ### Các Bước Thực Hiện
-
-```bash
-# 1. Clone hoặc tải dự án về
-git clone https://github.com/your-team/car-showroom.git
-
-# 2. Chuyển vào thư mục gốc của web server
-cp -r car-showroom/ /xampp/htdocs/car-showroom/
-
-# 3. Khởi động Apache và MySQL trong XAMPP Control Panel
-
-# 4. Import cơ sở dữ liệu
-#    Mở phpMyAdmin → Tạo CSDL: car_showroom_db
-#    Import: database/schema.sql
-#    Import: database/seed.sql  (dữ liệu mẫu, tùy chọn)
-
-# 5. Cấu hình kết nối CSDL trong config/db.php
-
-# 6. Mở trình duyệt
-http://localhost/car-showroom/
-```
-
----
+- Tải git về máy, kết nối đến repo
+ sau đó bật terminal trong vscode bằng cách gõ(ctrl + ~)
+ sau đó gõ lệnh sau:
+    git config --global user.name "gõ tên của bạn"
+    git config --global user.email "gõ email của bạn" 
+sau đó clone repo bằng cách gõ câu lệnh sau:
+    git clone https://github.com/nambuuu/showroom-oto.git
+sau khi clone về máy xong mọi người sẽ code các file được giao nhiệm vụ sau đó commit và push lên github
 
 ## 🔧 Cấu Hình
 
