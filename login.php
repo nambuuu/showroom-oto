@@ -10,13 +10,13 @@ $loginError = '';
 $registerError = '';
 $registerSuccess = false;
 
-// xử lý đăng nhập
+// handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if ($username === '' || $password === '') {
-        $loginError = 'Vui lòng nhập đầy đủ tài khoản và mật khẩu.';
+        $loginError = 'Please enter your username and password.';
     } else {
         try {
             $stmt = $pdo->prepare("SELECT id, username, password, full_name, role FROM admin_users WHERE username = :username LIMIT 1");
@@ -34,15 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 header('Location: admin/dashboard.php');
                 exit;
             } else {
-                $loginError = 'Sai tài khoản hoặc mật khẩu.';
+                $loginError = 'Incorrect username or password.';
             }
         } catch (PDOException $e) {
-            $loginError = 'Hệ thống đang bận, vui lòng thử lại sau.';
+            $loginError = 'System is busy, please try again later.';
         }
     }
 }
 
-// xử lý đăng ký
+// handle registration
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
     $firstName = trim($_POST['first_name'] ?? '');
     $lastName  = trim($_POST['last_name'] ?? '');
@@ -52,22 +52,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $confirm   = $_POST['confirm'] ?? '';
 
     if ($firstName === '' || $lastName === '' || $email === '' || $username === '' || $password === '') {
-        $registerError = 'Vui lòng điền đầy đủ thông tin.';
+        $registerError = 'Please fill in all required fields.';
     } elseif ($password !== $confirm) {
-        $registerError = 'Mật khẩu xác nhận không khớp.';
+        $registerError = 'Passwords do not match.';
     } elseif (strlen($password) < 6) {
-        $registerError = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        $registerError = 'Password must be at least 6 characters.';
     } else {
         try {
             $check = $pdo->prepare("SELECT id FROM admin_users WHERE username = :username LIMIT 1");
             $check->execute([':username' => $username]);
             if ($check->fetch()) {
-                $registerError = 'Tên đăng nhập đã được sử dụng.';
+                $registerError = 'Username is already taken.';
             } else {
                 $check2 = $pdo->prepare("SELECT id FROM admin_users WHERE email = :email LIMIT 1");
                 $check2->execute([':email' => $email]);
                 if ($check2->fetch()) {
-                    $registerError = 'Email đã được sử dụng.';
+                    $registerError = 'Email is already in use.';
                 } else {
                     $hash = password_hash($password, PASSWORD_BCRYPT);
                     $fullName = $lastName . ' ' . $firstName;
@@ -83,18 +83,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
             }
         } catch (PDOException $e) {
-            $registerError = 'Hệ thống đang bận, vui lòng thử lại sau.';
+            $registerError = 'System is busy, please try again later.';
         }
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Đăng nhập vào AutoElite Showroom - Hệ thống quản lý showroom ô tô cao cấp">
-    <title>Đăng nhập | AutoElite Showroom</title>
+    <meta name="description" content="Login to AutoElite Showroom - Premium Car Showroom Management System">
+    <title>Login | AutoElite Showroom</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             background: #c89b3c;
         }
 
-        /* phần bên phải - form */
+        /* right side - form */
         .login-right {
             width: 480px;
             min-height: 100vh;
@@ -477,15 +477,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <div class="login-left">
     <div class="slider-wrapper">
-        <img src="assets/image/cars/porsche 911.jpg" alt="Porsche 911" class="active">
-        <img src="assets/image/cars/bmw 430i Gran Coupe 2022.jpg" alt="BMW 430i Gran Coupe">
-        <img src="assets/image/cars/Toyota Camry 2025.jpg" alt="Toyota Camry 2025">
+        <img src="assets/image/cars/BMW.jpg" alt="BMW" class="active">
+        <img src="assets/image/cars/Toyota Camry.jpg" alt="Toyota Camry">
+        <img src="assets/image/cars/Porche 911 turbo.jpg" alt="Porsche 911 Turbo">
     </div>
     <div class="slider-overlay"></div>
     <div class="slider-content">
-        <span class="brand-tag" id="slide-tag">PORSCHE</span>
-        <h2 id="slide-title">Porsche 911 Turbo S</h2>
-        <p id="slide-desc">Biểu tượng tốc độ và đẳng cấp</p>
+        <span class="brand-tag" id="slide-tag">BMW</span>
+        <h2 id="slide-title">BMW</h2>
+        <p id="slide-desc">The ultimate driving machine</p>
     </div>
     <div class="slider-dots">
         <span class="active" data-index="0"></span>
@@ -500,16 +500,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 
     <div class="form-header">
-        <h1 id="form-title">Chào mừng trở lại</h1>
-        <p id="form-desc">Đăng nhập để quản lý showroom của bạn</p>
+        <h1 id="form-title">Welcome Back</h1>
+        <p id="form-desc">Sign in to manage your showroom</p>
     </div>
 
     <div class="tab-switcher">
-        <button id="tab-login" class="active" onclick="switchTab('login')">Đăng nhập</button>
-        <button id="tab-register" onclick="switchTab('register')">Đăng ký</button>
+        <button id="tab-login" class="active" onclick="switchTab('login')">Login</button>
+        <button id="tab-register" onclick="switchTab('register')">Register</button>
     </div>
 
-    <!-- FORM ĐĂNG NHẬP -->
+    <!-- LOGIN FORM -->
     <div id="panel-login" class="form-panel active">
         <?php if ($loginError): ?>
             <div class="alert-msg alert-error" id="login-err">
@@ -520,16 +520,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         <form method="POST" action="login.php" autocomplete="off">
             <input type="hidden" name="action" value="login">
             <div class="input-group">
-                <label for="login-user">Tên đăng nhập</label>
+                <label for="login-user">Username</label>
                 <div class="input-wrap">
-                    <input type="text" id="login-user" name="username" placeholder="Nhập tên đăng nhập" required>
+                    <input type="text" id="login-user" name="username" placeholder="Enter your username" required>
                     <i class="fas fa-user"></i>
                 </div>
             </div>
             <div class="input-group">
-                <label for="login-pass">Mật khẩu</label>
+                <label for="login-pass">Password</label>
                 <div class="input-wrap">
-                    <input type="password" id="login-pass" name="password" placeholder="Nhập mật khẩu" required>
+                    <input type="password" id="login-pass" name="password" placeholder="Enter your password" required>
                     <i class="fas fa-lock"></i>
                     <button type="button" class="toggle-pass" onclick="togglePassword('login-pass', this)">
                         <i class="fas fa-eye"></i>
@@ -537,24 +537,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </div>
             <div class="form-options">
-                <label><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
-                <a href="#">Quên mật khẩu?</a>
+                <label><input type="checkbox" name="remember"> Remember me</label>
+                <a href="#">Forgot password?</a>
             </div>
-            <button type="submit" class="btn-submit">Đăng nhập</button>
+            <button type="submit" class="btn-submit">Sign In</button>
         </form>
 
-        <div class="divider">hoặc tiếp tục với</div>
+        <div class="divider">or continue with</div>
         <div class="social-login">
             <button type="button"><i class="fab fa-google"></i> Google</button>
             <button type="button"><i class="fab fa-facebook-f"></i> Facebook</button>
         </div>
     </div>
 
-    <!-- FORM ĐĂNG KÝ -->
+    <!-- REGISTER FORM -->
     <div id="panel-register" class="form-panel">
         <?php if ($registerSuccess): ?>
             <div class="alert-msg alert-success" id="reg-ok">
-                <i class="fas fa-check-circle"></i> Đăng ký thành công! Bạn có thể đăng nhập ngay.
+                <i class="fas fa-check-circle"></i> Registration successful! You can now sign in.
             </div>
         <?php endif; ?>
 
@@ -568,16 +568,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <input type="hidden" name="action" value="register">
             <div class="input-row">
                 <div class="input-group">
-                    <label for="reg-fname">Họ</label>
+                    <label for="reg-fname">Last Name</label>
                     <div class="input-wrap">
-                        <input type="text" id="reg-fname" name="last_name" placeholder="Nguyễn" required>
+                        <input type="text" id="reg-fname" name="last_name" placeholder="Smith" required>
                         <i class="fas fa-user"></i>
                     </div>
                 </div>
                 <div class="input-group">
-                    <label for="reg-lname">Tên</label>
+                    <label for="reg-lname">First Name</label>
                     <div class="input-wrap">
-                        <input type="text" id="reg-lname" name="first_name" placeholder="Văn A" required>
+                        <input type="text" id="reg-lname" name="first_name" placeholder="John" required>
                         <i class="fas fa-user"></i>
                     </div>
                 </div>
@@ -590,17 +590,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </div>
             <div class="input-group">
-                <label for="reg-user">Tên đăng nhập</label>
+                <label for="reg-user">Username</label>
                 <div class="input-wrap">
-                    <input type="text" id="reg-user" name="username" placeholder="Chọn tên đăng nhập" required>
+                    <input type="text" id="reg-user" name="username" placeholder="Choose a username" required>
                     <i class="fas fa-at"></i>
                 </div>
             </div>
             <div class="input-row">
                 <div class="input-group">
-                    <label for="reg-pass">Mật khẩu</label>
+                    <label for="reg-pass">Password</label>
                     <div class="input-wrap">
-                        <input type="password" id="reg-pass" name="password" placeholder="Tối thiểu 6 ký tự" required>
+                        <input type="password" id="reg-pass" name="password" placeholder="Minimum 6 characters" required>
                         <i class="fas fa-lock"></i>
                         <button type="button" class="toggle-pass" onclick="togglePassword('reg-pass', this)">
                             <i class="fas fa-eye"></i>
@@ -608,23 +608,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     </div>
                 </div>
                 <div class="input-group">
-                    <label for="reg-confirm">Xác nhận</label>
+                    <label for="reg-confirm">Confirm</label>
                     <div class="input-wrap">
-                        <input type="password" id="reg-confirm" name="confirm" placeholder="Nhập lại mật khẩu" required>
+                        <input type="password" id="reg-confirm" name="confirm" placeholder="Re-enter your password" required>
                         <i class="fas fa-lock"></i>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn-submit" style="margin-top: 6px;">Tạo tài khoản</button>
+            <button type="submit" class="btn-submit" style="margin-top: 6px;">Create Account</button>
         </form>
     </div>
 </div>
 
 <script>
 const slides = [
-    { tag: 'PORSCHE', title: 'Porsche 911 Turbo S', desc: 'Biểu tượng tốc độ và đẳng cấp' },
-    { tag: 'BMW', title: 'BMW 430i Gran Coupe', desc: 'Sang trọng từ mọi góc nhìn' },
-    { tag: 'TOYOTA', title: 'Toyota Camry 2025', desc: 'Sự lựa chọn hoàn hảo cho mọi hành trình' }
+    { tag: 'BMW', title: 'BMW', desc: 'The ultimate driving machine' },
+    { tag: 'TOYOTA', title: 'Toyota Camry', desc: 'Refined comfort meets outstanding performance' },
+    { tag: 'PORSCHE', title: 'Porsche 911 Turbo', desc: 'The icon of speed and prestige' }
 ];
 
 let current = 0;
@@ -648,7 +648,7 @@ dots.forEach(dot => {
 
 setInterval(() => goToSlide((current + 1) % slides.length), 5000);
 
-// chuyển tab login / register
+// switch between login / register tabs
 function switchTab(tab) {
     document.getElementById('tab-login').classList.toggle('active', tab === 'login');
     document.getElementById('tab-register').classList.toggle('active', tab === 'register');
@@ -656,15 +656,15 @@ function switchTab(tab) {
     document.getElementById('panel-register').classList.toggle('active', tab === 'register');
 
     if (tab === 'login') {
-        document.getElementById('form-title').textContent = 'Chào mừng trở lại';
-        document.getElementById('form-desc').textContent = 'Đăng nhập để quản lý showroom của bạn';
+        document.getElementById('form-title').textContent = 'Welcome Back';
+        document.getElementById('form-desc').textContent = 'Sign in to manage your showroom';
     } else {
-        document.getElementById('form-title').textContent = 'Tạo tài khoản mới';
-        document.getElementById('form-desc').textContent = 'Điền thông tin để bắt đầu sử dụng hệ thống';
+        document.getElementById('form-title').textContent = 'Create a New Account';
+        document.getElementById('form-desc').textContent = 'Fill in your details to get started';
     }
 }
 
-// toggle hiển thị mật khẩu
+// toggle password visibility
 function togglePassword(inputId, btn) {
     const input = document.getElementById(inputId);
     const icon = btn.querySelector('i');
@@ -677,7 +677,7 @@ function togglePassword(inputId, btn) {
     }
 }
 
-// nếu có lỗi đăng ký hoặc đăng ký thành công thì auto chuyển sang tab register
+// if registration error or success, auto-switch to register tab
 <?php if ($registerError || $registerSuccess): ?>
     switchTab('register');
 <?php endif; ?>
