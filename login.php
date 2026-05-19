@@ -2,7 +2,11 @@
 require_once __DIR__ . '/config/db.php';
 
 if (isset($_SESSION['admin_id'])) {
-    header('Location: admin/dashboard.php');
+    if (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'superadmin') {
+        header('Location: admin/dashboard.php');
+    } else {
+        header('Location: index.php');
+    }
     exit;
 }
 
@@ -31,7 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $update = $pdo->prepare("UPDATE admin_users SET last_login = NOW() WHERE id = :id");
                 $update->execute([':id' => $user['id']]);
 
-                header('Location: admin/dashboard.php');
+                if ($user['role'] === 'superadmin') {
+                    header('Location: admin/dashboard.php');
+                } else {
+                    header('Location: index.php');
+                }
                 exit;
             } else {
                 $loginError = 'Incorrect username or password.';
