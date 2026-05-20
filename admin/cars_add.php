@@ -10,9 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $price      = (float)($_POST['price'] ?? 0);
     $status     = $_POST['status'] ?? 'available';
     $errors     = [];
+    
     if ($name === '' || $brand_id === '' || $year <= 0 || $price <= 0) {
         $errors[] = 'Vui lòng nhập đầy đủ thông tin hợp lệ.';
     }
+
     // Handle image upload
     $thumbnailPath = '';
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
@@ -20,13 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if (!in_array($_FILES['thumbnail']['type'], $allowed)) {
             $errors[] = 'Định dạng ảnh không hợp lệ (chỉ chấp nhận jpg/png/webp).';
         }
-        if ($_FILES['thumbnail']['size'] > MAX_FILE_SIZE) {
+        
+        $max_size = 5 * 1024 * 1024; // 5MB
+        if ($_FILES['thumbnail']['size'] > $max_size) {
             $errors[] = 'Kích thước ảnh không được vượt quá 5MB.';
         }
+
         if (empty($errors)) {
+            $upload_dir = '../assets/image/cars/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            
             $ext = pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION);
             $newName = uniqid('car_') . '.' . $ext;
-            $dest = UPLOAD_PATH . $newName;
+            $dest = $upload_dir . $newName;
+            
             if (!move_uploaded_file($_FILES['thumbnail']['tmp_name'], $dest)) {
                 $errors[] = 'Lỗi khi lưu ảnh.';
             } else {
@@ -34,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
         }
     }
+    
     if (empty($errors)) {
         $stmt = $pdo->prepare('INSERT INTO cars (model_name, brand_id, year, price, status) VALUES (:model_name, :brand_id, :year, :price, :status)');
         $stmt->execute([
@@ -68,63 +80,184 @@ $brands = $brandStmt->fetchAll();
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Xe – Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .form-glass {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-glass-header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .form-glass-header h3 {
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .form-label {
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .form-control, .form-select {
+            background: var(--bg-primary) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text) !important;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 0 3px var(--gold-glow) !important;
+        }
+        .upload-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+        .upload-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .upload-preview i {
+            font-size: 48px;
+            color: var(--text-muted);
+        }
+        .section-title {
+            font-size: 14px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body class="bg-dark text-light">
+<body>
 <?php include '../includes/sidebar.php'; ?>
-<div class="main-content">
+<div class="main-content" id="mainContent">
     <?php include '../includes/topbar.php'; ?>
-    <div class="container py-4">
-        <h2 class="text-gold mb-4">Thêm Xe Mới</h2>
+    <div class="page-body">
+        
+        <div class="d-flex align-items-center mb-4">
+            <a href="cars.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Quay lại</a>
+            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Thêm Xe Mới</h4>
+        </div>
+
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger"><?php echo implode('<br>', $errors); ?></div>
+            <div class="alert alert-danger" style="background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #ef4444; max-width: 800px; margin: 0 auto 20px;">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> <?php echo implode('<br>', $errors); ?>
+            </div>
         <?php endif; ?>
-        <form method="POST" action="" enctype="multipart/form-data" class="row g-3">
-            <input type="hidden" name="action" value="add">
-            <div class="col-md-6">
-                <label class="form-label">Tên xe</label>
-                <input type="text" name="model_name" class="form-control" required>
+
+        <div class="form-glass">
+            <div class="form-glass-header">
+                <h3><i class="bi bi-car-front-fill me-2"></i>Thông Tin Xe</h3>
+                <p class="text-muted" style="font-size: 14px;">Vui lòng điền đầy đủ và chính xác thông tin để thêm xe mới.</p>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Hãng</label>
-                <select name="brand_id" class="form-select" required>
-                    <option value="">-- Chọn hãng --</option>
-                    <?php foreach ($brands as $b): ?>
-                        <option value="<?php echo $b['id']; ?>"><?php echo htmlspecialchars($b['name']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Năm</label>
-                <input type="number" name="year" class="form-control" min="1900" max="2099" required>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Giá (VND)</label>
-                <input type="number" name="price" class="form-control" min="0" step="1000" required>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Trạng thái</label>
-                <select name="status" class="form-select" required>
-                    <option value="available">Đang bán</option>
-                    <option value="sold_out">Hết hàng</option>
-                    <option value="coming_soon">Sắp ra mắt</option>
-                </select>
-            </div>
-            <div class="col-md-9">
-                <label class="form-label">Ảnh thumbnail</label>
-                <input type="file" name="thumbnail" class="form-control" accept="image/jpeg,image/png,image/webp" required>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Lưu Xe</button>
-                <a href="cars.php" class="btn btn-outline-gold ms-2">Hủy</a>
-            </div>
-        </form>
+            
+            <form method="POST" action="" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="add">
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="section-title">Thông tin cơ bản</div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tên xe <span class="text-danger">*</span></label>
+                            <input type="text" name="model_name" class="form-control" required placeholder="VD: S 450 Luxury" value="<?= htmlspecialchars($_POST['model_name'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Hãng sản xuất <span class="text-danger">*</span></label>
+                            <select name="brand_id" class="form-select" required>
+                                <option value="">-- Chọn hãng --</option>
+                                <?php foreach ($brands as $b): ?>
+                                    <option value="<?php echo $b['id']; ?>" <?= (isset($_POST['brand_id']) && $_POST['brand_id'] == $b['id']) ? 'selected' : '' ?>>
+                                        <?php echo htmlspecialchars($b['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <label class="form-label">Năm SX <span class="text-danger">*</span></label>
+                                <input type="number" name="year" class="form-control" min="1900" max="2099" required placeholder="2024" value="<?= htmlspecialchars($_POST['year'] ?? '') ?>">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Trạng thái <span class="text-danger">*</span></label>
+                                <select name="status" class="form-select" required>
+                                    <option value="available" <?= (isset($_POST['status']) && $_POST['status'] == 'available') ? 'selected' : '' ?>>Đang bán</option>
+                                    <option value="sold_out" <?= (isset($_POST['status']) && $_POST['status'] == 'sold_out') ? 'selected' : '' ?>>Hết hàng</option>
+                                    <option value="coming_soon" <?= (isset($_POST['status']) && $_POST['status'] == 'coming_soon') ? 'selected' : '' ?>>Sắp ra mắt</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Giá niêm yết (VND) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" name="price" class="form-control" min="0" step="1000" required placeholder="VD: 5500000000" value="<?= htmlspecialchars($_POST['price'] ?? '') ?>">
+                                <span class="input-group-text" style="background: var(--bg-secondary); border-color: var(--border); color: var(--gold);">₫</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="section-title">Hình ảnh đại diện</div>
+                        <div class="upload-preview" id="thumbnailPreview">
+                            <i class="bi bi-camera"></i>
+                        </div>
+                        <div>
+                            <input type="file" name="thumbnail" id="thumbnailInput" class="form-control mb-2" accept="image/jpeg,image/png,image/webp" required>
+                            <small class="text-muted"><i class="bi bi-info-circle me-1"></i> Định dạng: JPG, PNG, WEBP. Dung lượng tối đa: 5MB.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-5 border-top pt-4" style="border-color: var(--border) !important;">
+                    <a href="cars.php" class="btn btn-secondary" style="background: var(--bg-secondary); border-color: var(--border); color: var(--text);">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-gold"><i class="bi bi-plus-circle me-1"></i> Lưu thông tin xe</button>
+                </div>
+            </form>
+        </div>
     </div>
     <?php include '../includes/footer.php'; ?>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="../assets/js/main.js"></script>
+
+<script>
+    document.getElementById('thumbnailInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('thumbnailPreview');
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.innerHTML = '<i class="bi bi-camera"></i>';
+        }
+    });
+</script>
 </body>
 </html>
