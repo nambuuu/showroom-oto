@@ -15,6 +15,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $errors[] = 'Vui lòng nhập đầy đủ thông tin hợp lệ.';
     }
 
+    // Specifications
+    $engine = trim($_POST['engine'] ?? '');
+    $horsepower = (isset($_POST['horsepower']) && $_POST['horsepower'] !== '') ? (int)$_POST['horsepower'] : null;
+    $torque = trim($_POST['torque'] ?? '');
+    $transmission = trim($_POST['transmission'] ?? '');
+    $fuel_type = trim($_POST['fuel_type'] ?? '');
+    $fuel_efficiency = trim($_POST['fuel_efficiency'] ?? '');
+    $seating = (isset($_POST['seating']) && $_POST['seating'] !== '') ? (int)$_POST['seating'] : null;
+    $drive_type = trim($_POST['drive_type'] ?? '');
+    $top_speed = (isset($_POST['top_speed']) && $_POST['top_speed'] !== '') ? (int)$_POST['top_speed'] : null;
+    $acceleration = (isset($_POST['acceleration']) && $_POST['acceleration'] !== '') ? (float)$_POST['acceleration'] : null;
+
     // Handle image upload
     $thumbnailPath = '';
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
@@ -66,6 +78,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 ':image'  => $imgName
             ]);
         }
+
+        // Lưu thông số kỹ thuật
+        $specStmt = $pdo->prepare('INSERT INTO car_specifications (car_id, engine, horsepower, torque, transmission, fuel_type, fuel_efficiency, seating, drive_type, top_speed, acceleration) VALUES (:car_id, :engine, :horsepower, :torque, :transmission, :fuel_type, :fuel_efficiency, :seating, :drive_type, :top_speed, :acceleration)');
+        $specStmt->execute([
+            ':car_id' => $carId,
+            ':engine' => $engine ?: null,
+            ':horsepower' => $horsepower,
+            ':torque' => $torque ?: null,
+            ':transmission' => $transmission ?: null,
+            ':fuel_type' => $fuel_type ?: null,
+            ':fuel_efficiency' => $fuel_efficiency ?: null,
+            ':seating' => $seating,
+            ':drive_type' => $drive_type ?: null,
+            ':top_speed' => $top_speed,
+            ':acceleration' => $acceleration
+        ]);
 
         header('Location: cars.php?msg=added');
         exit;
@@ -231,6 +259,52 @@ $brands = $brandStmt->fetchAll();
                             <input type="file" name="thumbnail" id="thumbnailInput" class="form-control mb-2" accept="image/jpeg,image/png,image/webp" required>
                             <small class="text-muted"><i class="bi bi-info-circle me-1"></i> Định dạng: JPG, PNG, WEBP. Dung lượng tối đa: 5MB.</small>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-2">
+                    <div class="col-12">
+                        <div class="section-title">Thông số kỹ thuật </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Động cơ</label>
+                        <input type="text" name="engine" class="form-control" placeholder="VD: 3.0L V6" value="<?= htmlspecialchars($_POST['engine'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Mã lực (HP)</label>
+                        <input type="number" name="horsepower" class="form-control" placeholder="VD: 367" value="<?= htmlspecialchars($_POST['horsepower'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Mô-men xoắn</label>
+                        <input type="text" name="torque" class="form-control" placeholder="VD: 500 Nm" value="<?= htmlspecialchars($_POST['torque'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Hộp số</label>
+                        <input type="text" name="transmission" class="form-control" placeholder="VD: 9G-TRONIC" value="<?= htmlspecialchars($_POST['transmission'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Loại nhiên liệu</label>
+                        <input type="text" name="fuel_type" class="form-control" placeholder="VD: Xăng" value="<?= htmlspecialchars($_POST['fuel_type'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Mức tiêu thụ</label>
+                        <input type="text" name="fuel_efficiency" class="form-control" placeholder="VD: 8.5 L/100km" value="<?= htmlspecialchars($_POST['fuel_efficiency'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Số chỗ ngồi</label>
+                        <input type="number" name="seating" class="form-control" placeholder="VD: 5" value="<?= htmlspecialchars($_POST['seating'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Hệ dẫn động</label>
+                        <input type="text" name="drive_type" class="form-control" placeholder="VD: 4MATIC" value="<?= htmlspecialchars($_POST['drive_type'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Tốc độ tối đa (km/h)</label>
+                        <input type="number" name="top_speed" class="form-control" placeholder="VD: 250" value="<?= htmlspecialchars($_POST['top_speed'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Tăng tốc 0-100km/h (s)</label>
+                        <input type="number" step="0.1" name="acceleration" class="form-control" placeholder="VD: 5.1" value="<?= htmlspecialchars($_POST['acceleration'] ?? '') ?>">
                     </div>
                 </div>
 
