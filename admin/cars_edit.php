@@ -17,6 +17,11 @@ if (!$car) {
     exit;
 }
 
+// Lấy thông số kỹ thuật hiện có
+$specStmt = $pdo->prepare('SELECT * FROM car_specifications WHERE car_id = :id');
+$specStmt->execute([':id' => $id]);
+$car_specs = $specStmt->fetch(PDO::FETCH_ASSOC) ?: [];
+
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'edit') {
     $name     = trim($_POST['model_name'] ?? '');
@@ -29,6 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $errors[] = 'Vui lòng nhập đầy đủ thông tin hợp lệ.';
     }
     
+    // Specifications from POST
+    $engine = trim($_POST['engine'] ?? '');
+    $horsepower = (isset($_POST['horsepower']) && $_POST['horsepower'] !== '') ? (int)$_POST['horsepower'] : null;
+    $torque = trim($_POST['torque'] ?? '');
+    $transmission = trim($_POST['transmission'] ?? '');
+    $fuel_type = trim($_POST['fuel_type'] ?? '');
+    $fuel_efficiency = trim($_POST['fuel_efficiency'] ?? '');
+    $seating = (isset($_POST['seating']) && $_POST['seating'] !== '') ? (int)$_POST['seating'] : null;
+    $drive_type = trim($_POST['drive_type'] ?? '');
+    $top_speed = (isset($_POST['top_speed']) && $_POST['top_speed'] !== '') ? (int)$_POST['top_speed'] : null;
+    $acceleration = (isset($_POST['acceleration']) && $_POST['acceleration'] !== '') ? (float)$_POST['acceleration'] : null;
+
     // Handle optional new thumbnail
     $thumbnailPath = $car['thumbnail'] ?? '';
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
@@ -85,6 +102,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             if (!empty($car['thumbnail']) && file_exists('../assets/image/cars/' . $car['thumbnail'])) {
                 unlink('../assets/image/cars/' . $car['thumbnail']);
             }
+        }
+
+        // Save specs
+        $checkSpec = $pdo->prepare('SELECT id FROM car_specifications WHERE car_id = :id');
+        $checkSpec->execute([':id' => $id]);
+        if ($checkSpec->fetch()) {
+            $updSpec = $pdo->prepare('UPDATE car_specifications SET engine = :engine, horsepower = :horsepower, torque = :torque, transmission = :transmission, fuel_type = :fuel_type, fuel_efficiency = :fuel_efficiency, seating = :seating, drive_type = :drive_type, top_speed = :top_speed, acceleration = :acceleration WHERE car_id = :car_id');
+            $updSpec->execute([
+                ':engine' => $engine ?: null,
+                ':horsepower' => $horsepower,
+                ':torque' => $torque ?: null,
+                ':transmission' => $transmission ?: null,
+                ':fuel_type' => $fuel_type ?: null,
+                ':fuel_efficiency' => $fuel_efficiency ?: null,
+                ':seating' => $seating,
+                ':drive_type' => $drive_type ?: null,
+                ':top_speed' => $top_speed,
+                ':acceleration' => $acceleration,
+                ':car_id' => $id
+            ]);
+        } else {
+            $insSpec = $pdo->prepare('INSERT INTO car_specifications (car_id, engine, horsepower, torque, transmission, fuel_type, fuel_efficiency, seating, drive_type, top_speed, acceleration) VALUES (:car_id, :engine, :horsepower, :torque, :transmission, :fuel_type, :fuel_efficiency, :seating, :drive_type, :top_speed, :acceleration)');
+            $insSpec->execute([
+                ':car_id' => $id,
+                ':engine' => $engine ?: null,
+                ':horsepower' => $horsepower,
+                ':torque' => $torque ?: null,
+                ':transmission' => $transmission ?: null,
+                ':fuel_type' => $fuel_type ?: null,
+                ':fuel_efficiency' => $fuel_efficiency ?: null,
+                ':seating' => $seating,
+                ':drive_type' => $drive_type ?: null,
+                ':top_speed' => $top_speed,
+                ':acceleration' => $acceleration
+            ]);
         }
 
         header('Location: cars.php?msg=updated');
@@ -252,6 +304,52 @@ $brands = $brandStmt->fetchAll();
                             <input type="file" name="thumbnail" id="thumbnailInput" class="form-control mb-2" accept="image/jpeg,image/png,image/webp">
                             <small class="text-muted"><i class="bi bi-info-circle me-1"></i> Để trống nếu không muốn thay đổi ảnh.</small>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-2">
+                    <div class="col-12">
+                        <div class="section-title">Thông số kỹ thuật </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Động cơ</label>
+                        <input type="text" name="engine" class="form-control" value="<?= htmlspecialchars($car_specs['engine'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Mã lực (HP)</label>
+                        <input type="number" name="horsepower" class="form-control" value="<?= htmlspecialchars($car_specs['horsepower'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Mô-men xoắn</label>
+                        <input type="text" name="torque" class="form-control" value="<?= htmlspecialchars($car_specs['torque'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Hộp số</label>
+                        <input type="text" name="transmission" class="form-control" value="<?= htmlspecialchars($car_specs['transmission'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Loại nhiên liệu</label>
+                        <input type="text" name="fuel_type" class="form-control" value="<?= htmlspecialchars($car_specs['fuel_type'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Mức tiêu thụ</label>
+                        <input type="text" name="fuel_efficiency" class="form-control" value="<?= htmlspecialchars($car_specs['fuel_efficiency'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Số chỗ ngồi</label>
+                        <input type="number" name="seating" class="form-control" value="<?= htmlspecialchars($car_specs['seating'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Hệ dẫn động</label>
+                        <input type="text" name="drive_type" class="form-control" value="<?= htmlspecialchars($car_specs['drive_type'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Tốc độ tối đa (km/h)</label>
+                        <input type="number" name="top_speed" class="form-control" value="<?= htmlspecialchars($car_specs['top_speed'] ?? '') ?>">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Tăng tốc 0-100km/h (s)</label>
+                        <input type="number" step="0.1" name="acceleration" class="form-control" value="<?= htmlspecialchars($car_specs['acceleration'] ?? '') ?>">
                     </div>
                 </div>
 
