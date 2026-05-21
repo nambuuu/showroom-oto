@@ -297,4 +297,4 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
     <?php include '../includes/footer.php'; ?>
 </div>
 </body>
-</html>
+</html> 
