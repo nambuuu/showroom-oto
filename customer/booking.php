@@ -138,6 +138,7 @@ if (isset($_SESSION['user_id'])) {
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(233, 193, 118, 0.15);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            overflow: visible;
         }
 
         .input-line {
@@ -210,10 +211,48 @@ if (isset($_SESSION['user_id'])) {
         .swal-premium-popup { background: #131313 !important; border: 1px solid rgba(197, 160, 89, 0.5) !important; color: #e5e2e1 !important; border-radius: 16px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;}
         .swal-premium-title { color: #e9c176 !important; font-family: 'Playfair Display', serif !important; letter-spacing: 1px; }
         .swal-premium-confirm { background: linear-gradient(135deg, #c5a059 0%, #775a19 100%) !important; color: #261900 !important; font-weight: bold !important; font-family: 'Inter', sans-serif !important; border-radius: 8px !important; padding: 12px 30px !important; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Multi-step Form & Interactions */
+        .step { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .step.active { display: block; opacity: 1; }
+        .progress-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; position: relative; margin-bottom: 2rem; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #e9c176; transition: width 0.4s ease; width: 33.33%; }
+        
+        /* Card (no 3D transform to avoid stacking context issues with dropdown) */
+        .tilt-card { transition: box-shadow 0.3s ease; }
+        .tilt-card:hover { box-shadow: 0 35px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+        .tilt-content { /* no transform */ }
+        
+        /* Custom Select */
+        .custom-select-wrapper { position: relative; user-select: none; width: 100%; }
+        .custom-select { position: relative; display: flex; flex-direction: column; }
+        .custom-select__trigger {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; font-size: 1.125rem; color: #e5e2e1;
+            border-bottom: 1px solid rgba(154, 143, 128, 0.3); cursor: pointer; transition: all 0.3s;
+        }
+        .custom-select.open .custom-select__trigger { border-bottom-color: #e9c176; }
+        .custom-options {
+            position: absolute; display: block; top: 100%; left: 0; right: 0;
+            background: rgba(20, 20, 20, 0.98); backdrop-filter: blur(10px);
+            border: 1px solid rgba(233, 193, 118, 0.2); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.3s, visibility 0.3s; z-index: 9999; max-height: 250px; overflow-y: auto; margin-top: 5px;
+        }
+        .custom-options::-webkit-scrollbar { width: 6px; }
+        .custom-options::-webkit-scrollbar-thumb { background: #e9c176; border-radius: 3px; }
+        .custom-select.open .custom-options { opacity: 1; visibility: visible; pointer-events: all; }
+        .custom-option { padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .custom-option:last-child { border-bottom: none; }
+        .custom-option:hover, .custom-option.selected { background: rgba(233, 193, 118, 0.1); color: #e9c176; }
+        
+        /* Particles */
+        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; pointer-events: none; }
     </style>
 </head>
 <body class="font-body-md antialiased relative">
     <div class="bg-hero-pattern"></div>
+    <div id="particles-js"></div>
     
     <!-- Top Navigation -->
     <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 lg:px-margin-desktop py-6 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/10">
@@ -315,67 +354,107 @@ if (isset($_SESSION['user_id'])) {
             </div>
             
             <!-- Right Content: Booking Form Card -->
-            <div class="lg:col-span-6 lg:col-start-7 reveal-up delay-200 mt-12 lg:mt-0 mb-20 lg:mb-0">
-                <div class="glass-card p-8 lg:p-14 rounded-3xl relative overflow-hidden">
-                    <!-- Decorative corner accent -->
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
-                    
-                    <h2 class="text-headline-sm font-headline-sm text-on-surface mb-10">Thông Tin Đặt Lịch</h2>
-                    
-                    <form id="formBooking" class="space-y-8 relative z-10">
-                        <!-- Select Model -->
-                        <div class="relative group">
-                            <select name="car_id" id="car_id" class="w-full bg-transparent text-on-surface input-line appearance-none cursor-pointer text-lg" required>
-                                <option class="bg-surface text-on-surface" disabled selected value="">-- Đang tải danh sách xe --</option>
-                            </select>
-                            <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">expand_more</span>
-                        </div>
+            <div class="lg:col-span-6 lg:col-start-7 reveal-up delay-200 mt-12 lg:mt-0 mb-20 lg:mb-0 perspective-1000">
+                <div class="glass-card p-8 lg:p-14 rounded-3xl relative tilt-card" id="bookingCard">
+                    <div class="tilt-content">
+                        <!-- Decorative corner accent -->
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
                         
-                        <!-- Name & Phone -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="relative group">
-                                <input name="full_name" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="fullname" placeholder="Họ & Tên" type="text" value="<?php echo htmlspecialchars($user_name); ?>" required />
-                                <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="fullname">Họ & Tên *</label>
-                            </div>
-                            <div class="relative group">
-                                <input name="phone" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="phone" placeholder="Số Điện Thoại" type="tel" value="<?php echo htmlspecialchars($user_phone); ?>" required />
-                                <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="phone">Số Điện Thoại *</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="relative group">
-                            <input name="email" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="email" placeholder="Email" type="email" value="<?php echo htmlspecialchars($user_email); ?>" />
-                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="email">Email</label>
-                        </div>
-                        
-                        <!-- Date & Time -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="relative group">
-                                <input name="preferred_date" class="w-full bg-transparent text-on-surface input-line" type="date" required />
-                                <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Ngày dự kiến *</span>
-                                <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">calendar_today</span>
-                            </div>
-                            <div class="relative group">
-                                <input name="preferred_time" class="w-full bg-transparent text-on-surface input-line" type="time" required />
-                                <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Giờ dự kiến *</span>
-                                <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">schedule</span>
-                            </div>
+                        <div class="flex justify-between items-end mb-8 relative z-10">
+                            <h2 class="text-headline-sm font-headline-sm text-on-surface">Đặt Lịch Lái Thử</h2>
+                            <span class="text-primary font-label-caps tracking-widest text-sm" id="stepIndicator">BƯỚC 1/3</span>
                         </div>
 
-                        <!-- Message -->
-                        <div class="relative group mt-8">
-                            <textarea name="message" id="message" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" rows="3" placeholder="Yêu cầu bổ sung (Tùy chọn)"></textarea>
-                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="message">Yêu cầu bổ sung (Tùy chọn)</label>
+                        <!-- Progress Bar -->
+                        <div class="progress-bar relative z-10">
+                            <div class="progress-fill" id="progressFill"></div>
                         </div>
                         
-                        <!-- Submit Button -->
-                        <div class="pt-6">
-                            <button id="btnSubmitBooking" class="btn-glow flex items-center justify-center gap-3 w-full py-5 text-label-caps font-label-caps text-on-primary-fixed rounded-xl text-lg font-bold tracking-widest shadow-2xl" type="submit">
-                                GỬI YÊU CẦU ĐẶT LỊCH
-                            </button>
-                        </div>
-                    </form>
+                        <form id="formBooking" class="relative z-10 min-h-[350px]">
+                            <!-- STEP 1: SELECT CAR -->
+                            <div class="step active" id="step1">
+                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Lựa chọn Siêu xe</h3>
+                                <div class="custom-select-wrapper" id="carSelectWrapper">
+                                    <div class="custom-select">
+                                        <div class="custom-select__trigger">
+                                            <span id="carSelectDisplay">-- Đang tải danh sách xe --</span>
+                                            <span class="material-symbols-outlined text-on-surface-variant transition-transform" id="carSelectIcon">expand_more</span>
+                                        </div>
+                                        <div class="custom-options" id="carOptions">
+                                            <!-- Injected by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="car_id" id="car_id" required>
+                                
+                                <div class="pt-10 flex justify-end">
+                                    <button type="button" id="btnNext1" class="btn-glow px-8 py-3 text-label-caps font-label-caps text-on-primary-fixed rounded-xl font-bold tracking-widest">
+                                        TIẾP TỤC <span class="material-symbols-outlined align-middle ml-1 text-sm">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 2: DATE & TIME -->
+                            <div class="step" id="step2">
+                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Thời gian Dự kiến</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="relative group">
+                                        <input name="preferred_date" id="preferred_date" class="w-full bg-transparent text-on-surface input-line" type="date" required />
+                                        <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Ngày dự kiến *</span>
+                                        <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">calendar_today</span>
+                                    </div>
+                                    <div class="relative group">
+                                        <input name="preferred_time" id="preferred_time" class="w-full bg-transparent text-on-surface input-line" type="time" required />
+                                        <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Giờ dự kiến *</span>
+                                        <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">schedule</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="pt-10 flex justify-between items-center mt-4">
+                                    <button type="button" id="btnPrev1" class="text-on-surface-variant hover:text-primary transition-colors flex items-center font-label-caps tracking-widest text-sm">
+                                        <span class="material-symbols-outlined mr-1 text-sm">arrow_back</span> QUAY LẠI
+                                    </button>
+                                    <button type="button" id="btnNext2" class="btn-glow px-8 py-3 text-label-caps font-label-caps text-on-primary-fixed rounded-xl font-bold tracking-widest">
+                                        TIẾP TỤC <span class="material-symbols-outlined align-middle ml-1 text-sm">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 3: PERSONAL INFO -->
+                            <div class="step" id="step3">
+                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Thông tin Cá nhân</h3>
+                                <div class="space-y-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div class="relative group">
+                                            <input name="full_name" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="fullname" placeholder="Họ & Tên" type="text" value="<?php echo htmlspecialchars($user_name); ?>" required />
+                                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="fullname">Họ & Tên *</label>
+                                        </div>
+                                        <div class="relative group">
+                                            <input name="phone" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="phone" placeholder="Số Điện Thoại" type="tel" value="<?php echo htmlspecialchars($user_phone); ?>" required />
+                                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="phone">Số Điện Thoại *</label>
+                                        </div>
+                                    </div>
+                                    <div class="relative group">
+                                        <input name="email" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="email" placeholder="Email" type="email" value="<?php echo htmlspecialchars($user_email); ?>" />
+                                        <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="email">Email</label>
+                                    </div>
+                                    <div class="relative group mt-8">
+                                        <textarea name="message" id="message" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" rows="2" placeholder="Yêu cầu bổ sung (Tùy chọn)"></textarea>
+                                        <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="message">Yêu cầu bổ sung (Tùy chọn)</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="pt-10 flex justify-between items-center mt-4">
+                                    <button type="button" id="btnPrev2" class="text-on-surface-variant hover:text-primary transition-colors flex items-center font-label-caps tracking-widest text-sm">
+                                        <span class="material-symbols-outlined mr-1 text-sm">arrow_back</span> QUAY LẠI
+                                    </button>
+                                    <button id="btnSubmitBooking" class="btn-glow px-8 py-3 text-label-caps font-label-caps text-on-primary-fixed rounded-xl font-bold tracking-widest shadow-2xl" type="submit">
+                                        HOÀN TẤT
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -436,7 +515,9 @@ if (isset($_SESSION['user_id'])) {
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Thiết lập ngày tối thiểu là hôm nay cho input date
+            // ============================
+            // 1. THIẾT LẬP NGÀY TỐI THIỂU
+            // ============================
             const dateInput = document.querySelector('input[name="preferred_date"]');
             if (dateInput) {
                 const today = new Date().toISOString().split('T')[0];
@@ -445,38 +526,152 @@ if (isset($_SESSION['user_id'])) {
 
             fetchWeather();
             loadCars();
-            
-            // Hiệu ứng Parallax cho ảnh nền siêu xe
-            const container = document.getElementById('parallaxContainer');
+
+            // ============================
+            // 2. MULTI-STEP FORM NAVIGATION
+            // ============================
+            let currentStep = 1;
+            const totalSteps = 3;
+            const progressFill = document.getElementById('progressFill');
+            const stepIndicator = document.getElementById('stepIndicator');
+
+            function goToStep(step) {
+                // Ẩn step hiện tại
+                const current = document.getElementById('step' + currentStep);
+                if (current) {
+                    current.classList.remove('active');
+                }
+                // Hiện step mới
+                currentStep = step;
+                const next = document.getElementById('step' + currentStep);
+                if (next) {
+                    // Delay nhỏ để CSS transition hoạt động
+                    setTimeout(() => next.classList.add('active'), 50);
+                }
+                // Cập nhật thanh tiến trình
+                if (progressFill) {
+                    progressFill.style.width = ((currentStep / totalSteps) * 100) + '%';
+                }
+                if (stepIndicator) {
+                    stepIndicator.textContent = 'BƯỚC ' + currentStep + '/' + totalSteps;
+                }
+            }
+
+            // Nút TIẾP TỤC Bước 1 → 2
+            const btnNext1 = document.getElementById('btnNext1');
+            if (btnNext1) {
+                btnNext1.addEventListener('click', function() {
+                    const carId = document.getElementById('car_id').value;
+                    if (!carId) {
+                        Swal.fire({
+                            icon: 'warning', title: 'Chưa chọn xe',
+                            text: 'Vui lòng chọn một dòng xe trước khi tiếp tục.',
+                            customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
+                            buttonsStyling: false
+                        });
+                        return;
+                    }
+                    goToStep(2);
+                });
+            }
+
+            // Nút TIẾP TỤC Bước 2 → 3
+            const btnNext2 = document.getElementById('btnNext2');
+            if (btnNext2) {
+                btnNext2.addEventListener('click', function() {
+                    const date = document.getElementById('preferred_date').value;
+                    const time = document.getElementById('preferred_time').value;
+                    if (!date || !time) {
+                        Swal.fire({
+                            icon: 'warning', title: 'Thiếu thông tin',
+                            text: 'Vui lòng chọn ngày và giờ dự kiến.',
+                            customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
+                            buttonsStyling: false
+                        });
+                        return;
+                    }
+                    goToStep(3);
+                });
+            }
+
+            // Nút QUAY LẠI Bước 2 → 1
+            const btnPrev1 = document.getElementById('btnPrev1');
+            if (btnPrev1) {
+                btnPrev1.addEventListener('click', function() { goToStep(1); });
+            }
+
+            // Nút QUAY LẠI Bước 3 → 2
+            const btnPrev2 = document.getElementById('btnPrev2');
+            if (btnPrev2) {
+                btnPrev2.addEventListener('click', function() { goToStep(2); });
+            }
+
+            // ============================
+            // 3. CUSTOM SELECT DROPDOWN
+            // ============================
+            const selectWrapper = document.getElementById('carSelectWrapper');
+            const customSelect = selectWrapper ? selectWrapper.querySelector('.custom-select') : null;
+            const selectTrigger = selectWrapper ? selectWrapper.querySelector('.custom-select__trigger') : null;
+            const optionsContainer = document.getElementById('carOptions');
+            const selectDisplay = document.getElementById('carSelectDisplay');
+            const selectIcon = document.getElementById('carSelectIcon');
+            const hiddenCarInput = document.getElementById('car_id');
+
+            if (selectTrigger && customSelect) {
+                // Mở/đóng dropdown khi click vào trigger
+                selectTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    customSelect.classList.toggle('open');
+                    if (selectIcon) {
+                        selectIcon.style.transform = customSelect.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+                    }
+                });
+
+                // Đóng dropdown khi click ra ngoài
+                document.addEventListener('click', function(e) {
+                    if (!selectWrapper.contains(e.target)) {
+                        customSelect.classList.remove('open');
+                        if (selectIcon) selectIcon.style.transform = 'rotate(0)';
+                    }
+                });
+            }
+
+            // ============================
+            // 4. PARALLAX EFFECT
+            // ============================
             const img = document.getElementById('parallaxImg');
 
             document.addEventListener('mousemove', (e) => {
-                if(window.innerWidth > 1024 && img) {
+                if (window.innerWidth > 1024 && img) {
                     const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
                     const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
                     img.style.transform = `translate(calc(10% + ${xAxis}px), ${yAxis}px) scale(1.05)`;
                 }
             });
 
-            // Đặt lại transform khi chuột rời đi
             document.addEventListener('mouseleave', () => {
-                 if(window.innerWidth > 1024 && img) {
+                if (window.innerWidth > 1024 && img) {
                     img.style.transform = `translate(10%, 0) scale(1)`;
                     img.style.transition = 'transform 0.5s ease-out';
-                 }
+                }
             });
-            
+
             document.addEventListener('mouseenter', () => {
-                 if(img) img.style.transition = 'none';
+                if (img) img.style.transition = 'none';
             });
-            
-            // Xử lý Form Submit
+
+            // ============================
+            // 5. FORM SUBMIT
+            // ============================
             const form = document.getElementById('formBooking');
             if (form) {
                 form.addEventListener('submit', submitBooking);
             }
         });
 
+        // ============================
+        // FETCH WEATHER
+        // ============================
         function fetchWeather() {
             fetch('../api/get_weather.php')
                 .then(response => response.json())
@@ -489,36 +684,91 @@ if (isset($_SESSION['user_id'])) {
                 .catch(error => console.error('Lỗi khi tải thời tiết:', error));
         }
 
+        // ============================
+        // LOAD CARS → CUSTOM SELECT
+        // ============================
         function loadCars() {
-            const selectCar = document.getElementById('car_id');
+            const optionsContainer = document.getElementById('carOptions');
+            const selectDisplay = document.getElementById('carSelectDisplay');
+            const hiddenCarInput = document.getElementById('car_id');
+            const customSelect = document.querySelector('#carSelectWrapper .custom-select');
+            const selectIcon = document.getElementById('carSelectIcon');
+
             fetch('../api/get_cars.php?limit=100')
                 .then(response => response.json())
                 .then(res => {
-                    if (res.status === 'success' && res.data) {
-                        selectCar.innerHTML = '<option class="bg-surface text-on-surface" disabled selected value="">-- Lựa chọn dòng xe bạn muốn --</option>';
+                    if (res.status === 'success' && res.data && res.data.length > 0) {
+                        optionsContainer.innerHTML = '';
+                        selectDisplay.textContent = '-- Lựa chọn dòng xe bạn muốn --';
+
                         res.data.forEach(car => {
                             const name = car.brand_name ? `${car.brand_name} ${car.model_name}` : car.model_name;
-                            selectCar.innerHTML += `<option class="bg-surface text-on-surface" value="${car.id}">${name}</option>`;
+                            const option = document.createElement('div');
+                            option.classList.add('custom-option');
+                            option.dataset.value = car.id;
+                            option.textContent = name;
+
+                            option.addEventListener('click', function() {
+                                // Cập nhật giá trị đã chọn
+                                selectDisplay.textContent = name;
+                                hiddenCarInput.value = car.id;
+
+                                // Đánh dấu option được chọn
+                                optionsContainer.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
+                                option.classList.add('selected');
+
+                                // Đóng dropdown
+                                if (customSelect) customSelect.classList.remove('open');
+                                if (selectIcon) selectIcon.style.transform = 'rotate(0)';
+                            });
+
+                            optionsContainer.appendChild(option);
                         });
                     } else {
-                        selectCar.innerHTML = '<option class="bg-surface text-on-surface" disabled value="">Không tải được danh sách</option>';
+                        selectDisplay.textContent = 'Không tải được danh sách xe';
                     }
                 })
                 .catch(err => {
                     console.error('Lỗi khi tải danh sách xe:', err);
-                    selectCar.innerHTML = '<option class="bg-surface text-on-surface" disabled value="">Lỗi kết nối</option>';
+                    if (selectDisplay) selectDisplay.textContent = 'Lỗi kết nối';
                 });
         }
 
+        // ============================
+        // SUBMIT BOOKING
+        // ============================
         function submitBooking(e) {
             e.preventDefault();
             const form = e.target;
             const btn = document.getElementById('btnSubmitBooking');
             const originalText = btn.innerHTML;
-            
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => { data[key] = value; });
+
+            // Kiểm tra các trường bắt buộc
+            const carId = document.getElementById('car_id').value;
+            const fullName = document.getElementById('fullname').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const preferredDate = document.getElementById('preferred_date').value;
+            const preferredTime = document.getElementById('preferred_time').value;
+
+            if (!carId || !fullName || !phone || !preferredDate || !preferredTime) {
+                Swal.fire({
+                    icon: 'warning', title: 'Thiếu thông tin',
+                    text: 'Vui lòng điền đầy đủ các trường bắt buộc (*) trước khi gửi.',
+                    customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
+                    buttonsStyling: false
+                });
+                return;
+            }
+
+            const data = {
+                car_id: carId,
+                full_name: fullName,
+                phone: phone,
+                email: document.getElementById('email').value.trim(),
+                preferred_date: preferredDate,
+                preferred_time: preferredTime,
+                message: document.getElementById('message').value.trim()
+            };
 
             // Trạng thái Loading
             btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">autorenew</span> ĐANG XỬ LÝ...';
@@ -532,66 +782,46 @@ if (isset($_SESSION['user_id'])) {
             })
             .then(response => response.json())
             .then(res => {
-                // Khôi phục nút bấm
                 btn.innerHTML = originalText;
                 btn.style.pointerEvents = 'auto';
                 btn.classList.remove('opacity-80');
-                
+
                 if (res.status === 'success') {
-                    // Thông báo thành công cao cấp
                     Swal.fire({
                         icon: 'success',
                         title: 'Đăng Ký Thành Công',
                         text: res.message || 'Chuyên viên của chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.',
-                        customClass: {
-                            popup: 'swal-premium-popup',
-                            title: 'swal-premium-title',
-                            confirmButton: 'swal-premium-confirm'
-                        },
+                        customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                         buttonsStyling: false
                     });
-                    
-                    // Reset các field ngoại trừ thông tin cá nhân lấy từ session
-                    const dateInput = form.querySelector('input[name="preferred_date"]');
-                    const timeInput = form.querySelector('input[name="preferred_time"]');
-                    const messageInput = form.querySelector('input[name="message"]');
-                    const carInput = form.querySelector('select[name="car_id"]');
-                    
-                    if(dateInput) dateInput.value = '';
-                    if(timeInput) timeInput.value = '';
-                    if(messageInput) messageInput.value = '';
-                    if(carInput) carInput.selectedIndex = 0;
+
+                    // Reset form nhưng giữ thông tin cá nhân từ session
+                    document.getElementById('preferred_date').value = '';
+                    document.getElementById('preferred_time').value = '';
+                    document.getElementById('message').value = '';
+                    document.getElementById('car_id').value = '';
+                    const selectDisplay = document.getElementById('carSelectDisplay');
+                    if (selectDisplay) selectDisplay.textContent = '-- Lựa chọn dòng xe bạn muốn --';
+                    document.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
 
                 } else {
-                    // Thông báo lỗi
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Rất tiếc...',
+                        icon: 'error', title: 'Rất tiếc...',
                         text: res.message || 'Có lỗi xảy ra, vui lòng thử lại.',
-                        customClass: {
-                            popup: 'swal-premium-popup',
-                            title: 'swal-premium-title',
-                            confirmButton: 'swal-premium-confirm'
-                        },
+                        customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                         buttonsStyling: false
                     });
                 }
             })
             .catch(error => {
-                // Khôi phục nút bấm
                 btn.innerHTML = originalText;
                 btn.style.pointerEvents = 'auto';
                 btn.classList.remove('opacity-80');
-                
+
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi Kết Nối',
+                    icon: 'error', title: 'Lỗi Kết Nối',
                     text: 'Không thể kết nối tới máy chủ. Vui lòng thử lại sau.',
-                    customClass: {
-                        popup: 'swal-premium-popup',
-                        title: 'swal-premium-title',
-                        confirmButton: 'swal-premium-confirm'
-                    },
+                    customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                     buttonsStyling: false
                 });
                 console.error('Lỗi khi gửi form:', error);
