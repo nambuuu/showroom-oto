@@ -1,53 +1,83 @@
 <?php
-require_once '../config/db.php';
 header('Content-Type: application/json; charset=utf-8');
+require_once '../config/db.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    echo json_encode(['status' => 'error', 'message' => 'Phương thức không được hỗ trợ.']);
+    exit;
+}
 
 try {
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    // Chế độ đơn giản (booking dropdown): chỉ limit, không page
+    if (!isset($_GET['page'])) {
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 100;
+        if ($limit <= 0 || $limit > 1000) {
+            $limit = 100;
+        }
+
+        $stmt = $pdo->prepare(
+            "SELECT c.id, c.model_name, b.name AS brand_name, c.price, c.category, c.status
+             FROM cars c
+             JOIN brands b ON c.brand_id = b.id
+             WHERE c.status IN ('available', 'coming_soon')
+             ORDER BY b.name ASC, c.model_name ASC
+             LIMIT :limit"
+        );
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $cars = $stmt->fetchAll();
+
+        echo json_encode([
+            'status' => 'success',
+            'data' => $cars,
+        ]);
+        exit;
+    }
+
+    // Chế độ phân trang (trang danh sách xe)
+    $page = max(1, (int)$_GET['page']);
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    if ($limit <= 0 || $limit > 100) {
+        $limit = 10;
+    }
     $offset = ($page - 1) * $limit;
-    
-    $brand_id = isset($_GET['brand_id']) ? (int)$_GET['brand_id'] : null;
-    $category = isset($_GET['category']) ? $_GET['category'] : null;
-    $search = isset($_GET['search']) ? $_GET['search'] : null;
+
+    $brand_id = isset($_GET['brand_id']) ? (int)$_GET['brand_id'] : 0;
+    $category = isset($_GET['category']) ? trim($_GET['category']) : '';
+    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
     $where = [];
     $params = [];
 
-    if ($brand_id) {
-        $where[] = "c.brand_id = :brand_id";
+    if ($brand_id > 0) {
+        $where[] = 'c.brand_id = :brand_id';
         $params[':brand_id'] = $brand_id;
     }
-
-    if ($category) {
-        $where[] = "c.category = :category";
+    if ($category !== '') {
+        $where[] = 'c.category = :category';
         $params[':category'] = $category;
     }
-
-    if ($search) {
-        $where[] = "c.model_name LIKE :search";
+    if ($search !== '') {
+        $where[] = 'c.model_name LIKE :search';
         $params[':search'] = '%' . $search . '%';
     }
 
-    $whereClause = !empty($where) ? "WHERE " . implode(" AND ", $where) : "";
+    $whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
-    // Count total
-    $countSql = "SELECT COUNT(id) as total FROM cars c $whereClause";
-    $stmtCount = $pdo->prepare($countSql);
+    $stmtCount = $pdo->prepare("SELECT COUNT(c.id) AS total FROM cars c $whereClause");
     $stmtCount->execute($params);
-    $total = $stmtCount->fetch()['total'];
+    $total = (int)$stmtCount->fetch()['total'];
 
-    // Get data
     $sql = "
-        SELECT c.*, b.name as brand_name, img.image as main_image 
-        FROM cars c 
+        SELECT c.*, b.name AS brand_name, img.image AS main_image
+        FROM cars c
         LEFT JOIN brands b ON c.brand_id = b.id
         LEFT JOIN car_images img ON c.id = img.car_id AND img.is_main = 1
         $whereClause
         ORDER BY c.created_at DESC
         LIMIT $limit OFFSET $offset
     ";
-    
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     $cars = $stmt->fetchAll();
@@ -59,12 +89,14 @@ try {
             'total' => $total,
             'page' => $page,
             'limit' => $limit,
-            'total_pages' => ceil($total / $limit)
-        ]
+            'total_pages' => $limit > 0 ? (int)ceil($total / $limit) : 0,
+        ],
     ]);
-
 } catch (Exception $e) {
+    error_log('Database error in get_cars: ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Lỗi hệ thống. Vui lòng thử lại sau.',
+    ]);
 }
-?>
