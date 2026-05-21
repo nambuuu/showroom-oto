@@ -5,7 +5,7 @@ if (isset($_SESSION['admin_id'])) {
     if (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'superadmin') {
         header('Location: admin/dashboard.php');
     } else {
-        header('Location: index.php');
+        header('Location: customer/index.php');
     }
     exit;
 }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 if ($user['role'] === 'superadmin') {
                     header('Location: admin/dashboard.php');
                 } else {
-                    header('Location: index.php');
+                    header('Location: customer/index.php');
                 }
                 exit;
             } else {
@@ -504,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <div class="login-right">
     <div class="logo-area">
-        <div class="logo-text"><span>Auto</span>SupperCar</div>
+        <div class="logo-text"><span>Auto</span>SuperCar</div>
     </div>
 
     <div class="form-header">
