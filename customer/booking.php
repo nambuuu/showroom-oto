@@ -2,6 +2,15 @@
 // customer/booking.php
 require_once '../config/db.php';
 
+$currentPage = 'booking';
+$navItems = [
+    ['id' => 'home',    'label' => 'Trang Chủ',    'href' => 'index.php'],
+    ['id' => 'cars',    'label' => 'Khám Phá Xe',  'href' => 'cars.php'],
+    ['id' => 'compare', 'label' => 'So Sánh',      'href' => 'compare.php'],
+    ['id' => 'about',   'label' => 'Giới Thiệu',  'href' => 'about.php'],
+    ['id' => 'booking', 'label' => 'Lái Thử',     'href' => 'booking.php'],
+];
+
 $user_name = '';
 $user_email = '';
 $user_phone = '';
@@ -261,11 +270,14 @@ if (isset($_SESSION['user_id'])) {
             AutoSuperCar
         </a>
         
-        <div class="hidden lg:flex items-center gap-8">
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="index.php">Trang Chủ</a>
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="cars.php">Khám Phá Xe</a>
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="compare.php">So Sánh</a>
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="about.php">Giới Thiệu</a>
+        <div class="hidden lg:flex items-center gap-1">
+            <?php foreach ($navItems as $item): ?>
+                <a
+                    href="<?php echo htmlspecialchars($item['href']); ?>"
+                    class="px-3 py-2 rounded-full text-label-caps font-label-caps transition-colors duration-300 <?php echo $currentPage === $item['id'] ? 'text-primary bg-primary/12 ring-1 ring-primary/20' : 'text-on-surface-variant hover:text-primary hover:bg-primary/8'; ?>"
+                    <?php echo $currentPage === $item['id'] ? 'aria-current="page"' : ''; ?>
+                ><?php echo htmlspecialchars($item['label']); ?></a>
+            <?php endforeach; ?>
         </div>
         
         <div class="flex items-center gap-6">
