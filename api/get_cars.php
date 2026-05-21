@@ -17,11 +17,13 @@ try {
         }
 
         $stmt = $pdo->prepare(
-            "SELECT c.id, c.model_name, b.name AS brand_name, c.price, c.category, c.status
+            "SELECT c.id, c.model_name, b.name AS brand_name, c.price, c.category, c.year, c.status,
+                    img.image AS main_image
              FROM cars c
              JOIN brands b ON c.brand_id = b.id
+             LEFT JOIN car_images img ON c.id = img.car_id AND img.is_main = 1
              WHERE c.status IN ('available', 'coming_soon')
-             ORDER BY b.name ASC, c.model_name ASC
+             ORDER BY c.created_at DESC
              LIMIT :limit"
         );
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
