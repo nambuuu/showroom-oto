@@ -2,12 +2,17 @@
 header('Content-Type: application/json');
 require_once '../config/db.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    echo json_encode(['status' => 'error', 'message' => 'Phương thức không được hỗ trợ.']);
+    exit;
+}
+
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-if (!$id) {
+if ($id <= 0) {
     echo json_encode([
         'status' => 'error',
-        'message' => 'Thiếu tham số ID xe.'
+        'message' => 'Tham số ID xe không hợp lệ.'
     ]);
     exit;
 }
@@ -38,9 +43,10 @@ try {
         ]);
     }
 } catch (Exception $e) {
+    error_log("Database error in get_car ($id): " . $e->getMessage());
     echo json_encode([
         'status' => 'error',
-        'message' => $e->getMessage()
+        'message' => 'Lỗi hệ thống. Vui lòng thử lại sau.'
     ]);
 }
 ?>

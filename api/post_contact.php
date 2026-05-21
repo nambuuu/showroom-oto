@@ -2,6 +2,11 @@
 header('Content-Type: application/json');
 require_once '../config/db.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['status' => 'error', 'message' => 'Phương thức không được hỗ trợ.']);
+    exit;
+}
+
 // Nhận dữ liệu JSON từ body request
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
@@ -14,16 +19,24 @@ if (!$data) {
     exit;
 }
 
-$full_name = $data['full_name'] ?? null;
-$email = $data['email'] ?? null;
-$phone = $data['phone'] ?? null;
-$subject = $data['subject'] ?? null;
-$message = $data['message'] ?? null;
+$full_name = isset($data['full_name']) ? trim(strip_tags($data['full_name'])) : null;
+$email = isset($data['email']) ? trim(filter_var($data['email'], FILTER_SANITIZE_EMAIL)) : null;
+$phone = isset($data['phone']) ? trim(strip_tags($data['phone'])) : null;
+$subject = isset($data['subject']) ? trim(strip_tags($data['subject'])) : null;
+$message = isset($data['message']) ? trim(strip_tags($data['message'])) : null;
 
 if (!$full_name || !$email || !$subject || !$message) {
     echo json_encode([
         'status' => 'error',
         'message' => 'Vui lòng điền đầy đủ các trường thông tin bắt buộc (*).'
+    ]);
+    exit;
+}
+
+if ($email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Địa chỉ email không hợp lệ.'
     ]);
     exit;
 }
@@ -38,12 +51,13 @@ try {
 
     echo json_encode([
         'status' => 'success',
-        'message' => 'Gửi yêu cầu liên hệ thành công! Chúng tôi sẽ liên hệ lại với bạn sớm.'
+        'message' => 'Gửi yêu cầu liên hệ thành công! Chúng tôi sẽ phản hồi lại bạn sớm nhất.'
     ]);
 } catch (Exception $e) {
+    error_log("Database error in post_contact: " . $e->getMessage());
     echo json_encode([
         'status' => 'error',
-        'message' => 'Đã xảy ra lỗi khi lưu thông tin liên hệ: ' . $e->getMessage()
+        'message' => 'Đã xảy ra lỗi hệ thống khi gửi yêu cầu. Vui lòng thử lại sau.'
     ]);
 }
 ?>

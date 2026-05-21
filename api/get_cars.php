@@ -2,8 +2,16 @@
 header('Content-Type: application/json');
 require_once '../config/db.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    echo json_encode(['status' => 'error', 'message' => 'Phương thức không được hỗ trợ.']);
+    exit;
+}
+
 try {
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 100;
+    if ($limit <= 0 || $limit > 1000) {
+        $limit = 100;
+    }
     
     // Lấy danh sách xe cùng tên hãng xe tương ứng
     $stmt = $pdo->prepare("
@@ -23,9 +31,10 @@ try {
         'data' => $cars
     ]);
 } catch (Exception $e) {
+    error_log("Database error in get_cars: " . $e->getMessage());
     echo json_encode([
         'status' => 'error',
-        'message' => $e->getMessage()
+        'message' => 'Lỗi hệ thống. Vui lòng thử lại sau.'
     ]);
 }
 ?>
