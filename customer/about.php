@@ -244,8 +244,8 @@ session_start();
     <header class="hero-section relative z-10 w-full pt-20">
         <div class="reveal-up active">
             <div class="text-label-caps font-label-caps text-primary tracking-[0.3em] uppercase mb-6">Tuyệt Tác Vượt Thời Gian</div>
-            <h1 class="text-[5rem] lg:text-[7rem] font-display-lg font-bold leading-[1.1] uppercase tracking-wide bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent mb-8">
-                Định Hình<br/>Đẳng Cấp
+            <h1 class="text-[5rem] lg:text-[7rem] font-display-lg font-bold leading-[1.3] uppercase tracking-wide bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent mb-8">
+                Định Hình<br>Đẳng Cấp
             </h1>
             <p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto font-light leading-relaxed">
                 Hơn cả một showroom ô tô, AutoSuperCar là nơi giao thoa giữa nghệ thuật chế tác cơ khí đỉnh cao và phong cách sống thượng lưu độc bản.
