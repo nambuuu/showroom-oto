@@ -1,7 +1,6 @@
 <?php
 // customer/about.php
 require_once '../config/db.php';
-session_start();
 ?>
 <!DOCTYPE html>
 <html class="dark" lang="vi">
