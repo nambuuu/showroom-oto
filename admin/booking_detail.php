@@ -5,25 +5,35 @@ require_once '../config/db.php';
 $pageTitle = 'Chi tiết lịch lái thử';
 
 $id = (int)($_GET['id'] ?? 0);
-if (!$id) { header('Location: bookings.php'); exit; }
+if (!$id) {
+    header('Location: bookings.php');
+    exit;
+}
 
 $stmt = $pdo->prepare(
-    "SELECT b.*, c.model_name AS car_name, br.name AS brand_name, br.country AS brand_country
+    "SELECT b.*, c.model_name AS car_name, c.price,
+            br.name AS brand_name, br.country AS brand_country,
+            ci.image AS car_image
      FROM bookings b
-     JOIN cars c  ON b.car_id  = c.id
+     JOIN cars c ON b.car_id = c.id
      JOIN brands br ON c.brand_id = br.id
+     LEFT JOIN car_images ci ON ci.car_id = c.id AND ci.is_main = 1
      WHERE b.id = :id"
 );
 $stmt->execute([':id' => $id]);
 $booking = $stmt->fetch();
-if (!$booking) { header('Location: bookings.php'); exit; }
+
+if (!$booking) {
+    header('Location: bookings.php');
+    exit;
+}
 
 $toast = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
-    $allowed = ['pending','approved','rejected','done'];
+    $allowed = ['pending', 'approved', 'rejected', 'done'];
     $ns = $_POST['status'];
     if (in_array($ns, $allowed, true)) {
-        $pdo->prepare('UPDATE bookings SET status=:s WHERE id=:id')
+        $pdo->prepare('UPDATE bookings SET status = :s WHERE id = :id')
             ->execute([':s' => $ns, ':id' => $id]);
         $booking['status'] = $ns;
         $toast = 'success';
@@ -31,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
 }
 
 $statusMap = [
-    'pending'  => ['label'=>'Chờ duyệt',   'cls'=>'warning', 'icon'=>'clock-fill'],
-    'approved' => ['label'=>'Đã duyệt',    'cls'=>'success', 'icon'=>'check-circle-fill'],
-    'rejected' => ['label'=>'Từ chối',     'cls'=>'danger',  'icon'=>'x-circle-fill'],
-    'done'     => ['label'=>'Hoàn thành',  'cls'=>'info',    'icon'=>'flag-fill'],
+    'pending'  => ['label' => 'Chờ duyệt',   'cls' => 'warning', 'icon' => 'clock-fill'],
+    'approved' => ['label' => 'Đã duyệt',    'cls' => 'success', 'icon' => 'check-circle-fill'],
+    'rejected' => ['label' => 'Từ chối',     'cls' => 'danger',  'icon' => 'x-circle-fill'],
+    'done'     => ['label' => 'Hoàn thành',  'cls' => 'info',    'icon' => 'flag-fill'],
 ];
-$cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'secondary','icon'=>'dot'];
+$cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' => 'secondary', 'icon' => 'dot'];
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -59,6 +69,8 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
 .info-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;}
 .info-value{font-size:14px;color:var(--text);font-weight:500;}
 .avatar-lg{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#000;flex-shrink:0;box-shadow:0 0 20px var(--gold-glow);}
+.car-preview{width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;}
+.car-preview-placeholder{width:100%;height:160px;border-radius:10px;border:1px solid var(--border);background:var(--bg-secondary);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:36px;margin-bottom:14px;}
 .status-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
 .status-flow{display:flex;align-items:center;gap:0;}
 .sf-step{display:flex;flex-direction:column;align-items:center;gap:6px;}
@@ -87,18 +99,16 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
 
     <div class="page-body">
 
-        <!-- Page header -->
         <div class="page-header">
             <div>
                 <div class="page-title">Chi tiết lịch lái thử</div>
-                <div class="page-subtitle">Mã lịch hẹn #<?= str_pad($id, 5, '0', STR_PAD_LEFT) ?> &mdash; Đăng ký lúc <?= date('H:i d/m/Y', strtotime($booking['created_at'])) ?></div>
+                <div class="page-subtitle">Mã lịch hẹn #<?= str_pad((string)$id, 5, '0', STR_PAD_LEFT) ?> &mdash; Đăng ký lúc <?= date('H:i d/m/Y', strtotime($booking['created_at'])) ?></div>
             </div>
             <a href="bookings.php" class="btn btn-outline-gold">
                 <i class="bi bi-arrow-left"></i> Quay lại danh sách
             </a>
         </div>
 
-        <!-- Status flow bar -->
         <div class="status-bar">
             <div>
                 <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Trạng thái hiện tại</div>
@@ -107,21 +117,21 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                 </span>
             </div>
 
-            <!-- Visual flow -->
             <div class="status-flow">
                 <?php
                 $steps = [
-                    ['key'=>'pending',  'icon'=>'clock',         'label'=>'Chờ duyệt'],
-                    ['key'=>'approved', 'icon'=>'check-circle',  'label'=>'Đã duyệt'],
-                    ['key'=>'done',     'icon'=>'flag',          'label'=>'Hoàn thành'],
+                    ['key' => 'pending',  'icon' => 'clock',         'label' => 'Chờ duyệt'],
+                    ['key' => 'approved', 'icon' => 'check-circle',  'label' => 'Đã duyệt'],
+                    ['key' => 'done',     'icon' => 'flag',          'label' => 'Hoàn thành'],
                 ];
-                $order = ['pending'=>0,'approved'=>1,'rejected'=>1,'done'=>2];
+                $order = ['pending' => 0, 'approved' => 1, 'rejected' => 1, 'done' => 2];
                 $curOrder = $order[$booking['status']] ?? 0;
                 foreach ($steps as $i => $step):
                     $stepOrder = $i;
-                    $isDone   = $stepOrder < $curOrder;
-                    $isActive = ($step['key'] === $booking['status']) || ($booking['status']==='rejected' && $step['key']==='approved' ? false : $stepOrder === $curOrder);
-                    $dotCls   = $isDone ? 'done-step' : ($isActive ? 'active' : '');
+                    $isDone = $stepOrder < $curOrder;
+                    $isActive = ($step['key'] === $booking['status'])
+                        || ($booking['status'] !== 'rejected' && $stepOrder === $curOrder);
+                    $dotCls = $isDone ? 'done-step' : ($isActive ? 'active' : '');
                 ?>
                 <div class="sf-step">
                     <div class="sf-dot <?= $dotCls ?>">
@@ -129,7 +139,7 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                     </div>
                     <div class="sf-label"><?= $step['label'] ?></div>
                 </div>
-                <?php if ($i < count($steps)-1): ?>
+                <?php if ($i < count($steps) - 1): ?>
                 <div class="sf-line <?= $isDone ? 'done-line' : '' ?>"></div>
                 <?php endif; ?>
                 <?php endforeach; ?>
@@ -140,11 +150,10 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                 <?php endif; ?>
             </div>
 
-            <!-- Update form -->
             <form method="POST" style="display:flex;align-items:center;gap:10px">
                 <select name="status" class="form-select" style="width:160px">
                     <?php foreach ($statusMap as $k => $v): ?>
-                    <option value="<?= $k ?>" <?= $booking['status']===$k?'selected':'' ?>>
+                    <option value="<?= $k ?>" <?= $booking['status'] === $k ? 'selected' : '' ?>>
                         <?= $v['label'] ?>
                     </option>
                     <?php endforeach; ?>
@@ -155,10 +164,8 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
             </form>
         </div>
 
-        <!-- Detail grid -->
         <div class="detail-grid">
 
-            <!-- Customer info -->
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="bi bi-person-fill"></i>
@@ -166,7 +173,7 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                 </div>
                 <div class="detail-card-body">
                     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
-                        <div class="avatar-lg"><?= strtoupper(substr($booking['full_name'],0,1)) ?></div>
+                        <div class="avatar-lg"><?= strtoupper(substr($booking['full_name'], 0, 1)) ?></div>
                         <div>
                             <div style="font-size:18px;font-weight:700;color:var(--text)"><?= htmlspecialchars($booking['full_name']) ?></div>
                             <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Khách hàng đặt lịch</div>
@@ -183,9 +190,13 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                     <div class="info-row">
                         <div class="info-label"><i class="bi bi-envelope" style="color:var(--gold)"></i> Email</div>
                         <div class="info-value">
+                            <?php if (!empty($booking['email'])): ?>
                             <a href="mailto:<?= htmlspecialchars($booking['email']) ?>" style="color:var(--gold)">
                                 <?= htmlspecialchars($booking['email']) ?>
                             </a>
+                            <?php else: ?>
+                            <span style="color:var(--text-muted)">—</span>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <?php if (!empty($booking['message'])): ?>
@@ -199,13 +210,18 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                 </div>
             </div>
 
-            <!-- Booking info -->
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="bi bi-calendar2-check-fill"></i>
                     <h3>Thông tin lịch hẹn</h3>
                 </div>
                 <div class="detail-card-body">
+                    <?php if (!empty($booking['car_image'])): ?>
+                        <img src="../assets/image/cars/<?= htmlspecialchars($booking['car_image']) ?>" class="car-preview" alt="<?= htmlspecialchars($booking['car_name']) ?>">
+                    <?php else: ?>
+                        <div class="car-preview-placeholder"><i class="bi bi-car-front"></i></div>
+                    <?php endif; ?>
+
                     <div class="info-row">
                         <div class="info-label"><i class="bi bi-car-front-fill" style="color:var(--gold)"></i> Xe đăng ký lái thử</div>
                         <div class="info-value" style="font-size:16px;font-weight:700;color:var(--gold)">
@@ -214,17 +230,22 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                         <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
                             <span class="badge badge-gold"><i class="bi bi-award"></i> <?= htmlspecialchars($booking['brand_name']) ?></span>
                             <?php if (!empty($booking['brand_country'])): ?>
-                            &nbsp;<span style="color:var(--text-muted)"><?= htmlspecialchars($booking['brand_country']) ?></span>
+                            &nbsp;<span><?= htmlspecialchars($booking['brand_country']) ?></span>
                             <?php endif; ?>
                         </div>
+                        <?php if (!empty($booking['price'])): ?>
+                        <div style="font-size:14px;color:var(--gold);font-weight:600;margin-top:6px">
+                            <?= number_format((float)$booking['price'], 0, ',', '.') ?> ₫
+                        </div>
+                        <?php endif; ?>
                     </div>
                     <div class="info-row">
                         <div class="info-label"><i class="bi bi-calendar2" style="color:var(--gold)"></i> Ngày hẹn</div>
                         <div class="info-value" style="font-size:16px">
                             <?php
                             $d = strtotime($booking['preferred_date']);
-                            $days = ['Chủ nhật','Thứ hai','Thứ ba','Thứ tư','Thứ năm','Thứ sáu','Thứ bảy'];
-                            echo $days[date('w',$d)] . ', ' . date('d/m/Y', $d);
+                            $days = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+                            echo $days[(int)date('w', $d)] . ', ' . date('d/m/Y', $d);
                             ?>
                         </div>
                     </div>
@@ -241,9 +262,8 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
                     <?php
                     $today = strtotime('today');
                     $apptDay = strtotime($booking['preferred_date']);
-                    $diff = $apptDay - $today;
-                    $diffDays = (int)round($diff / 86400);
-                    if ($diffDays > 0 && $booking['status'] !== 'done' && $booking['status'] !== 'rejected'):
+                    $diffDays = (int)round(($apptDay - $today) / 86400);
+                    if ($diffDays > 0 && !in_array($booking['status'], ['done', 'rejected'], true)):
                     ?>
                     <div style="margin-top:12px;background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--gold)">
                         <i class="bi bi-hourglass-split"></i>
@@ -259,14 +279,15 @@ $cur = $statusMap[$booking['status']] ?? ['label'=>$booking['status'],'cls'=>'se
             </div>
         </div>
 
-        <!-- Quick actions -->
         <div style="display:flex;gap:12px;flex-wrap:wrap">
             <a href="tel:<?= htmlspecialchars($booking['phone']) ?>" class="btn btn-outline-gold">
                 <i class="bi bi-telephone-fill"></i> Gọi khách hàng
             </a>
+            <?php if (!empty($booking['email'])): ?>
             <a href="mailto:<?= htmlspecialchars($booking['email']) ?>" class="btn btn-info-outline">
                 <i class="bi bi-envelope-fill"></i> Gửi email
             </a>
+            <?php endif; ?>
             <a href="bookings.php" class="btn btn-outline-gold" style="margin-left:auto">
                 <i class="bi bi-arrow-left"></i> Về danh sách
             </a>

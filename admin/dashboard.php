@@ -97,7 +97,7 @@ $recentContacts = $pdo->query(
 
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-pie-chart-fill me-2"></i>Trạng thái lịch hẹn</h5>
+                    <h5><i class="bi bi-pie-chart-fill me-2"></i> Trạng thái lịch hẹn</h5>
                 </div>
                 <div class="card-glass-body" style="display:flex;align-items:center;justify-content:center">
                     <canvas id="bookingChart" style="max-height:220px"></canvas>
@@ -106,7 +106,7 @@ $recentContacts = $pdo->query(
 
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-bar-chart-fill me-2"></i>Xe theo hãng</h5>
+                    <h5><i class="bi bi-bar-chart-fill me-2"></i> Xe theo hãng</h5>
                 </div>
                 <div class="card-glass-body">
                     <canvas id="brandChart" style="max-height:220px"></canvas>
@@ -121,8 +121,8 @@ $recentContacts = $pdo->query(
             <!-- Recent bookings -->
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-calendar-event me-2"></i>Lịch lái thử gần đây</h5>
-                    <a href="bookings.php" class="btn btn-outline-gold btn-sm">Xem tất cả</a>
+                    <h5><i class="bi bi-calendar-event me-2"></i> Lịch lái thử gần đây</h5>
+                    <a href="bookings.php" class="btn btn-outline-gold btn-sm"> Xem tất cả</a>
                 </div>
                 <div class="admin-table-wrap" style="border:none;border-radius:0">
                     <table class="admin-table">
@@ -161,7 +161,7 @@ $recentContacts = $pdo->query(
             <!-- Recent contacts -->
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-envelope-open me-2"></i>Liên hệ gần đây</h5>
+                    <h5><i class="bi bi-envelope-open me-2"></i> Liên hệ gần đây</h5>
                     <a href="contacts.php" class="btn btn-outline-gold btn-sm">Xem tất cả</a>
                 </div>
                 <div class="admin-table-wrap" style="border:none;border-radius:0">
@@ -221,7 +221,7 @@ new Chart(document.getElementById('bookingChart'), {
         labels: <?= json_encode($bkLabels) ?>,
         datasets: [{
             data: <?= json_encode($bkData) ?>,
-            backgroundColor: ['#f59e0b','#10b981','#ef4444','#3b82f6','#6366f1'],
+            backgroundColor: ['#f59e0b','#39b38bff','#ef4444','#3b82f6','#6366f1'],
             borderWidth: 0,
             hoverOffset: 8
         }]

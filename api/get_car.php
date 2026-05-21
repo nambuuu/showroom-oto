@@ -1,8 +1,9 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 require_once '../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
     echo json_encode(['status' => 'error', 'message' => 'Phương thức không được hỗ trợ.']);
     exit;
 }
@@ -10,43 +11,56 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($id <= 0) {
+    http_response_code(400);
     echo json_encode([
         'status' => 'error',
-        'message' => 'Tham số ID xe không hợp lệ.'
+        'message' => 'Tham số ID xe không hợp lệ.',
     ]);
     exit;
 }
 
 try {
-    $stmt = $pdo->prepare("
-        SELECT c.*, b.name AS brand_name, s.engine, s.horsepower, s.torque, 
-               s.transmission, s.fuel_type, s.fuel_efficiency, s.seating, 
-               s.drive_type, s.top_speed, s.acceleration,
-               (SELECT image FROM car_images WHERE car_id = c.id AND is_main = 1 LIMIT 1) AS main_image
-        FROM cars c
-        JOIN brands b ON c.brand_id = b.id
-        LEFT JOIN car_specifications s ON c.id = s.car_id
-        WHERE c.id = ?
-    ");
-    $stmt->execute([$id]);
+    $stmt = $pdo->prepare(
+        'SELECT c.*, b.name AS brand_name
+         FROM cars c
+         LEFT JOIN brands b ON c.brand_id = b.id
+         WHERE c.id = :id'
+    );
+    $stmt->execute([':id' => $id]);
     $car = $stmt->fetch();
 
-    if ($car) {
-        echo json_encode([
-            'status' => 'success',
-            'data' => $car
-        ]);
-    } else {
+    if (!$car) {
+        http_response_code(404);
         echo json_encode([
             'status' => 'error',
-            'message' => 'Không tìm thấy mẫu xe tương ứng.'
+            'message' => 'Không tìm thấy mẫu xe tương ứng.',
         ]);
+        exit;
     }
+
+    $stmtSpec = $pdo->prepare('SELECT * FROM car_specifications WHERE car_id = :id');
+    $stmtSpec->execute([':id' => $id]);
+    $specifications = $stmtSpec->fetch() ?: null;
+
+    $stmtImg = $pdo->prepare(
+        'SELECT * FROM car_images WHERE car_id = :id ORDER BY is_main DESC, id ASC'
+    );
+    $stmtImg->execute([':id' => $id]);
+    $images = $stmtImg->fetchAll();
+
+    echo json_encode([
+        'status' => 'success',
+        'data' => [
+            'car' => $car,
+            'specifications' => $specifications,
+            'images' => $images,
+        ],
+    ]);
 } catch (Exception $e) {
     error_log("Database error in get_car ($id): " . $e->getMessage());
+    http_response_code(500);
     echo json_encode([
         'status' => 'error',
-        'message' => 'Lỗi hệ thống. Vui lòng thử lại sau.'
+        'message' => 'Lỗi hệ thống. Vui lòng thử lại sau.',
     ]);
 }
-?>

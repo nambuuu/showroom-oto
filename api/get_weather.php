@@ -1,32 +1,47 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
     echo json_encode(['status' => 'error', 'message' => 'Phương thức không được hỗ trợ.']);
     exit;
 }
 
-// Tọa độ Hà Nội để lấy thời tiết thời gian thực từ Open-Meteo
-$url = 'https://api.open-meteo.com/v1/forecast?latitude=21.0285&longitude=105.8542&current_weather=true';
+$lat = isset($_GET['lat']) ? $_GET['lat'] : '21.0285';
+$lng = isset($_GET['lng']) ? $_GET['lng'] : '105.8542';
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Timeout ngắn để tránh treo trang
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-$response = curl_exec($ch);
-$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+$url = "https://api.open-meteo.com/v1/forecast?latitude={$lat}&longitude={$lng}&current_weather=true";
 
-if ($response && $httpcode === 200) {
-    echo $response;
-} else {
-    // Trả về mặc định nếu API ngoài bị lỗi hoặc timeout
+try {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if (curl_errno($ch)) {
+        throw new Exception(curl_error($ch));
+    }
+
+    curl_close($ch);
+
+    if ($response && $httpCode >= 200 && $httpCode < 300) {
+        echo $response;
+        exit;
+    }
+
+    throw new Exception('Weather API returned HTTP ' . $httpCode);
+} catch (Exception $e) {
+    error_log('Weather API error: ' . $e->getMessage());
     echo json_encode([
         'current_weather' => [
-            'temperature' => 28.0
+            'temperature' => 28.0,
         ],
-        'is_fallback' => true
+        'is_fallback' => true,
     ]);
 }
-?>

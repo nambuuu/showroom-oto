@@ -5,10 +5,10 @@ $current = basename($_SERVER['PHP_SELF']);
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-        <div class="logo-icon">🚗</div>
+        <div class="logo-icon"><i class="bi bi-car-front-fill"></i></div>
         <div class="logo-text">
             SHOWROOM
-            <span>Ô TÔ ADMIN</span>
+            <span>OTO ADMIN</span>
         </div>
     </div>
 
