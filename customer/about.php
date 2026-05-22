@@ -12,7 +12,7 @@ $navItems = [
 ];
 ?>
 <!DOCTYPE html>
-<html class="dark" lang="vi">
+<html class="light" lang="vi">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -32,44 +32,44 @@ $navItems = [
                         "secondary": "#c8c6c5",
                         "inverse-surface": "#e5e2e1",
                         "tertiary-fixed-dim": "#c6c6c7",
-                        "surface-container-high": "#2a2a2a",
+                        "surface-container-high": "#e2e8f0",
                         "on-tertiary": "#2f3131",
-                        "on-background": "#e5e2e1",
+                        "on-background": "#0f172a",
                         "tertiary": "#c6c6c7",
                         "on-tertiary-container": "#393b3b",
-                        "background": "#131313",
+                        "background": "#ffffff",
                         "secondary-container": "#474746",
                         "primary-fixed": "#ffdea5",
-                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-lowest": "#ffffff",
                         "secondary-fixed": "#e5e2e1",
                         "primary-fixed-dim": "#e9c176",
                         "tertiary-fixed": "#e2e2e2",
                         "outline": "#9a8f80",
                         "tertiary-container": "#a4a5a5",
-                        "surface-container": "#201f1f",
-                        "on-surface": "#e5e2e1",
-                        "on-secondary-container": "#b7b5b4",
+                        "surface-container": "#f1f5f9",
+                        "on-surface": "#0f172a",
+                        "on-secondary-container": "#334155",
                         "on-tertiary-fixed-variant": "#454747",
                         "on-secondary-fixed-variant": "#474746",
                         "error": "#ffb4ab",
                         "on-error": "#690005",
-                        "surface-dim": "#131313",
+                        "surface-dim": "#f8fafc",
                         "on-primary": "#412d00",
                         "inverse-on-surface": "#313030",
                         "on-primary-fixed-variant": "#5d4201",
-                        "surface": "#131313",
+                        "surface": "#ffffff",
                         "on-primary-container": "#4e3700",
-                        "surface-container-highest": "#353534",
+                        "surface-container-highest": "#cbd5e1",
                         "on-tertiary-fixed": "#1a1c1c",
                         "primary-container": "#c5a059",
                         "primary": "#e9c176",
-                        "outline-variant": "#4e4639",
+                        "outline-variant": "#cbd5e1",
                         "error-container": "#93000a",
                         "on-error-container": "#ffdad6",
                         "on-secondary": "#313030",
                         "secondary-fixed-dim": "#c8c6c5",
-                        "on-surface-variant": "#d1c5b4",
-                        "surface-container-low": "#1c1b1b",
+                        "on-surface-variant": "#475569",
+                        "surface-container-low": "#f8fafc",
                         "inverse-primary": "#775a19",
                         "surface-bright": "#3a3939"
                     },
@@ -87,10 +87,10 @@ $navItems = [
                         "margin-desktop": "80px"
                     },
                     "fontFamily": {
-                        "display-lg": ["Playfair Display"],
+                        "display-lg": ["Orbitron"],
                         "label-caps": ["Inter"],
-                        "headline-md": ["Playfair Display"],
-                        "headline-sm": ["Playfair Display"],
+                        "headline-md": ["Orbitron"],
+                        "headline-sm": ["Orbitron"],
                         "body-md": ["Inter"],
                         "body-lg": ["Inter"],
                         "signature": ["Mrs Saint Delafield", "cursive"]
@@ -108,7 +108,7 @@ $navItems = [
         }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
     <style>
@@ -118,7 +118,7 @@ $navItems = [
             --scroll-offset: calc(var(--nav-h) + var(--subnav-h) + 16px);
         }
 
-        body { background-color: #050505; color: #e5e2e1; overflow-x: hidden; }
+        body { background-color: #ffffff; color: #0f172a; overflow-x: hidden; }
         body.menu-open { overflow: hidden; }
 
         /* Material Symbols — bắt buộc; uppercase trên parent sẽ làm icon hiện chữ "south" */
@@ -144,18 +144,18 @@ $navItems = [
 
         .bg-hero-pattern {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; pointer-events: none;
-            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.06) 0%, rgba(5, 5, 5, 1) 65%);
+            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.06) 0%, rgba(255, 255, 255, 1) 65%);
         }
 
         .glass-card {
-            background: rgba(26, 26, 26, 0.45);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(233, 193, 118, 0.12);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(0, 0, 0, 0.04);
             transition: border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
         }
         .glass-card:hover {
-            background: rgba(32, 32, 32, 0.65);
+            background: rgba(255, 255, 255, 0.9);
             border-color: rgba(233, 193, 118, 0.28);
             transform: translateY(-4px);
         }
@@ -201,7 +201,7 @@ $navItems = [
             min-height: 100svh;
             min-height: 100vh;
             background:
-                linear-gradient(180deg, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.82) 60%, #050505 100%),
+                linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.9) 60%, #ffffff 100%),
                 url('../assets/images/cars/mercedes-s-class.jpg') center center / cover no-repeat;
             position: relative;
             display: flex;
@@ -293,10 +293,10 @@ $navItems = [
         }
 
         .watermark-text {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Orbitron', serif;
             font-size: clamp(3rem, 12vw, 10rem);
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.025);
+            color: rgba(0, 0, 0, 0.05);
             position: absolute; top: 8%; left: 0;
             z-index: 0; user-select: none; pointer-events: none;
             line-height: 1;
@@ -449,7 +449,7 @@ $navItems = [
     </header>
 
     <!-- Sub navigation -->
-    <div id="subnavBar" class="subnav-bar sticky z-40 bg-[#050505]/95 backdrop-blur-md border-b border-outline-variant/10">
+    <div id="subnavBar" class="subnav-bar sticky z-40 bg-[#ffffff]/95 backdrop-blur-md border-b border-outline-variant/10">
         <div class="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop py-2.5 subnav-scroll overflow-x-auto">
             <div class="flex items-center gap-2 min-w-max" role="tablist" aria-label="Mục trang Giới thiệu">
                 <a href="#story" class="subnav-link is-active" data-subnav="story">Câu chuyện</a>
@@ -465,7 +465,7 @@ $navItems = [
     </div>
 
     <!-- Story -->
-    <section id="story" class="section-pill relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-[#050505] overflow-hidden">
+    <section id="story" class="section-pill relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-[#ffffff] overflow-hidden">
         <div class="watermark-text" aria-hidden="true">HISTORY</div>
 
         <div class="max-w-container-max mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -504,7 +504,7 @@ $navItems = [
                         <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_forward</span>
                     </a>
                 </div>
-                <p class="font-signature text-4xl sm:text-5xl lg:text-6xl text-white/70 mt-8 select-none overflow-hidden" aria-hidden="true">AutoSuperCar</p>
+                <p class="font-signature text-4xl sm:text-5xl lg:text-6xl text-black/10 mt-8 select-none overflow-hidden" aria-hidden="true">AutoSuperCar</p>
             </div>
         </div>
     </section>
@@ -533,7 +533,7 @@ $navItems = [
     </section>
 
     <!-- Values -->
-    <section id="values" class="section-pill py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-[#050505] relative z-10 overflow-hidden">
+    <section id="values" class="section-pill py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-[#ffffff] relative z-10 overflow-hidden">
         <div class="absolute top-0 right-0 w-2/3 h-full bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06)_0%,transparent_70%)] pointer-events-none" aria-hidden="true"></div>
 
         <div class="max-w-3xl mx-auto text-center mb-14 sm:mb-16 reveal-up">
@@ -595,7 +595,7 @@ $navItems = [
     </section>
 
     <!-- Visit / Showroom -->
-    <section id="visit" class="section-pill py-20 sm:py-28 px-4 sm:px-6 lg:px-margin-desktop bg-[#050505] relative z-10">
+    <section id="visit" class="section-pill py-20 sm:py-28 px-4 sm:px-6 lg:px-margin-desktop bg-[#ffffff] relative z-10">
         <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch reveal-up">
             <div class="glass-card rounded-2xl p-8 sm:p-10 flex flex-col justify-center">
                 <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase mb-4">Showroom</span>
@@ -633,7 +633,7 @@ $navItems = [
                     loading="lazy"
                     onerror="this.style.display='none'"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#ffffff] via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
             </div>
         </div>
     </section>
