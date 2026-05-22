@@ -9,6 +9,7 @@ $navItems = [
     ['id' => 'compare', 'label' => 'So Sánh',      'href' => 'compare.php', 'icon' => 'compare_arrows'],
     ['id' => 'about',   'label' => 'Giới Thiệu',  'href' => 'about.php',   'icon' => 'info'],
     ['id' => 'booking', 'label' => 'Lái Thử',     'href' => 'booking.php', 'icon' => 'event_available'],
+    ['id' => 'contact', 'label' => 'Liên Hệ',    'href' => 'contact.php', 'icon' => 'mail'],
 ];
 ?>
 <!DOCTYPE html>

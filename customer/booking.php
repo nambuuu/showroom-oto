@@ -9,6 +9,7 @@ $navItems = [
     ['id' => 'compare', 'label' => 'So Sánh',      'href' => 'compare.php'],
     ['id' => 'about',   'label' => 'Giới Thiệu',  'href' => 'about.php'],
     ['id' => 'booking', 'label' => 'Lái Thử',     'href' => 'booking.php'],
+    ['id' => 'contact', 'label' => 'Liên Hệ',    'href' => 'contact.php'],
 ];
 
 $user_name = '';
