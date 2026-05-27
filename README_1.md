@@ -90,7 +90,7 @@ car-showroom/
 │   ├── post_booking.php    # Nhận & lưu yêu cầu đặt lịch
 │   ├── post_contact.php    # Nhận & lưu yêu cầu liên hệ
 │   └── get_brands.php      # Lấy danh sách hãng cho dropdown
-│
+│   └── get_weather.php     # Lấy thông tin thời tiết
 ├── assets/
 │   ├── css/style.css       # Stylesheet chính + responsive
 │   ├── js/main.js            # JavaScript toàn cục
