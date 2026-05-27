@@ -7,7 +7,7 @@ define('BASE_URL',  'http://localhost/showroom-oto/');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'car_showroom_db');
 define('DB_USER', 'root');
-define('DB_PASS', '0945350630');
+define('DB_PASS', '123456');
 
 define('UPLOAD_PATH', __DIR__ . '/../assets/image/cars/');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB

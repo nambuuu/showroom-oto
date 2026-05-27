@@ -32,7 +32,7 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 <!DOCTYPE html>
-<html class="dark" lang="vi">
+<html class="light" lang="vi">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -53,44 +53,44 @@ if (isset($_SESSION['user_id'])) {
                         "secondary": "#c8c6c5",
                         "inverse-surface": "#e5e2e1",
                         "tertiary-fixed-dim": "#c6c6c7",
-                        "surface-container-high": "#2a2a2a",
+                        "surface-container-high": "#e2e8f0",
                         "on-tertiary": "#2f3131",
-                        "on-background": "#e5e2e1",
+                        "on-background": "#0f172a",
                         "tertiary": "#c6c6c7",
                         "on-tertiary-container": "#393b3b",
-                        "background": "#131313",
+                        "background": "#ffffff",
                         "secondary-container": "#474746",
                         "primary-fixed": "#ffdea5",
-                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-lowest": "#ffffff",
                         "secondary-fixed": "#e5e2e1",
                         "primary-fixed-dim": "#e9c176",
                         "tertiary-fixed": "#e2e2e2",
                         "outline": "#9a8f80",
                         "tertiary-container": "#a4a5a5",
-                        "surface-container": "#201f1f",
-                        "on-surface": "#e5e2e1",
-                        "on-secondary-container": "#b7b5b4",
+                        "surface-container": "#f1f5f9",
+                        "on-surface": "#0f172a",
+                        "on-secondary-container": "#334155",
                         "on-tertiary-fixed-variant": "#454747",
                         "on-secondary-fixed-variant": "#474746",
                         "error": "#ffb4ab",
                         "on-error": "#690005",
-                        "surface-dim": "#131313",
+                        "surface-dim": "#f8fafc",
                         "on-primary": "#412d00",
                         "inverse-on-surface": "#313030",
                         "on-primary-fixed-variant": "#5d4201",
-                        "surface": "#131313",
+                        "surface": "#ffffff",
                         "on-primary-container": "#4e3700",
-                        "surface-container-highest": "#353534",
+                        "surface-container-highest": "#cbd5e1",
                         "on-tertiary-fixed": "#1a1c1c",
                         "primary-container": "#c5a059",
                         "primary": "#e9c176",
-                        "outline-variant": "#4e4639",
+                        "outline-variant": "#cbd5e1",
                         "error-container": "#93000a",
                         "on-error-container": "#ffdad6",
                         "on-secondary": "#313030",
                         "secondary-fixed-dim": "#c8c6c5",
-                        "on-surface-variant": "#d1c5b4",
-                        "surface-container-low": "#1c1b1b",
+                        "on-surface-variant": "#475569",
+                        "surface-container-low": "#f8fafc",
                         "inverse-primary": "#775a19",
                         "surface-bright": "#3a3939"
                     },
@@ -108,10 +108,10 @@ if (isset($_SESSION['user_id'])) {
                         "margin-desktop": "80px"
                     },
                     "fontFamily": {
-                        "display-lg": ["Playfair Display"],
+                        "display-lg": ["Orbitron"],
                         "label-caps": ["Inter"],
-                        "headline-md": ["Playfair Display"],
-                        "headline-sm": ["Playfair Display"],
+                        "headline-md": ["Orbitron"],
+                        "headline-sm": ["Orbitron"],
                         "body-md": ["Inter"],
                         "body-lg": ["Inter"]
                     },
@@ -129,22 +129,22 @@ if (isset($_SESSION['user_id'])) {
     </script>
     
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        body { background-color: #050505; color: #e5e2e1; overflow-x: hidden; }
+        body { background-color: #ffffff; color: #0f172a; overflow-x: hidden; }
         
         .bg-hero-pattern {
             position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.05) 0%, rgba(5, 5, 5, 1) 70%);
+            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.05) 0%, rgba(255, 255, 255, 1) 70%);
         }
 
         .glass-card {
-            background: rgba(26, 26, 26, 0.4);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(233, 193, 118, 0.15);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -218,19 +218,19 @@ if (isset($_SESSION['user_id'])) {
         }
 
         /* Custom SweetAlert2 Theme */
-        .swal-premium-popup { background: #131313 !important; border: 1px solid rgba(197, 160, 89, 0.5) !important; color: #e5e2e1 !important; border-radius: 16px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;}
-        .swal-premium-title { color: #e9c176 !important; font-family: 'Playfair Display', serif !important; letter-spacing: 1px; }
+        .swal-premium-popup { background: #ffffff !important; border: 1px solid rgba(197, 160, 89, 0.5) !important; color: #0f172a !important; border-radius: 16px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;}
+        .swal-premium-title { color: #e9c176 !important; font-family: 'Orbitron', serif !important; letter-spacing: 1px; }
         .swal-premium-confirm { background: linear-gradient(135deg, #c5a059 0%, #775a19 100%) !important; color: #261900 !important; font-weight: bold !important; font-family: 'Inter', sans-serif !important; border-radius: 8px !important; padding: 12px 30px !important; text-transform: uppercase; letter-spacing: 1px; }
         
         /* Multi-step Form & Interactions */
         .step { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
         .step.active { display: block; opacity: 1; }
-        .progress-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; position: relative; margin-bottom: 2rem; }
+        .progress-bar { height: 4px; background: rgba(0,0,0,0.1); border-radius: 2px; overflow: hidden; position: relative; margin-bottom: 2rem; }
         .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: #e9c176; transition: width 0.4s ease; width: 33.33%; }
         
         /* Card (no 3D transform to avoid stacking context issues with dropdown) */
         .tilt-card { transition: box-shadow 0.3s ease; }
-        .tilt-card:hover { box-shadow: 0 35px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+        .tilt-card:hover { box-shadow: 0 35px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(0, 0, 0, 0.08); }
         .tilt-content { /* no transform */ }
         
         /* Custom Select */
@@ -238,13 +238,13 @@ if (isset($_SESSION['user_id'])) {
         .custom-select { position: relative; display: flex; flex-direction: column; }
         .custom-select__trigger {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 0; font-size: 1.125rem; color: #e5e2e1;
+            padding: 12px 0; font-size: 1.125rem; color: #0f172a;
             border-bottom: 1px solid rgba(154, 143, 128, 0.3); cursor: pointer; transition: all 0.3s;
         }
         .custom-select.open .custom-select__trigger { border-bottom-color: #e9c176; }
         .custom-options {
             position: absolute; display: block; top: 100%; left: 0; right: 0;
-            background: rgba(20, 20, 20, 0.98); backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
             border: 1px solid rgba(233, 193, 118, 0.2); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             opacity: 0; visibility: hidden; pointer-events: none;
             transition: opacity 0.3s, visibility 0.3s; z-index: 9999; max-height: 250px; overflow-y: auto; margin-top: 5px;
@@ -252,7 +252,7 @@ if (isset($_SESSION['user_id'])) {
         .custom-options::-webkit-scrollbar { width: 6px; }
         .custom-options::-webkit-scrollbar-thumb { background: #e9c176; border-radius: 3px; }
         .custom-select.open .custom-options { opacity: 1; visibility: visible; pointer-events: all; }
-        .custom-option { padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .custom-option { padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .custom-option:last-child { border-bottom: none; }
         .custom-option:hover, .custom-option.selected { background: rgba(233, 193, 118, 0.1); color: #e9c176; }
         
