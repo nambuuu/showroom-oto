@@ -163,14 +163,16 @@ require_once '../config/db.php';
            HERO SECTION
         */
         .hero {
-            height: 100vh;
+            height: 85vh; 
+            min-height: 600px;
             display: flex;
             align-items: center;
             position: relative;
             padding: 0 5%;
-            margin-top: 0;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 100%),
-                        url('../assets/image/cars/Porche\ 911\ turbo.jpg') no-repeat center center/cover;
+            margin-top: 70px; 
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.1) 100%),
+                        url('../assets/image/cars/Porche\ 911\ turbo.jpg') no-repeat right center/cover;
+            border-bottom: 1px solid var(--border);
         }
 
         .hero-content {
@@ -219,6 +221,55 @@ require_once '../config/db.php';
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 
+           BRAND CAROUSEL
+        */
+        .brands-section {
+            padding: 40px 5%;
+            background-color: #fff;
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brands-track {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            width: max-content;
+            animation: scrollBrands 20s linear infinite;
+        }
+
+        .brands-track:hover {
+            animation-play-state: paused;
+        }
+
+        .brand-logo-item {
+            width: 120px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+
+        .brand-logo-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-logo-item:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes scrollBrands {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 30px)); } /* 30px là một nửa của gap (60px) để vòng lặp khớp hoàn hảo */
         }
 
         /* 
@@ -574,6 +625,29 @@ require_once '../config/db.php';
             <a href="cars.php" class="btn-primary">
                 Khám Phá Ngay <i class="fa-solid fa-arrow-right"></i>
             </a>
+        </div>
+    </section>
+
+    <!-- BRANDS CAROUSEL SECTION -->
+    <section class="brands-section">
+        <div class="brands-track">
+            <!-- Set 1 -->
+            <div class="brand-logo-item"><img src="../assets/image/brands/Mercedes-Logo.svg.png" alt="Mercedes"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/bmw-logo.png" alt="BMW"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/porsche-logo.png" alt="Porsche"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/logo-Toyota.png" alt="Toyota"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/VinFast-logo-2026.png" alt="VinFast"></div>
+            <div class="brand-logo-item" style="mix-blend-mode: multiply;"><img src="../assets/image/brands/audi.jpg" alt="Audi" style="mix-blend-mode: multiply;"></div>
+            <div class="brand-logo-item" style="mix-blend-mode: multiply;"><img src="../assets/image/brands/lexus.jpg" alt="Lexus" style="mix-blend-mode: multiply;"></div>
+            
+            <!-- Set 2 (Duplicate for infinite loop) -->
+            <div class="brand-logo-item"><img src="../assets/image/brands/Mercedes-Logo.svg.png" alt="Mercedes"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/bmw-logo.png" alt="BMW"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/porsche-logo.png" alt="Porsche"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/logo-Toyota.png" alt="Toyota"></div>
+            <div class="brand-logo-item"><img src="../assets/image/brands/VinFast-logo-2026.png" alt="VinFast"></div>
+            <div class="brand-logo-item" style="mix-blend-mode: multiply;"><img src="../assets/image/brands/audi.jpg" alt="Audi" style="mix-blend-mode: multiply;"></div>
+            <div class="brand-logo-item" style="mix-blend-mode: multiply;"><img src="../assets/image/brands/lexus.jpg" alt="Lexus" style="mix-blend-mode: multiply;"></div>
         </div>
     </section>
 

@@ -473,6 +473,19 @@ require_once '../config/db.php';
                     <option value="20000000000">Dưới 20 tỷ</option>
                 </select>
             </div>
+            <div class="filter-group">
+                <i class="fa-solid fa-calendar-days"></i>
+                <select id="yearFilter">
+                    <option value="">Tất cả năm SX</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
         </aside>
 
         <!-- CARS CONTENT -->
@@ -514,6 +527,7 @@ require_once '../config/db.php';
             document.getElementById('brandFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
             document.getElementById('seatingFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
             document.getElementById('priceFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
+            document.getElementById('yearFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
         });
 
         function debounce(func, timeout = 300) {
@@ -555,6 +569,7 @@ require_once '../config/db.php';
             const brand = document.getElementById('brandFilter').value;
             const seating = document.getElementById('seatingFilter').value;
             const maxPrice = document.getElementById('priceFilter').value;
+            const year = document.getElementById('yearFilter').value;
             
             let url = `../api/get_cars.php?page=${currentPage}&limit=9`;
             if (search)   url += `&search=${encodeURIComponent(search)}`;
@@ -562,6 +577,7 @@ require_once '../config/db.php';
             if (brand)    url += `&brand_id=${encodeURIComponent(brand)}`;
             if (seating)  url += `&seating=${encodeURIComponent(seating)}`;
             if (maxPrice) url += `&max_price=${encodeURIComponent(maxPrice)}`;
+            if (year)     url += `&year=${encodeURIComponent(year)}`;
 
             fetch(url)
                 .then(res => res.json())
