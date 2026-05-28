@@ -51,6 +51,7 @@ try {
     $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
     $seating  = isset($_GET['seating'])  ? (int)$_GET['seating']  : 0;
     $max_price = isset($_GET['max_price']) ? (int)$_GET['max_price'] : 0;
+    $year = isset($_GET['year']) ? (int)$_GET['year'] : 0;
 
     $where = [];
     $params = [];
@@ -74,6 +75,10 @@ try {
     if ($max_price > 0) {
         $where[] = 'c.price <= :max_price';
         $params[':max_price'] = $max_price;
+    }
+    if ($year > 0) {
+        $where[] = 'c.year = :year';
+        $params[':year'] = $year;
     }
 
     $whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
