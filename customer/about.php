@@ -13,7 +13,7 @@ $navItems = [
 ];
 ?>
 <!DOCTYPE html>
-<html class="light" lang="vi">
+<html class="dark" lang="vi">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -25,54 +25,29 @@ $navItems = [
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
-                        "surface-variant": "#353534",
-                        "surface-tint": "#e9c176",
-                        "on-primary-fixed": "#261900",
-                        "on-secondary-fixed": "#1c1b1b",
-                        "secondary": "#c8c6c5",
-                        "inverse-surface": "#e5e2e1",
-                        "tertiary-fixed-dim": "#c6c6c7",
-                        "surface-container-high": "#e2e8f0",
-                        "on-tertiary": "#2f3131",
-                        "on-background": "#0f172a",
-                        "tertiary": "#c6c6c7",
-                        "on-tertiary-container": "#393b3b",
-                        "background": "#ffffff",
-                        "secondary-container": "#474746",
-                        "primary-fixed": "#ffdea5",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary-fixed": "#e5e2e1",
-                        "primary-fixed-dim": "#e9c176",
-                        "tertiary-fixed": "#e2e2e2",
-                        "outline": "#9a8f80",
-                        "tertiary-container": "#a4a5a5",
-                        "surface-container": "#f1f5f9",
-                        "on-surface": "#0f172a",
-                        "on-secondary-container": "#334155",
-                        "on-tertiary-fixed-variant": "#454747",
-                        "on-secondary-fixed-variant": "#474746",
+                                        "colors": {
+                        "primary": "#d4a843",
+                        "primary-fixed": "#f0c96a",
+                        "primary-fixed-dim": "#a67c2e",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#111111",
+                        "surface": "#0a0a0a",
+                        "surface-dim": "#111111",
+                        "surface-container": "#171717",
+                        "surface-container-low": "#111111",
+                        "surface-container-lowest": "#050505",
+                        "surface-container-high": "#262626",
+                        "surface-container-highest": "#333333",
+                        "on-surface": "#f5f5f5",
+                        "on-surface-variant": "#a3a3a3",
+                        "outline": "#404040",
+                        "outline-variant": "#262626",
                         "error": "#ffb4ab",
                         "on-error": "#690005",
-                        "surface-dim": "#f8fafc",
-                        "on-primary": "#412d00",
-                        "inverse-on-surface": "#313030",
-                        "on-primary-fixed-variant": "#5d4201",
-                        "surface": "#ffffff",
-                        "on-primary-container": "#4e3700",
-                        "surface-container-highest": "#cbd5e1",
-                        "on-tertiary-fixed": "#1a1c1c",
-                        "primary-container": "#c5a059",
-                        "primary": "#e9c176",
-                        "outline-variant": "#cbd5e1",
-                        "error-container": "#93000a",
-                        "on-error-container": "#ffdad6",
-                        "on-secondary": "#313030",
-                        "secondary-fixed-dim": "#c8c6c5",
-                        "on-surface-variant": "#475569",
-                        "surface-container-low": "#f8fafc",
-                        "inverse-primary": "#775a19",
-                        "surface-bright": "#3a3939"
+                        "secondary": "#262626",
+                        "on-secondary": "#a3a3a3",
+                        "secondary-container": "#333333",
+                        "on-secondary-container": "#d4d4d4"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.125rem",
@@ -88,12 +63,12 @@ $navItems = [
                         "margin-desktop": "80px"
                     },
                     "fontFamily": {
-                        "display-lg": ["Orbitron"],
-                        "label-caps": ["Inter"],
-                        "headline-md": ["Orbitron"],
-                        "headline-sm": ["Orbitron"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"],
+                        "display-lg": ["Outfit", "sans-serif"],
+                        "label-caps": ["Outfit", "sans-serif"],
+                        "headline-md": ["Outfit", "sans-serif"],
+                        "headline-sm": ["Outfit", "sans-serif"],
+                        "body-md": ["Outfit", "sans-serif"],
+                        "body-lg": ["Outfit", "sans-serif"],
                         "signature": ["Mrs Saint Delafield", "cursive"]
                     },
                     "fontSize": {
@@ -109,7 +84,7 @@ $navItems = [
         }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
     <style>
@@ -119,7 +94,7 @@ $navItems = [
             --scroll-offset: calc(var(--nav-h) + var(--subnav-h) + 16px);
         }
 
-        body { background-color: #ffffff; color: #0f172a; overflow-x: hidden; }
+        body { background-color: #0a0a0a; color: #f5f5f5; overflow-x: hidden; }
         body.menu-open { overflow: hidden; }
 
         /* Material Symbols — bắt buộc; uppercase trên parent sẽ làm icon hiện chữ "south" */
@@ -145,18 +120,18 @@ $navItems = [
 
         .bg-hero-pattern {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; pointer-events: none;
-            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.06) 0%, rgba(255, 255, 255, 1) 65%);
+            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.08) 0%, rgba(10, 10, 10, 1) 65%);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(23, 23, 23, 0.7);
             backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(233, 193, 118, 0.12);
             box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(0, 0, 0, 0.04);
             transition: border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
         }
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(38, 38, 38, 0.8);
             border-color: rgba(233, 193, 118, 0.28);
             transform: translateY(-4px);
         }
@@ -202,7 +177,7 @@ $navItems = [
             min-height: 100svh;
             min-height: 100vh;
             background:
-                linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.9) 60%, #ffffff 100%),
+                linear-gradient(180deg, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.95) 60%, #0a0a0a 100%),
                 url('../assets/images/cars/mercedes-s-class.jpg') center center / cover no-repeat;
             position: relative;
             display: flex;
@@ -294,7 +269,7 @@ $navItems = [
         }
 
         .watermark-text {
-            font-family: 'Orbitron', serif;
+            font-family: 'Outfit', sans-serif;
             font-size: clamp(3rem, 12vw, 10rem);
             font-weight: 700;
             color: rgba(0, 0, 0, 0.05);
@@ -372,10 +347,7 @@ $navItems = [
                     <?php endif; ?>
                 </div>
 
-                <a href="booking.php" class="hidden sm:inline-flex items-center gap-2 btn-glow text-on-primary-fixed px-5 lg:px-7 py-2.5 lg:py-3 text-label-caps font-label-caps rounded-full shadow-[0_0_20px_rgba(233,193,118,0.15)]">
-                    <span class="material-symbols-outlined text-lg" aria-hidden="true">steering_wheel_heat</span>
-                    Đặt Lịch
-                </a>
+
 
                 <button type="button" id="menuToggle" class="xl:hidden flex items-center justify-center w-11 h-11 rounded-full border border-outline-variant/30 text-on-surface hover:border-primary/40 hover:text-primary transition-colors" aria-expanded="false" aria-controls="mobileMenu" aria-label="Mở menu">
                     <span class="material-symbols-outlined text-2xl" id="menuIcon">menu</span>
@@ -405,10 +377,7 @@ $navItems = [
             <?php endforeach; ?>
         </nav>
         <div class="p-6 border-t border-outline-variant/15 space-y-4">
-            <a href="booking.php" class="btn-glow w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-label-caps font-label-caps text-on-primary-fixed">
-                <span class="material-symbols-outlined" aria-hidden="true">event_available</span>
-                Đặt Lịch Lái Thử
-            </a>
+
             <?php if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id'])): ?>
                 <a href="../login.php" class="w-full flex items-center justify-center gap-2 py-3 rounded-full btn-outline-gold text-sm text-on-surface-variant">
                     <span class="material-symbols-outlined text-lg" aria-hidden="true">login</span>
@@ -450,23 +419,20 @@ $navItems = [
     </header>
 
     <!-- Sub navigation -->
-    <div id="subnavBar" class="subnav-bar sticky z-40 bg-[#ffffff]/95 backdrop-blur-md border-b border-outline-variant/10">
+    <div id="subnavBar" class="subnav-bar sticky z-40 bg-surface/95 backdrop-blur-md border-b border-outline-variant/10">
         <div class="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop py-2.5 subnav-scroll overflow-x-auto">
             <div class="flex items-center gap-2 min-w-max" role="tablist" aria-label="Mục trang Giới thiệu">
                 <a href="#story" class="subnav-link is-active" data-subnav="story">Câu chuyện</a>
                 <a href="#values" class="subnav-link" data-subnav="values">Giá trị</a>
                 <a href="#experience" class="subnav-link" data-subnav="experience">Trải nghiệm</a>
                 <a href="#visit" class="subnav-link" data-subnav="visit">Showroom</a>
-                <a href="booking.php" class="subnav-link !text-primary !border-primary/40 !bg-primary/10 inline-flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-base leading-none" aria-hidden="true">event_available</span>
-                    Lái thử
-                </a>
+
             </div>
         </div>
     </div>
 
     <!-- Story -->
-    <section id="story" class="section-pill relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-[#ffffff] overflow-hidden">
+    <section id="story" class="section-pill relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-surface overflow-hidden">
         <div class="watermark-text" aria-hidden="true">HISTORY</div>
 
         <div class="max-w-container-max mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -534,7 +500,7 @@ $navItems = [
     </section>
 
     <!-- Values -->
-    <section id="values" class="section-pill py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-[#ffffff] relative z-10 overflow-hidden">
+    <section id="values" class="section-pill py-20 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-margin-desktop bg-surface relative z-10 overflow-hidden">
         <div class="absolute top-0 right-0 w-2/3 h-full bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06)_0%,transparent_70%)] pointer-events-none" aria-hidden="true"></div>
 
         <div class="max-w-3xl mx-auto text-center mb-14 sm:mb-16 reveal-up">
@@ -596,7 +562,7 @@ $navItems = [
     </section>
 
     <!-- Visit / Showroom -->
-    <section id="visit" class="section-pill py-20 sm:py-28 px-4 sm:px-6 lg:px-margin-desktop bg-[#ffffff] relative z-10">
+    <section id="visit" class="section-pill py-20 sm:py-28 px-4 sm:px-6 lg:px-margin-desktop bg-surface relative z-10">
         <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch reveal-up">
             <div class="glass-card rounded-2xl p-8 sm:p-10 flex flex-col justify-center">
                 <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase mb-4">Showroom</span>
@@ -634,7 +600,7 @@ $navItems = [
                     loading="lazy"
                     onerror="this.style.display='none'"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#ffffff] via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
             </div>
         </div>
     </section>
@@ -846,5 +812,13 @@ $navItems = [
             });
         }
     </script>
+    <!-- Floating Test Drive Button -->
+    <a href="booking.php" class="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] btn-glow flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-[0_10px_30px_rgba(212,168,67,0.4)] hover:scale-110 transition-transform duration-300 group" aria-label="Đặt lịch lái thử">
+        <span class="material-symbols-outlined text-on-primary-fixed text-2xl sm:text-3xl">steering_wheel_heat</span>
+        <span class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-surface-container-highest text-on-surface px-4 py-2 rounded-lg text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl border border-outline-variant/20 hidden sm:block">
+            Đặt Lái Thử
+        </span>
+    </a>
+
 </body>
 </html>

@@ -7,7 +7,7 @@ require_once '../config/db.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoSuperCar | Khám Phá Xe</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -39,7 +39,7 @@ require_once '../config/db.php';
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-secondary);
             color: var(--text-dark);
             min-height: 100vh;
@@ -48,7 +48,7 @@ require_once '../config/db.php';
         }
 
         a { text-decoration: none; color: inherit; transition: color var(--transition); }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Orbitron', sans-serif; color: var(--text-dark); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; color: var(--text-dark); }
 
         /* NAVBAR */
         .navbar {
@@ -67,7 +67,7 @@ require_once '../config/db.php';
         }
 
         .navbar-brand {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 24px;
             font-weight: 900;
             color: var(--text-dark);
@@ -122,54 +122,79 @@ require_once '../config/db.php';
         .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
         .page-header p { color: var(--text-muted); font-size: 1.1rem; }
 
-        /* FILTER BAR */
-        .filter-section {
-            padding: 30px 5%;
-            background: var(--bg-primary);
+        /* SHOWROOM LAYOUT */
+        .showroom-layout {
             display: flex;
             gap: 20px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            padding: 40px 2% 40px 2%;
+            align-items: flex-start;
+        }
+
+        /* SIDEBAR FILTER */
+        .sidebar-filter {
+            width: 240px;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             position: sticky;
-            top: 65px;
-            z-index: 900;
+            top: 90px;
+        }
+
+        .filter-title {
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 4px;
         }
 
         .filter-group {
             display: flex;
             align-items: center;
             background: var(--bg-secondary);
-            border-radius: 30px;
-            padding: 5px 15px;
+            border-radius: 10px;
+            padding: 4px 10px;
             border: 1px solid var(--border);
+            margin-bottom: 10px;
+            transition: all var(--transition);
         }
 
-        .filter-group i { color: var(--gold); margin-right: 10px; }
+        .filter-group:focus-within, .filter-group:hover {
+            border-color: var(--gold);
+        }
+
+        .filter-group i { color: var(--gold); margin-right: 8px; width: 16px; text-align: center; font-size: 12px; }
         
         .filter-group input, .filter-group select {
             border: none;
             background: transparent;
-            padding: 10px;
-            font-size: 15px;
+            padding: 9px 0;
+            font-size: 13px;
             color: var(--text-dark);
             outline: none;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
+            width: 100%;
         }
 
-        .filter-group input { width: 250px; }
-        .filter-group select { width: 180px; cursor: pointer; }
+        .filter-group select { cursor: pointer; }
 
-        /* CAR GRID */
-        .cars-container {
-            padding: 50px 5%;
+        /* CARS CONTENT */
+        .cars-content {
+            flex: 1;
+            min-width: 0;
         }
+
 
         .cars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
         .car-card {
@@ -191,12 +216,15 @@ require_once '../config/db.php';
 
         .car-img-wrapper {
             position: relative;
-            height: 220px;
+            aspect-ratio: 16 / 9;
+            width: 100%;
             overflow: hidden;
+            background-color: transparent;
+            padding: 10px; /* Add a little padding so cars don't touch the edges */
         }
 
         .car-img-wrapper img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%; height: 100%; object-fit: contain;
             transition: transform 0.5s ease;
         }
 
@@ -223,7 +251,7 @@ require_once '../config/db.php';
 
         .car-title {
             font-size: 1.25rem; font-weight: 700; margin-bottom: 15px;
-            color: var(--text-dark); font-family: 'Orbitron', sans-serif;
+            color: var(--text-dark); font-family: 'Outfit', sans-serif;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
 
@@ -313,7 +341,7 @@ require_once '../config/db.php';
         /* FOOTER */
         footer { background: #0f172a; color: #fff; padding: 80px 5% 30px; margin-top: 50px; }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 50px; }
-        .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
+        .footer-logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
         .footer-logo span { color: var(--gold); }
         .footer-about { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8; }
         .footer-title { font-size: 1.2rem; margin-bottom: 25px; color: #fff; }
@@ -324,6 +352,40 @@ require_once '../config/db.php';
         .contact-info li { display: flex; gap: 15px; margin-bottom: 20px; color: var(--text-dim); }
         .contact-info i { color: var(--gold); font-size: 1.2rem; margin-top: 3px; }
         .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: var(--text-dim); font-size: 0.9rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .showroom-layout {
+                flex-direction: column;
+                padding: 30px 5%;
+            }
+            .sidebar-filter {
+                width: 100%;
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .filter-title {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .filter-group {
+                flex: 1;
+                min-width: 200px;
+                margin-bottom: 0;
+            }
+        }
+        @media (max-width: 768px) {
+            .filter-group {
+                min-width: 100%;
+            }
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -361,38 +423,65 @@ require_once '../config/db.php';
         <p>Tìm kiếm kiệt tác phù hợp với phong cách của bạn</p>
     </div>
 
-    <!-- FILTER SECTION -->
-    <div class="filter-section">
-        <div class="filter-group">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="Tìm kiếm tên xe, ví dụ: Porsche 911">
-        </div>
-        <div class="filter-group">
-            <i class="fa-solid fa-car"></i>
-            <select id="categoryFilter">
-                <option value="">Tất cả kiểu dáng</option>
-                <option value="sedan">Sedan</option>
-                <option value="suv">SUV</option>
-                <option value="hatchback">Hatchback</option>
-                <option value="truck">Truck</option>
-                <option value="coupe">Coupe</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <i class="fa-solid fa-building"></i>
-            <select id="brandFilter">
-                <option value="">Tất cả các hãng</option>
-                <!-- Thêm qua API sau -->
-            </select>
-        </div>
-    </div>
+    <!-- MAIN LAYOUT -->
+    <div class="showroom-layout">
+        <!-- FILTER SIDEBAR -->
+        <aside class="sidebar-filter">
+            <h3 class="filter-title">Bộ Lọc Tìm Kiếm</h3>
+            <div class="filter-group">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Tên xe, vd: Porsche...">
+            </div>
+            <div class="filter-group">
+                <i class="fa-solid fa-car"></i>
+                <select id="categoryFilter">
+                    <option value="">Tất cả kiểu dáng</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="hatchback">Hatchback</option>
+                    <option value="truck">Truck</option>
+                    <option value="coupe">Coupe</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <i class="fa-solid fa-building"></i>
+                <select id="brandFilter">
+                    <option value="">Tất cả các hãng</option>
+                    <!-- Thêm qua API sau -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <i class="fa-solid fa-users"></i>
+                <select id="seatingFilter">
+                    <option value="">Tất cả chỗ ngồi</option>
+                    <option value="2">2 chỗ</option>
+                    <option value="4">4 chỗ</option>
+                    <option value="5">5 chỗ</option>
+                    <option value="6">6 chỗ</option>
+                    <option value="7">7 chỗ</option>
+                    <option value="8">8 chỗ</option>
+                    <option value="9">9 chỗ</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <i class="fa-solid fa-money-bill"></i>
+                <select id="priceFilter">
+                    <option value="">Tất cả mức giá</option>
+                    <option value="1000000000">Dưới 1 tỷ</option>
+                    <option value="5000000000">Dưới 5 tỷ</option>
+                    <option value="10000000000">Dưới 10 tỷ</option>
+                    <option value="20000000000">Dưới 20 tỷ</option>
+                </select>
+            </div>
+        </aside>
 
-    <!-- CARS LIST -->
-    <div class="cars-container">
-        <div class="cars-grid" id="carsContainer">
-            <div class="loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><br><br>Đang tải dữ liệu...</div>
+        <!-- CARS CONTENT -->
+        <div class="cars-content">
+            <div class="cars-grid" id="carsContainer">
+                <div class="loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><br><br>Đang tải dữ liệu...</div>
+            </div>
+            <div class="pagination" id="paginationContainer"></div>
         </div>
-        <div class="pagination" id="paginationContainer"></div>
     </div>
 
     <!-- COMPARE WIDGET -->
@@ -423,6 +512,8 @@ require_once '../config/db.php';
             document.getElementById('searchInput').addEventListener('input', debounce(() => { currentPage = 1; fetchCars(); }, 500));
             document.getElementById('categoryFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
             document.getElementById('brandFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
+            document.getElementById('seatingFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
+            document.getElementById('priceFilter').addEventListener('change', () => { currentPage = 1; fetchCars(); });
         });
 
         function debounce(func, timeout = 300) {
@@ -462,11 +553,15 @@ require_once '../config/db.php';
             const search = document.getElementById('searchInput').value;
             const category = document.getElementById('categoryFilter').value;
             const brand = document.getElementById('brandFilter').value;
+            const seating = document.getElementById('seatingFilter').value;
+            const maxPrice = document.getElementById('priceFilter').value;
             
             let url = `../api/get_cars.php?page=${currentPage}&limit=9`;
-            if (search) url += `&search=${encodeURIComponent(search)}`;
+            if (search)   url += `&search=${encodeURIComponent(search)}`;
             if (category) url += `&category=${encodeURIComponent(category)}`;
-            if (brand) url += `&brand_id=${encodeURIComponent(brand)}`;
+            if (brand)    url += `&brand_id=${encodeURIComponent(brand)}`;
+            if (seating)  url += `&seating=${encodeURIComponent(seating)}`;
+            if (maxPrice) url += `&max_price=${encodeURIComponent(maxPrice)}`;
 
             fetch(url)
                 .then(res => res.json())
@@ -490,7 +585,7 @@ require_once '../config/db.php';
                                         <div class="car-specs">
                                             <div class="spec-item"><i class="fa-solid fa-gauge-high"></i><span>${car.category || 'N/A'}</span></div>
                                             <div class="spec-item"><i class="fa-solid fa-calendar-days"></i><span>${car.year || '2024'}</span></div>
-                                            <div class="spec-item"><i class="fa-solid fa-gas-pump"></i><span>Tự Động</span></div>
+                                            <div class="spec-item"><i class="fa-solid fa-users"></i><span>${car.seating ? car.seating + ' chỗ' : 'N/A'}</span></div>
                                         </div>
                                         <div class="car-footer">
                                             <div class="car-price">${formatPrice}</div>
@@ -530,7 +625,7 @@ require_once '../config/db.php';
 
         function changePage(page) {
             currentPage = page;
-            window.scrollTo({ top: document.querySelector('.filter-section').offsetTop - 80, behavior: 'smooth' });
+            window.scrollTo({ top: document.querySelector('.showroom-layout').offsetTop - 80, behavior: 'smooth' });
             fetchCars();
         }
 

@@ -18,12 +18,13 @@ try {
 
         $stmt = $pdo->prepare(
             "SELECT c.id, c.model_name, b.name AS brand_name, c.price, c.category, c.year, c.status,
-                    img.image AS main_image
+                    img.image AS main_image, cs.seating
              FROM cars c
              JOIN brands b ON c.brand_id = b.id
              LEFT JOIN car_images img ON c.id = img.car_id AND img.is_main = 1
+             LEFT JOIN car_specifications cs ON c.id = cs.car_id
              WHERE c.status IN ('available', 'coming_soon')
-             ORDER BY c.created_at DESC
+             ORDER BY b.name ASC, c.created_at DESC
              LIMIT :limit"
         );
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
@@ -47,7 +48,9 @@ try {
 
     $brand_id = isset($_GET['brand_id']) ? (int)$_GET['brand_id'] : 0;
     $category = isset($_GET['category']) ? trim($_GET['category']) : '';
-    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
+    $seating  = isset($_GET['seating'])  ? (int)$_GET['seating']  : 0;
+    $max_price = isset($_GET['max_price']) ? (int)$_GET['max_price'] : 0;
 
     $where = [];
     $params = [];
@@ -64,20 +67,34 @@ try {
         $where[] = 'c.model_name LIKE :search';
         $params[':search'] = '%' . $search . '%';
     }
+    if ($seating > 0) {
+        $where[] = 'cs.seating = :seating';
+        $params[':seating'] = $seating;
+    }
+    if ($max_price > 0) {
+        $where[] = 'c.price <= :max_price';
+        $params[':max_price'] = $max_price;
+    }
 
     $whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
-    $stmtCount = $pdo->prepare("SELECT COUNT(c.id) AS total FROM cars c $whereClause");
+    $stmtCount = $pdo->prepare("
+        SELECT COUNT(c.id) AS total
+        FROM cars c
+        LEFT JOIN car_specifications cs ON c.id = cs.car_id
+        $whereClause
+    ");
     $stmtCount->execute($params);
     $total = (int)$stmtCount->fetch()['total'];
 
     $sql = "
-        SELECT c.*, b.name AS brand_name, img.image AS main_image
+        SELECT c.*, b.name AS brand_name, img.image AS main_image, cs.seating
         FROM cars c
         LEFT JOIN brands b ON c.brand_id = b.id
         LEFT JOIN car_images img ON c.id = img.car_id AND img.is_main = 1
+        LEFT JOIN car_specifications cs ON c.id = cs.car_id
         $whereClause
-        ORDER BY c.created_at DESC
+        ORDER BY b.name ASC, c.created_at DESC
         LIMIT $limit OFFSET $offset
     ";
     $stmt = $pdo->prepare($sql);

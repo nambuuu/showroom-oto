@@ -7,7 +7,7 @@ require_once '../config/db.php';
     <meta charset="UTF-8">
     <meta name="Viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoSuperCar | So Sánh Xe</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -35,7 +35,7 @@ require_once '../config/db.php';
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-secondary);
             color: var(--text-dark);
             min-height: 100vh;
@@ -44,7 +44,7 @@ require_once '../config/db.php';
         }
 
         a { text-decoration: none; color: inherit; transition: color var(--transition); }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Orbitron', sans-serif; color: var(--text-dark); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; color: var(--text-dark); }
 
         /* NAVBAR */
         .navbar {
@@ -53,7 +53,7 @@ require_once '../config/db.php';
             backdrop-filter: blur(10px); position: fixed; top: 0; left: 0;
             width: 100%; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
-        .navbar-brand { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .navbar-brand { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
         .navbar-brand span { color: var(--gold); }
         .nav-links { display: flex; gap: 30px; list-style: none; }
         .nav-links li a { font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dark); position: relative; padding: 5px 0; }
@@ -106,8 +106,8 @@ require_once '../config/db.php';
         .remove-btn:hover { transform: scale(1.1); }
         .car-img-box { width: 100%; height: 150px; border-radius: 10px; overflow: hidden; background: var(--bg-secondary); }
         .car-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .car-name { font-size: 1.2rem; font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--text-dark); }
-        .car-price { font-size: 1.4rem; font-weight: 800; color: var(--gold); font-family: 'Inter', sans-serif; }
+        .car-name { font-size: 1.2rem; font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--text-dark); }
+        .car-price { font-size: 1.4rem; font-weight: 800; color: var(--gold); font-family: 'Outfit', sans-serif; }
         .car-brand { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
 
         .btn-buy { background: var(--text-dark); color: #fff; padding: 10px 20px; border-radius: 20px; font-weight: 600; font-size: 13px; margin-top: 10px; border: none; cursor: pointer;}
@@ -121,7 +121,7 @@ require_once '../config/db.php';
         /* FOOTER */
         footer { background: #0f172a; color: #fff; padding: 80px 5% 30px; margin-top: 50px; }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 50px; }
-        .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
+        .footer-logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
         .footer-logo span { color: var(--gold); }
         .footer-about { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8; }
         .footer-title { font-size: 1.2rem; margin-bottom: 25px; color: #fff; }

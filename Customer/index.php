@@ -9,7 +9,7 @@ require_once '../config/db.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoSuperCar Showroom | Trang Chủ</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -48,7 +48,7 @@ require_once '../config/db.php';
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-dark);
             min-height: 100vh;
@@ -63,7 +63,7 @@ require_once '../config/db.php';
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: var(--text-dark);
         }
 
@@ -87,7 +87,7 @@ require_once '../config/db.php';
         }
 
         .navbar-brand {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 24px;
             font-weight: 900;
             color: var(--text-dark);
@@ -313,7 +313,7 @@ require_once '../config/db.php';
             font-weight: 700;
             margin-bottom: 15px;
             color: var(--text-dark);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
 
         .car-specs {
@@ -435,7 +435,7 @@ require_once '../config/db.php';
         }
 
         .footer-logo {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 24px;
             font-weight: 900;
             margin-bottom: 20px;
@@ -569,7 +569,7 @@ require_once '../config/db.php';
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Tuyên Ngôn Của Sự Đẳng Cấp</h1>
+            <h1>Drive Your Dream </h1>
             <p>Trải nghiệm tinh hoa công nghệ và thiết kế hoàn mỹ. AutoSuperCar mang đến những kiệt tác xe hơi hàng đầu thế giới dành riêng cho bạn.</p>
             <a href="cars.php" class="btn-primary">
                 Khám Phá Ngay <i class="fa-solid fa-arrow-right"></i>

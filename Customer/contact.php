@@ -10,7 +10,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoSuperCar | Liên Hệ</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -43,7 +43,7 @@ session_start();
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-secondary);
             color: var(--text-dark);
             min-height: 100vh;
@@ -58,7 +58,7 @@ session_start();
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: var(--text-dark);
         }
 
@@ -79,7 +79,7 @@ session_start();
         }
 
         .navbar-brand {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 24px;
             font-weight: 900;
             color: var(--text-dark);
@@ -221,24 +221,33 @@ session_start();
         }
 
         .info-list i {
-            color: var(--text-dark);
-            background: var(--gold);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            color: var(--gold);
+            background: rgba(212, 168, 67, 0.1);
+            border: 1px solid rgba(212, 168, 67, 0.3);
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             flex-shrink: 0;
-            margin-top: 3px;
+            box-shadow: inset 0 0 10px rgba(212, 168, 67, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .info-list li:hover i {
+            background: var(--gold);
+            color: #111;
+            box-shadow: 0 8px 20px rgba(212, 168, 67, 0.4);
+            transform: translateY(-3px) scale(1.05);
         }
 
         .info-content h4 {
             color: #fff;
             font-size: 1.1rem;
             margin-bottom: 5px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
 
         .info-content p {
@@ -283,7 +292,7 @@ session_start();
             padding: 14px 18px;
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 1rem;
             background-color: var(--bg-secondary);
             transition: all var(--transition);
@@ -310,7 +319,7 @@ session_start();
             cursor: pointer;
             transition: all var(--transition);
             box-shadow: 0 4px 15px var(--gold-glow);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
 
         .btn-submit:hover {
@@ -363,7 +372,7 @@ session_start();
         }
 
         .footer-logo {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 24px;
             font-weight: 900;
             margin-bottom: 20px;
