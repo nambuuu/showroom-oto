@@ -12,7 +12,7 @@ if ($car_id === 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoSuperCar | Chi Tiết Xe</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -40,7 +40,7 @@ if ($car_id === 0) {
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-dark);
             min-height: 100vh;
@@ -49,7 +49,7 @@ if ($car_id === 0) {
         }
 
         a { text-decoration: none; color: inherit; transition: color var(--transition); }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Orbitron', sans-serif; color: var(--text-dark); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; color: var(--text-dark); }
 
         /* NAVBAR */
         .navbar {
@@ -58,7 +58,7 @@ if ($car_id === 0) {
             backdrop-filter: blur(10px); position: fixed; top: 0; left: 0;
             width: 100%; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
-        .navbar-brand { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .navbar-brand { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
         .navbar-brand span { color: var(--gold); }
         .nav-links { display: flex; gap: 30px; list-style: none; }
         .nav-links li a { font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dark); position: relative; padding: 5px 0; }
@@ -118,7 +118,7 @@ if ($car_id === 0) {
         }
 
         .car-title { font-size: 2.5rem; line-height: 1.2; margin-bottom: 20px; }
-        .car-price { font-size: 2rem; font-weight: 800; color: var(--gold); margin-bottom: 30px; font-family: 'Inter', sans-serif;}
+        .car-price { font-size: 2rem; font-weight: 800; color: var(--gold); margin-bottom: 30px; font-family: 'Outfit', sans-serif;}
 
         .btn-large {
             display: flex; justify-content: center; align-items: center; gap: 10px;
@@ -147,7 +147,7 @@ if ($car_id === 0) {
         .tab-btn {
             background: transparent; border: none; font-size: 1.1rem; font-weight: 700;
             color: var(--text-muted); padding: 15px 0; cursor: pointer;
-            position: relative; font-family: 'Orbitron', sans-serif;
+            position: relative; font-family: 'Outfit', sans-serif;
         }
         .tab-btn.active { color: var(--text-dark); }
         .tab-btn::after {
@@ -182,7 +182,7 @@ if ($car_id === 0) {
         /* FOOTER */
         footer { background: #0f172a; color: #fff; padding: 80px 5% 30px; margin-top: 50px; }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 50px; }
-        .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
+        .footer-logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
         .footer-logo span { color: var(--gold); }
         .footer-about { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8; }
         .footer-title { font-size: 1.2rem; margin-bottom: 25px; color: #fff; }

@@ -32,7 +32,7 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 <!DOCTYPE html>
-<html class="light" lang="vi">
+<html class="dark" lang="vi">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -45,54 +45,29 @@ if (isset($_SESSION['user_id'])) {
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
-                        "surface-variant": "#353534",
-                        "surface-tint": "#e9c176",
-                        "on-primary-fixed": "#261900",
-                        "on-secondary-fixed": "#1c1b1b",
-                        "secondary": "#c8c6c5",
-                        "inverse-surface": "#e5e2e1",
-                        "tertiary-fixed-dim": "#c6c6c7",
-                        "surface-container-high": "#e2e8f0",
-                        "on-tertiary": "#2f3131",
-                        "on-background": "#0f172a",
-                        "tertiary": "#c6c6c7",
-                        "on-tertiary-container": "#393b3b",
-                        "background": "#ffffff",
-                        "secondary-container": "#474746",
-                        "primary-fixed": "#ffdea5",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary-fixed": "#e5e2e1",
-                        "primary-fixed-dim": "#e9c176",
-                        "tertiary-fixed": "#e2e2e2",
-                        "outline": "#9a8f80",
-                        "tertiary-container": "#a4a5a5",
-                        "surface-container": "#f1f5f9",
-                        "on-surface": "#0f172a",
-                        "on-secondary-container": "#334155",
-                        "on-tertiary-fixed-variant": "#454747",
-                        "on-secondary-fixed-variant": "#474746",
+                                        "colors": {
+                        "primary": "#d4a843",
+                        "primary-fixed": "#f0c96a",
+                        "primary-fixed-dim": "#a67c2e",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#111111",
+                        "surface": "#0a0a0a",
+                        "surface-dim": "#111111",
+                        "surface-container": "#171717",
+                        "surface-container-low": "#111111",
+                        "surface-container-lowest": "#050505",
+                        "surface-container-high": "#262626",
+                        "surface-container-highest": "#333333",
+                        "on-surface": "#f5f5f5",
+                        "on-surface-variant": "#a3a3a3",
+                        "outline": "#404040",
+                        "outline-variant": "#262626",
                         "error": "#ffb4ab",
                         "on-error": "#690005",
-                        "surface-dim": "#f8fafc",
-                        "on-primary": "#412d00",
-                        "inverse-on-surface": "#313030",
-                        "on-primary-fixed-variant": "#5d4201",
-                        "surface": "#ffffff",
-                        "on-primary-container": "#4e3700",
-                        "surface-container-highest": "#cbd5e1",
-                        "on-tertiary-fixed": "#1a1c1c",
-                        "primary-container": "#c5a059",
-                        "primary": "#e9c176",
-                        "outline-variant": "#cbd5e1",
-                        "error-container": "#93000a",
-                        "on-error-container": "#ffdad6",
-                        "on-secondary": "#313030",
-                        "secondary-fixed-dim": "#c8c6c5",
-                        "on-surface-variant": "#475569",
-                        "surface-container-low": "#f8fafc",
-                        "inverse-primary": "#775a19",
-                        "surface-bright": "#3a3939"
+                        "secondary": "#262626",
+                        "on-secondary": "#a3a3a3",
+                        "secondary-container": "#333333",
+                        "on-secondary-container": "#d4d4d4"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.125rem",
@@ -108,12 +83,12 @@ if (isset($_SESSION['user_id'])) {
                         "margin-desktop": "80px"
                     },
                     "fontFamily": {
-                        "display-lg": ["Orbitron"],
-                        "label-caps": ["Inter"],
-                        "headline-md": ["Orbitron"],
-                        "headline-sm": ["Orbitron"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"]
+                        "display-lg": ["Outfit", "sans-serif"],
+                        "label-caps": ["Outfit", "sans-serif"],
+                        "headline-md": ["Outfit", "sans-serif"],
+                        "headline-sm": ["Outfit", "sans-serif"],
+                        "body-md": ["Outfit", "sans-serif"],
+                        "body-lg": ["Outfit", "sans-serif"]
                     },
                     "fontSize": {
                         "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600"}],
@@ -129,22 +104,22 @@ if (isset($_SESSION['user_id'])) {
     </script>
     
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        body { background-color: #ffffff; color: #0f172a; overflow-x: hidden; }
+        body { background-color: #0a0a0a; color: #f5f5f5; overflow-x: hidden; }
         
         .bg-hero-pattern {
             position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.05) 0%, rgba(255, 255, 255, 1) 70%);
+            background: radial-gradient(circle at 70% 30%, rgba(233, 193, 118, 0.08) 0%, rgba(10, 10, 10, 1) 70%);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(23, 23, 23, 0.7);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(233, 193, 118, 0.15);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -218,9 +193,9 @@ if (isset($_SESSION['user_id'])) {
         }
 
         /* Custom SweetAlert2 Theme */
-        .swal-premium-popup { background: #ffffff !important; border: 1px solid rgba(197, 160, 89, 0.5) !important; color: #0f172a !important; border-radius: 16px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;}
-        .swal-premium-title { color: #e9c176 !important; font-family: 'Orbitron', serif !important; letter-spacing: 1px; }
-        .swal-premium-confirm { background: linear-gradient(135deg, #c5a059 0%, #775a19 100%) !important; color: #261900 !important; font-weight: bold !important; font-family: 'Inter', sans-serif !important; border-radius: 8px !important; padding: 12px 30px !important; text-transform: uppercase; letter-spacing: 1px; }
+        .swal-premium-popup { background: #171717 !important; border: 1px solid rgba(197, 160, 89, 0.5) !important; color: #f5f5f5 !important; border-radius: 16px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;}
+        .swal-premium-title { color: #e9c176 !important; font-family: 'Outfit', sans-serif !important; letter-spacing: 1px; }
+        .swal-premium-confirm { background: linear-gradient(135deg, #c5a059 0%, #775a19 100%) !important; color: #261900 !important; font-weight: bold !important; font-family: 'Outfit', sans-serif !important; border-radius: 8px !important; padding: 12px 30px !important; text-transform: uppercase; letter-spacing: 1px; }
         
         /* Multi-step Form & Interactions */
         .step { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
@@ -238,13 +213,13 @@ if (isset($_SESSION['user_id'])) {
         .custom-select { position: relative; display: flex; flex-direction: column; }
         .custom-select__trigger {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 0; font-size: 1.125rem; color: #0f172a;
+            padding: 12px 0; font-size: 1.125rem; color: #f5f5f5;
             border-bottom: 1px solid rgba(154, 143, 128, 0.3); cursor: pointer; transition: all 0.3s;
         }
         .custom-select.open .custom-select__trigger { border-bottom-color: #e9c176; }
         .custom-options {
             position: absolute; display: block; top: 100%; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            background: rgba(23, 23, 23, 0.95); backdrop-filter: blur(10px);
             border: 1px solid rgba(233, 193, 118, 0.2); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             opacity: 0; visibility: hidden; pointer-events: none;
             transition: opacity 0.3s, visibility 0.3s; z-index: 9999; max-height: 250px; overflow-y: auto; margin-top: 5px;
@@ -252,7 +227,7 @@ if (isset($_SESSION['user_id'])) {
         .custom-options::-webkit-scrollbar { width: 6px; }
         .custom-options::-webkit-scrollbar-thumb { background: #e9c176; border-radius: 3px; }
         .custom-select.open .custom-options { opacity: 1; visibility: visible; pointer-events: all; }
-        .custom-option { padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .custom-option { padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); color: #f5f5f5; }
         .custom-option:last-child { border-bottom: none; }
         .custom-option:hover, .custom-option.selected { background: rgba(233, 193, 118, 0.1); color: #e9c176; }
         
@@ -301,9 +276,7 @@ if (isset($_SESSION['user_id'])) {
                 <?php endif; ?>
             </div>
 
-            <a href="booking.php" class="hidden md:inline-block bg-primary text-on-primary-fixed border border-transparent px-8 py-3 text-label-caps font-label-caps rounded-full hover:bg-surface-container-high hover:text-primary hover:border-outline-variant/30 transition-all duration-300 shadow-[0_0_15px_rgba(233,193,118,0.2)]">
-                Lái Thử
-            </a>
+
             
             <!-- Mobile Menu Icon -->
             <button class="lg:hidden text-on-surface-variant">
@@ -841,5 +814,13 @@ if (isset($_SESSION['user_id'])) {
             });
         }
     </script>
+    <!-- Floating Test Drive Button -->
+    <a href="#formBooking" class="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] btn-glow flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-[0_10px_30px_rgba(212,168,67,0.4)] hover:scale-110 transition-transform duration-300 group" aria-label="Đặt lịch lái thử">
+        <span class="material-symbols-outlined text-on-primary-fixed text-2xl sm:text-3xl">steering_wheel_heat</span>
+        <span class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-surface-container-highest text-on-surface px-4 py-2 rounded-lg text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl border border-outline-variant/20 hidden sm:block">
+            Đặt Lái Thử
+        </span>
+    </a>
+
 </body>
 </html>
