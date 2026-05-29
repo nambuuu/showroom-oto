@@ -36,7 +36,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>AutoSuperCar | Đặt Lịch Lái Thử</title>
+    <title>Auto DreamCars | Đặt Lịch Lái Thử</title>
     
     <!-- TailwindCSS & Config -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -241,16 +241,15 @@ if (isset($_SESSION['user_id'])) {
     
     <!-- Top Navigation -->
     <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 lg:px-margin-desktop py-6 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/10">
-        <a href="index.php" class="text-headline-sm font-headline-sm font-bold text-primary flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <span class="material-symbols-outlined text-4xl" data-weight="fill">sports_motorsports</span>
-            AutoSuperCar
+        <a href="index.php" class="font-display-lg font-[900] text-[24px] text-on-surface hover:opacity-80 transition-opacity whitespace-nowrap">
+            AUTO <span class="text-primary">DREAMCARS</span>
         </a>
         
         <div class="hidden lg:flex items-center gap-1">
             <?php foreach ($navItems as $item): ?>
                 <a
                     href="<?php echo htmlspecialchars($item['href']); ?>"
-                    class="px-3 py-2 rounded-full text-label-caps font-label-caps transition-colors duration-300 <?php echo $currentPage === $item['id'] ? 'text-primary bg-primary/12 ring-1 ring-primary/20' : 'text-on-surface-variant hover:text-primary hover:bg-primary/8'; ?>"
+                    class="px-3 py-1.5 rounded-full text-[13px] font-semibold uppercase tracking-[1px] transition-colors duration-300 <?php echo $currentPage === $item['id'] ? 'text-primary bg-primary/12 ring-1 ring-primary/20' : 'text-on-surface-variant hover:text-primary hover:bg-primary/8'; ?>"
                     <?php echo $currentPage === $item['id'] ? 'aria-current="page"' : ''; ?>
                 ><?php echo htmlspecialchars($item['label']); ?></a>
             <?php endforeach; ?>
@@ -301,7 +300,7 @@ if (isset($_SESSION['user_id'])) {
                         Exclusive<br/><span class="text-on-surface">Experience</span>
                     </h1>
                     <p class="text-body-lg font-body-lg text-on-surface-variant max-w-md">
-                        Đặt trước dịch vụ lái thử để cảm nhận trọn vẹn uy lực và đẳng cấp của AutoSuperCar.
+                        Đặt trước dịch vụ lái thử để cảm nhận trọn vẹn uy lực và đẳng cấp của Auto DreamCars.
                     </p>
                 </div>
                 
@@ -450,9 +449,8 @@ if (isset($_SESSION['user_id'])) {
     <footer class="w-full py-16 px-6 lg:px-margin-desktop border-t border-outline-variant/10 bg-surface-container-lowest relative z-20">
         <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
             <div class="space-y-6">
-                <div class="text-headline-sm font-headline-sm font-bold text-primary flex items-center gap-2">
-                    <span class="material-symbols-outlined text-3xl" data-weight="fill">sports_motorsports</span>
-                    AutoSuperCar
+                <div class="font-display-lg font-[900] text-[24px] text-on-surface whitespace-nowrap">
+                    AUTO <span class="text-primary">DREAMCARS</span>
                 </div>
                 <p class="text-on-surface-variant text-body-md opacity-70 max-w-xs">Định hình tiêu chuẩn mới cho dịch vụ siêu xe đẳng cấp tại Việt Nam.</p>
             </div>
@@ -493,7 +491,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
         <div class="max-w-container-max mx-auto mt-16 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-sm text-on-surface-variant opacity-60">
-            <p>&copy; <?php echo date('Y'); ?> AutoSuperCar. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> Auto DreamCars. All rights reserved.</p>
             <p class="mt-2 md:mt-0">Designed for Excellence</p>
         </div>
     </footer>

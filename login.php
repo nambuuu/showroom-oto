@@ -504,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <div class="login-right">
     <div class="logo-area">
-        <div class="logo-text"><span>Auto</span>SuperCar</div>
+        <div class="logo-text"><span>Auto</span> DreamCars</div>
     </div>
 
     <div class="form-header">

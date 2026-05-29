@@ -60,6 +60,31 @@ if (strlen($phone) < 9 || strlen($phone) > 15) {
 }
 
 try {
+    // Kiểm tra trùng lịch: cùng xe, cùng ngày, và cách nhau chưa tới 15 phút (900 giây)
+    $checkStmt = $pdo->prepare("
+        SELECT COUNT(*) 
+        FROM bookings 
+        WHERE car_id = :car_id 
+          AND preferred_date = :preferred_date 
+          AND status != 'rejected'
+          AND ABS(TIME_TO_SEC(TIMEDIFF(preferred_time, :preferred_time))) < 900
+    ");
+    $checkStmt->execute([
+        ':car_id' => $car_id,
+        ':preferred_date' => $preferred_date,
+        ':preferred_time' => $preferred_time,
+    ]);
+    $overlapCount = $checkStmt->fetchColumn();
+
+    if ($overlapCount > 0) {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Đặt lịch lái thử thất bại. Xe này đã có người đặt trong khoảng thời gian này. Vui lòng chọn thời gian cách ít nhất 15 phút.',
+        ]);
+        exit;
+    }
+
     $stmt = $pdo->prepare(
         "INSERT INTO bookings (car_id, full_name, email, phone, preferred_date, preferred_time, message, status, created_at)
          VALUES (:car_id, :full_name, :email, :phone, :preferred_date, :preferred_time, :message, 'pending', NOW())"
