@@ -7,7 +7,7 @@ require_once '../config/db.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoSuperCar Showroom | Trang Chủ</title>
+    <title>Auto DreamCars Showroom | Trang Chủ</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <!-- FontAwesome -->
@@ -587,7 +587,7 @@ require_once '../config/db.php';
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="index.php" class="navbar-brand">
-            AUTO<span>SUPERCAR</span>
+            AUTO<span>DREAMCARS</span>
         </a>
         
         <ul class="nav-links">
@@ -621,7 +621,7 @@ require_once '../config/db.php';
     <section class="hero">
         <div class="hero-content">
             <h1>Drive Your Dream </h1>
-            <p>Trải nghiệm tinh hoa công nghệ và thiết kế hoàn mỹ. AutoSuperCar mang đến những kiệt tác xe hơi hàng đầu thế giới dành riêng cho bạn.</p>
+            <p>Trải nghiệm tinh hoa công nghệ và thiết kế hoàn mỹ. Auto DreamCars mang đến những kiệt tác xe hơi hàng đầu thế giới dành riêng cho bạn.</p>
             <a href="cars.php" class="btn-primary">
                 Khám Phá Ngay <i class="fa-solid fa-arrow-right"></i>
             </a>
@@ -655,7 +655,7 @@ require_once '../config/db.php';
     <section class="featured-cars">
         <div class="section-title">
             <h2>Mẫu Xe Nổi Bật</h2>
-            <p>Tuyển tập những siêu phẩm được ưa chuộng nhất tại AutoSuperCar</p>
+            <p>Tuyển tập những siêu phẩm được ưa chuộng nhất tại Auto DreamCars</p>
         </div>
         
         <div class="cars-grid" id="featuredCarsContainer">
@@ -705,9 +705,9 @@ require_once '../config/db.php';
     <footer>
         <div class="footer-content">
             <div>
-                <div class="footer-logo">AUTO<span>SUPERCAR</span></div>
+                <div class="footer-logo">AUTO<span>DREAMCARS</span></div>
                 <p class="footer-about">
-                    AutoSuperCar Showroom là điểm đến lý tưởng cho những người đam mê xe hơi siêu sang. Chúng tôi tự hào phân phối các dòng xe cao cấp nhất với chất lượng dịch vụ chuẩn quốc tế.
+                    Auto DreamCars Showroom là điểm đến lý tưởng cho những người đam mê xe hơi siêu sang. Chúng tôi tự hào phân phối các dòng xe cao cấp nhất với chất lượng dịch vụ chuẩn quốc tế.
                 </p>
                 <div class="social-links">
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -757,7 +757,7 @@ require_once '../config/db.php';
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; <?php echo date('Y'); ?> AutoSuperCar Showroom. All Rights Reserved. Designed for Luxury.</p>
+            <p>&copy; <?php echo date('Y'); ?> Auto DreamCars Showroom. All Rights Reserved. Designed for Luxury.</p>
         </div>
     </footer>
 

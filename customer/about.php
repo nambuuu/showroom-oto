@@ -17,7 +17,7 @@ $navItems = [
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>AutoSuperCar | Về Chúng Tôi</title>
+    <title>Auto DreamCars | Về Chúng Tôi</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
@@ -309,16 +309,15 @@ $navItems = [
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 lg:px-margin-desktop py-4 lg:py-5 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/10 transition-all duration-300" id="navbar" role="navigation" aria-label="Điều hướng chính">
         <div class="max-w-container-max mx-auto flex justify-between items-center gap-4">
-            <a href="index.php" class="text-lg sm:text-headline-sm font-headline-sm font-bold text-primary flex items-center gap-2 hover:opacity-85 transition-opacity shrink-0">
-                <span class="material-symbols-outlined text-3xl sm:text-4xl" data-weight="fill">sports_motorsports</span>
-                <span class="hidden sm:inline">AutoSuperCar</span>
+            <a href="index.php" class="font-display-lg font-[900] text-[24px] text-on-surface hover:opacity-80 transition-opacity shrink-0 whitespace-nowrap">
+                AUTO <span class="text-primary">DREAMCARS</span>
             </a>
 
             <div class="hidden xl:flex items-center gap-1">
                 <?php foreach ($navItems as $item): ?>
                     <a
                         href="<?php echo htmlspecialchars($item['href']); ?>"
-                        class="nav-link text-label-caps font-label-caps <?php echo $currentPage === $item['id'] ? 'is-active' : 'text-on-surface-variant'; ?>"
+                        class="nav-link text-[13px] font-semibold uppercase tracking-[1px] <?php echo $currentPage === $item['id'] ? 'is-active' : 'text-on-surface-variant'; ?>"
                         <?php echo $currentPage === $item['id'] ? 'aria-current="page"' : ''; ?>
                     ><?php echo htmlspecialchars($item['label']); ?></a>
                 <?php endforeach; ?>
@@ -396,7 +395,7 @@ $navItems = [
                 <span class="bg-gradient-to-r from-primary via-[#f5e6c8] to-on-surface-variant bg-clip-text text-transparent">Đẳng Cấp</span>
             </h1>
             <p class="text-base sm:text-lg text-on-surface-variant max-w-2xl mx-auto font-light leading-relaxed mb-8 sm:mb-10 px-2">
-                Hơn cả một showroom ô tô — AutoSuperCar là nơi giao thoa giữa nghệ thuật chế tác cơ khí đỉnh cao và phong cách sống thượng lưu độc bản.
+                Hơn cả một showroom ô tô — Auto DreamCars là nơi giao thoa giữa nghệ thuật chế tác cơ khí đỉnh cao và phong cách sống thượng lưu độc bản.
             </p>
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none">
                 <a href="#story" class="btn-outline-gold inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide text-on-surface">
@@ -440,7 +439,7 @@ $navItems = [
                 <div class="absolute -inset-4 bg-primary/5 rounded-3xl blur-2xl pointer-events-none" aria-hidden="true"></div>
                 <img
                     src="../assets/images/cars/Porche%20911%20turbo.jpg"
-                    alt="Showroom AutoSuperCar"
+                    alt="Showroom Auto DreamCars"
                     class="relative w-full lg:w-[92%] rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.5)] object-cover aspect-[4/3]"
                     loading="lazy"
                     onerror="this.src='https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80'"
@@ -458,7 +457,7 @@ $navItems = [
                     <span class="text-primary italic">Biểu Tượng</span>
                 </h2>
                 <div class="space-y-5 text-on-surface-variant font-light text-base sm:text-lg leading-relaxed">
-                    <p>Khởi nguồn từ niềm đam mê mãnh liệt với những cỗ máy tốc độ và sự hoàn mỹ trong thiết kế, AutoSuperCar được thành lập với tầm nhìn trở thành điểm đến tối thượng cho giới tinh hoa yêu xe tại Việt Nam.</p>
+                    <p>Khởi nguồn từ niềm đam mê mãnh liệt với những cỗ máy tốc độ và sự hoàn mỹ trong thiết kế, Auto DreamCars được thành lập với tầm nhìn trở thành điểm đến tối thượng cho giới tinh hoa yêu xe tại Việt Nam.</p>
                     <p>Chúng tôi tự hào sở hữu bộ sưu tập độc bản từ những thương hiệu danh giá bậc nhất thế giới — mỗi chiếc xe là một tác phẩm nghệ thuật và bản tuyên ngôn về vị thế của chủ nhân.</p>
                 </div>
                 <div class="flex flex-wrap gap-3 mt-8">
@@ -471,7 +470,7 @@ $navItems = [
                         <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_forward</span>
                     </a>
                 </div>
-                <p class="font-signature text-4xl sm:text-5xl lg:text-6xl text-black/10 mt-8 select-none overflow-hidden" aria-hidden="true">AutoSuperCar</p>
+                <p class="font-signature text-4xl sm:text-5xl lg:text-6xl text-black/10 mt-8 select-none overflow-hidden" aria-hidden="true">Auto DreamCars</p>
             </div>
         </div>
     </section>
@@ -513,7 +512,7 @@ $navItems = [
             <?php
             $values = [
                 ['icon' => 'diamond', 'title' => 'Độc Bản & Đẳng Cấp', 'desc' => 'Chỉ tuyển chọn những mẫu xe xuất sắc nhất, mang tính biểu tượng và khẳng định vị thế độc tôn trên mọi hành trình.', 'delay' => ''],
-                ['icon' => 'verified_user', 'title' => 'Đặc Quyền Tối Thượng', 'desc' => 'Dịch vụ cá nhân hóa, không gian riêng tư tuyệt đối và đặc quyền chỉ dành cho thành viên AutoSuperCar.', 'delay' => 'delay-100'],
+                ['icon' => 'verified_user', 'title' => 'Đặc Quyền Tối Thượng', 'desc' => 'Dịch vụ cá nhân hóa, không gian riêng tư tuyệt đối và đặc quyền chỉ dành cho thành viên Auto DreamCars.', 'delay' => 'delay-100'],
                 ['icon' => 'globe', 'title' => 'Uy Tín Toàn Cầu', 'desc' => 'Minh bạch trong giao dịch, bảo hành và bảo dưỡng theo tiêu chuẩn khắt khe nhất của từng hãng.', 'delay' => 'delay-200'],
             ];
             foreach ($values as $v):
@@ -627,9 +626,8 @@ $navItems = [
     <footer class="w-full py-14 sm:py-16 px-4 sm:px-6 lg:px-margin-desktop border-t border-outline-variant/10 bg-surface-container-lowest relative z-20">
         <div class="max-w-container-max mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-gutter">
             <div class="sm:col-span-2 lg:col-span-2 space-y-5">
-                <div class="text-headline-sm font-headline-sm font-bold text-primary flex items-center gap-2">
-                    <span class="material-symbols-outlined text-3xl" data-weight="fill" aria-hidden="true">sports_motorsports</span>
-                    AutoSuperCar
+                <div class="font-display-lg font-[900] text-[24px] text-on-surface whitespace-nowrap">
+                    AUTO <span class="text-primary">DREAMCARS</span>
                 </div>
                 <p class="text-on-surface-variant text-body-md opacity-80 max-w-sm">Định hình tiêu chuẩn mới cho dịch vụ siêu xe đẳng cấp tại Việt Nam.</p>
             </div>
@@ -663,7 +661,7 @@ $navItems = [
             </div>
         </div>
         <div class="max-w-container-max mx-auto mt-12 pt-8 border-t border-outline-variant/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-on-surface-variant opacity-70">
-            <p>&copy; <?php echo date('Y'); ?> AutoSuperCar. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> Auto DreamCars. All rights reserved.</p>
             <p>Designed for Excellence</p>
         </div>
     </footer>

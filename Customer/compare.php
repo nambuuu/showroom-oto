@@ -6,7 +6,7 @@ require_once '../config/db.php';
 <head>
     <meta charset="UTF-8">
     <meta name="Viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoSuperCar | So Sánh Xe</title>
+    <title>Auto DreamCars | So Sánh Xe</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -138,7 +138,7 @@ require_once '../config/db.php';
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <a href="index.php" class="navbar-brand">AUTO<span>SUPERCAR</span></a>
+        <a href="index.php" class="navbar-brand">AUTO<span>DREAMCARS</span></a>
         <ul class="nav-links">
             <li><a href="index.php">Trang Chủ</a></li>
             <li><a href="cars.php">Khám Phá Xe</a></li>
@@ -207,7 +207,7 @@ require_once '../config/db.php';
     <!-- FOOTER -->
     <footer>
         <div class="footer-bottom" style="border:none; padding: 0;">
-            <p>&copy; <?php echo date('Y'); ?> AutoSuperCar Showroom. All Rights Reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> Auto DreamCars Showroom. All Rights Reserved.</p>
         </div>
     </footer>
 
