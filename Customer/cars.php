@@ -571,4 +571,4 @@ require_once '../config/db.php';
         }
     </script>
 </body>
-</html> 
+</html> ,
