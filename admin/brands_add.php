@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Thêm hãng xe';
+$pageTitle = 'Add Brand';
 $error = '';
 $success = '';
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $logo = '';
 
     if (empty($name)) {
-        $error = 'Vui lòng nhập tên hãng xe.';
+        $error = 'Please enter brand name.';
     } else {
         // Upload logo if exists
         if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
@@ -27,16 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (move_uploaded_file($_FILES['logo']['tmp_name'], $targetFile)) {
                 $logo = $fileName;
             } else {
-                $error = 'Lỗi upload ảnh.';
+                $error = 'Image upload error.';
             }
         }
 
         if (empty($error)) {
             $stmt = $pdo->prepare('INSERT INTO brands (name, country, logo) VALUES (?, ?, ?)');
             if ($stmt->execute([$name, $country, $logo])) {
-                $success = 'Thêm hãng xe thành công.';
+                $success = 'Brand added successfully.';
             } else {
-                $error = 'Có lỗi xảy ra khi lưu vào CSDL.';
+                $error = 'Database error occurred.';
             }
         }
     }
@@ -114,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="page-body">
         
         <div class="d-flex align-items-center mb-4">
-            <a href="brands.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Quay lại</a>
-            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Thêm Hãng Xe Mới</h4>
+            <a href="brands.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Add New Brand</h4>
         </div>
 
         <?php if ($error): ?>
@@ -132,43 +132,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="form-glass">
             <div class="form-glass-header">
-                <h3><i class="bi bi-award-fill me-2"></i>Thông Tin Hãng Xe</h3>
-                <p class="text-muted" style="font-size: 14px;">Vui lòng điền đầy đủ thông tin để thêm hãng xe mới.</p>
+                <h3><i class="bi bi-award-fill me-2"></i>Brand Information</h3>
+                <p class="text-muted" style="font-size: 14px;">Please fill in all information to add a new brand.</p>
             </div>
             
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
-                    <label class="form-label">Tên hãng xe <span class="text-danger">*</span></label>
+                    <label class="form-label">Brand name <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text" style="background: var(--bg-secondary); border-color: var(--border); color: var(--gold);"><i class="bi bi-tag-fill"></i></span>
-                        <input type="text" name="name" class="form-control" required placeholder="VD: Mercedes-Benz, BMW, Audi..." value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                        <input type="text" name="name" class="form-control" required placeholder="Ex: Mercedes-Benz, BMW, Audi..." value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Quốc gia</label>
+                    <label class="form-label">Country</label>
                     <div class="input-group">
                         <span class="input-group-text" style="background: var(--bg-secondary); border-color: var(--border); color: var(--gold);"><i class="bi bi-globe"></i></span>
-                        <input type="text" name="country" class="form-control" placeholder="VD: Đức, Nhật Bản, Mỹ..." value="<?= htmlspecialchars($_POST['country'] ?? '') ?>">
+                        <input type="text" name="country" class="form-control" placeholder="Ex: Germany, Japan, USA..." value="<?= htmlspecialchars($_POST['country'] ?? '') ?>">
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Logo hãng xe</label>
+                    <label class="form-label">Brand Logo</label>
                     <div class="d-flex align-items-center gap-3">
                         <div class="upload-preview" id="logoPreview">
                             <i class="bi bi-image"></i>
                         </div>
                         <div>
                             <input type="file" name="logo" id="logoInput" class="form-control mb-2" accept="image/*">
-                            <small class="text-muted">Định dạng hỗ trợ: JPG, PNG, WEBP. Tối đa 2MB.</small>
+                            <small class="text-muted">Supported formats: JPG, PNG, WEBP. Max 2MB.</small>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-5">
-                    <button type="reset" class="btn btn-secondary" style="background: var(--bg-secondary); border-color: var(--border); color: var(--text);">Nhập lại</button>
-                    <button type="submit" class="btn btn-gold"><i class="bi bi-plus-circle me-1"></i> Lưu hãng xe</button>
+                    <button type="reset" class="btn btn-secondary" style="background: var(--bg-secondary); border-color: var(--border); color: var(--text);">Reset</button>
+                    <button type="submit" class="btn btn-gold"><i class="bi bi-plus-circle me-1"></i> Save brand</button>
                 </div>
             </form>
         </div>

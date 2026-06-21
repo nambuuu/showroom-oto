@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Chi tiết lịch lái thử';
+$pageTitle = 'Test drive booking details';
 
 $id = (int)($_GET['id'] ?? 0);
 if (!$id) {
@@ -41,10 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
 }
 
 $statusMap = [
-    'pending'  => ['label' => 'Chờ duyệt',   'cls' => 'warning', 'icon' => 'clock-fill'],
-    'approved' => ['label' => 'Đã duyệt',    'cls' => 'success', 'icon' => 'check-circle-fill'],
-    'rejected' => ['label' => 'Từ chối',     'cls' => 'danger',  'icon' => 'x-circle-fill'],
-    'done'     => ['label' => 'Hoàn thành',  'cls' => 'info',    'icon' => 'flag-fill'],
+    'pending'  => ['label' => 'Pending',   'cls' => 'warning', 'icon' => 'clock-fill'],
+    'approved' => ['label' => 'Approved',    'cls' => 'success', 'icon' => 'check-circle-fill'],
+    'rejected' => ['label' => 'Rejected',     'cls' => 'danger',  'icon' => 'x-circle-fill'],
+    'done'     => ['label' => 'Done',  'cls' => 'info',    'icon' => 'flag-fill'],
 ];
 $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' => 'secondary', 'icon' => 'dot'];
 ?>
@@ -53,7 +53,7 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chi tiết lịch #<?= $id ?> – Admin</title>
+<title>Booking details #<?= $id ?> – Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 <style>
@@ -109,7 +109,7 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
     <?php if ($toast === 'success'): ?>
     <div class="toast-msg" id="toastMsg">
         <i class="bi bi-check-circle-fill" style="font-size: 18px; filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));"></i> 
-        Cập nhật trạng thái thành công!
+        Status updated successfully!
     </div>
     <script>setTimeout(()=>{const t=document.getElementById('toastMsg');if(t){t.style.animation='slideIn 0.4s reverse forwards';setTimeout(()=>t.remove(),400);}},3500);</script>
     <?php endif; ?>
@@ -118,27 +118,27 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
 
         <div class="page-header">
             <div>
-                <div class="page-title">Chi tiết lịch lái thử</div>
+                <div class="page-title">Test drive booking details</div>
                 <div class="page-subtitle" style="display: flex; align-items: center; gap: 8px;">
                     <span style="color: var(--gold); font-weight: 600;">#<?= str_pad((string)$id, 5, '0', STR_PAD_LEFT) ?></span>
                     <span style="color: rgba(255,255,255,0.2);">|</span>
-                    <i class="bi bi-calendar-event"></i> Đăng ký lúc <?= date('H:i d/m/Y', strtotime($booking['created_at'])) ?>
+                    <i class="bi bi-calendar-event"></i> Registered at <?= date('H:i d/m/Y', strtotime($booking['created_at'])) ?>
                 </div>
             </div>
             <a href="bookings.php" class="btn btn-outline-gold" style="padding: 10px 20px;">
-                <i class="bi bi-arrow-left"></i> Quay lại danh sách
+                <i class="bi bi-arrow-left"></i> Back to list
             </a>
         </div>
 
         <div class="status-bar">
             <div style="display: flex; flex-direction: column; gap: 8px; min-width: 180px;">
-                <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted);">Trạng thái hiện tại</div>
+                <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted);">Current status</div>
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span class="badge badge-<?= $cur['cls'] ?>" style="font-size: 14px; padding: 8px 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                         <i class="bi bi-<?= $cur['icon'] ?>"></i> <?= $cur['label'] ?>
                     </span>
                     <?php if ($booking['status'] === 'rejected'): ?>
-                        <span style="font-size: 13px; color: var(--danger); font-weight: 500;"><i class="bi bi-exclamation-triangle"></i> Đã từ chối</span>
+                        <span style="font-size: 13px; color: var(--danger); font-weight: 500;"><i class="bi bi-exclamation-triangle"></i> Rejected</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -146,9 +146,9 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
             <div class="status-flow">
                 <?php
                 $steps = [
-                    ['key' => 'pending',  'icon' => 'clock',         'label' => 'Chờ duyệt'],
-                    ['key' => 'approved', 'icon' => 'check-circle',  'label' => 'Đã duyệt'],
-                    ['key' => 'done',     'icon' => 'flag',          'label' => 'Hoàn thành'],
+                    ['key' => 'pending',  'icon' => 'clock',         'label' => 'Pending'],
+                    ['key' => 'approved', 'icon' => 'check-circle',  'label' => 'Approved'],
+                    ['key' => 'done',     'icon' => 'flag',          'label' => 'Done'],
                 ];
                 $order = ['pending' => 0, 'approved' => 1, 'rejected' => 1, 'done' => 2];
                 $curOrder = $order[$booking['status']] ?? 0;
@@ -176,7 +176,7 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
             </div>
 
             <form method="POST" style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
-                <div style="font-size: 12px; color: var(--text-muted); font-weight: 500; white-space: nowrap;">Cập nhật:</div>
+                <div style="font-size: 12px; color: var(--text-muted); font-weight: 500; white-space: nowrap;">Update:</div>
                 <select name="status" class="form-select" style="width: 140px; background: var(--bg-primary); border-color: rgba(255,255,255,0.1); color: var(--text); box-shadow: none;">
                     <?php foreach ($statusMap as $k => $v): ?>
                     <option value="<?= $k ?>" <?= $booking['status'] === $k ? 'selected' : '' ?>>
@@ -185,7 +185,7 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
                     <?php endforeach; ?>
                 </select>
                 <button type="submit" class="btn btn-gold" style="padding: 8px 16px;">
-                    <i class="bi bi-check2-circle" style="font-size: 15px;"></i> Lưu
+                    <i class="bi bi-check2-circle" style="font-size: 15px;"></i> Save
                 </button>
             </form>
         </div>
@@ -196,7 +196,7 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="bi bi-person-bounding-box"></i>
-                    <h3>Thông tin khách hàng</h3>
+                    <h3>Customer information</h3>
                 </div>
                 <div class="detail-card-body">
                     <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 28px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04);">
@@ -204,13 +204,13 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
                         <div>
                             <div style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.5px;"><?= htmlspecialchars($booking['full_name']) ?></div>
                             <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gold); margin-top: 6px; background: rgba(212,168,67,0.1); padding: 4px 10px; border-radius: 12px; border: 1px solid rgba(212,168,67,0.2);">
-                                <i class="bi bi-person-badge"></i> Khách hàng đặt lịch
+                                <i class="bi bi-person-badge"></i> Customer who booked
                             </div>
                         </div>
                     </div>
 
                     <div class="info-row">
-                        <div class="info-label"><i class="bi bi-telephone" style="color: var(--gold); font-size: 14px;"></i> Số điện thoại</div>
+                        <div class="info-label"><i class="bi bi-telephone" style="color: var(--gold); font-size: 14px;"></i> Phone number</div>
                         <div class="info-value">
                             <a href="tel:<?= htmlspecialchars($booking['phone']) ?>" style="color: #fff; font-size: 16px; font-weight: 600; letter-spacing: 0.5px;">
                                 <?= htmlspecialchars($booking['phone']) ?>
@@ -225,13 +225,13 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
                                 <?= htmlspecialchars($booking['email']) ?>
                             </a>
                             <?php else: ?>
-                            <span style="color: rgba(255,255,255,0.2); font-style: italic;">Chưa cung cấp</span>
+                            <span style="color: rgba(255,255,255,0.2); font-style: italic;">Not provided</span>
                             <?php endif; ?>
                         </div>
                     </div>
                     <?php if (!empty($booking['message'])): ?>
                     <div class="info-row" style="border-bottom: none;">
-                        <div class="info-label"><i class="bi bi-chat-right-quote" style="color: var(--gold); font-size: 14px;"></i> Ghi chú / Yêu cầu</div>
+                        <div class="info-label"><i class="bi bi-chat-right-quote" style="color: var(--gold); font-size: 14px;"></i> Notes / Requests</div>
                         <div class="info-value" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 12px; border-left: 3px solid var(--gold); color: var(--text-dim); font-style: italic; line-height: 1.6; margin-top: 8px;">
                             "<?= nl2br(htmlspecialchars($booking['message'])) ?>"
                         </div>
@@ -244,7 +244,7 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="bi bi-calendar2-week"></i>
-                    <h3>Thông tin lịch hẹn</h3>
+                    <h3>Appointment details</h3>
                 </div>
                 <div class="detail-card-body">
                     <div class="car-preview-wrap">
@@ -273,18 +273,18 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                         <div class="info-row" style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
-                            <div class="info-label" style="justify-content: center;"><i class="bi bi-calendar-event" style="color: var(--gold);"></i> Ngày hẹn</div>
+                            <div class="info-label" style="justify-content: center;"><i class="bi bi-calendar-event" style="color: var(--gold);"></i> Date</div>
                             <div class="info-value" style="font-size: 16px; text-align: center; color: #fff; margin-top: 4px;">
                                 <?php
                                 $d = strtotime($booking['preferred_date']);
-                                $days = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+                                $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                                 echo $days[(int)date('w', $d)] . '<br><span style="font-weight:700; font-size:18px;">' . date('d/m/Y', $d) . '</span>';
                                 ?>
                             </div>
                         </div>
                         
                         <div class="info-row" style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
-                            <div class="info-label" style="justify-content: center;"><i class="bi bi-clock-history" style="color: var(--gold);"></i> Giờ hẹn</div>
+                            <div class="info-label" style="justify-content: center;"><i class="bi bi-clock-history" style="color: var(--gold);"></i> Time</div>
                             <div class="info-value" style="font-size: 24px; text-align: center; font-weight: 700; font-family: 'Orbitron', sans-serif; color: var(--gold); margin-top: 4px; text-shadow: 0 0 12px rgba(212,168,67,0.3);">
                                 <?= date('H:i', strtotime($booking['preferred_time'])) ?>
                             </div>
@@ -299,12 +299,12 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
                     ?>
                     <div style="margin-top: 20px; background: linear-gradient(90deg, rgba(212,168,67,0.1), rgba(212,168,67,0.02)); border-left: 3px solid var(--gold); border-radius: 8px; padding: 12px 16px; font-size: 14px; color: var(--gold); display: flex; align-items: center; gap: 12px;">
                         <i class="bi bi-hourglass-split" style="font-size: 18px; animation: pulse 2s infinite;"></i>
-                        <div>Còn <strong style="font-size: 16px;"><?= $diffDays ?> ngày</strong> đến buổi lái thử</div>
+                        <div><strong style="font-size: 16px;"><?= $diffDays ?> days</strong> left until test drive</div>
                     </div>
                     <?php elseif ($diffDays === 0 && $booking['status'] === 'approved'): ?>
                     <div style="margin-top: 20px; background: linear-gradient(90deg, rgba(16,185,129,0.15), rgba(16,185,129,0.02)); border-left: 3px solid #10b981; border-radius: 8px; padding: 12px 16px; font-size: 14px; color: #10b981; display: flex; align-items: center; gap: 12px;">
                         <i class="bi bi-calendar-check-fill" style="font-size: 18px; filter: drop-shadow(0 0 8px rgba(16,185,129,0.5));"></i>
-                        <div><strong style="font-size: 16px;">Hôm nay</strong> là ngày lái thử!</div>
+                        <div><strong style="font-size: 16px;">Today</strong> is the test drive day!</div>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -314,16 +314,16 @@ $cur = $statusMap[$booking['status']] ?? ['label' => $booking['status'], 'cls' =
         <div class="action-bar">
             <div class="action-buttons">
                 <a href="tel:<?= htmlspecialchars($booking['phone']) ?>" class="btn btn-outline-gold" style="padding: 10px 20px; font-size: 14px;">
-                    <i class="bi bi-telephone-fill"></i> Gọi khách hàng
+                    <i class="bi bi-telephone-fill"></i> Call customer
                 </a>
                 <?php if (!empty($booking['email'])): ?>
                 <a href="mailto:<?= htmlspecialchars($booking['email']) ?>" class="btn btn-info-outline" style="padding: 10px 20px; font-size: 14px;">
-                    <i class="bi bi-envelope-fill"></i> Gửi email
+                    <i class="bi bi-envelope-fill"></i> Send email
                 </a>
                 <?php endif; ?>
             </div>
             <a href="bookings.php" class="btn btn-outline-gold" style="margin-left: auto; padding: 10px 20px; font-size: 14px;">
-                <i class="bi bi-arrow-left"></i> Về danh sách
+                <i class="bi bi-arrow-left"></i> Back to list
             </a>
         </div>
 

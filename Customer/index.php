@@ -7,7 +7,7 @@ require_once '../config/db.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto DreamCars Showroom | Trang Chủ</title>
+    <title>Auto DreamCars Showroom | Home</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <!-- FontAwesome -->
@@ -591,29 +591,29 @@ require_once '../config/db.php';
         </a>
         
         <ul class="nav-links">
-            <li><a href="index.php" class="active">Trang Chủ</a></li>
-            <li><a href="cars.php">Khám Phá Xe</a></li>
-            <li><a href="compare.php">So Sánh</a></li>
-            <li><a href="about.php">Giới Thiệu</a></li>
-            <li><a href="contact.php">Liên Hệ</a></li>
+            <li><a href="index.php" class="active">Home</a></li>
+            <li><a href="cars.php">Explore Cars</a></li>
+            <li><a href="compare.php">Compare</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
 
         <div style="display: flex; align-items: center; gap: 15px;">
             <!-- Weather Widget -->
-            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Thời tiết Hà Nội hiện tại">
+            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Current weather in Hanoi">
                 <i class="fa-solid fa-cloud-sun" style="color: var(--gold); font-size: 16px;"></i> 
                 <span id="weatherTemp">--°C</span>
             </div>
 
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <span style="font-weight: 600; color: var(--text-dark); font-size: 14px;">
-                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Khách hàng'); ?>
+                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Customer'); ?>
                 </span>
-                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Đăng nhập</a>
+                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Login</a>
             <?php endif; ?>
-            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Lái Thử</a>
+            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Test Drive</a>
         </div>
     </nav>
 
@@ -621,9 +621,9 @@ require_once '../config/db.php';
     <section class="hero">
         <div class="hero-content">
             <h1>Drive Your Dream </h1>
-            <p>Trải nghiệm tinh hoa công nghệ và thiết kế hoàn mỹ. Auto DreamCars mang đến những kiệt tác xe hơi hàng đầu thế giới dành riêng cho bạn.</p>
+            <p>Experience the pinnacle of technology and flawless design. Auto DreamCars brings the world's leading automotive masterpieces exclusively to you.</p>
             <a href="cars.php" class="btn-primary">
-                Khám Phá Ngay <i class="fa-solid fa-arrow-right"></i>
+                Explore Now <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
     </section>
@@ -654,15 +654,15 @@ require_once '../config/db.php';
     <!-- FEATURED CARS SECTION -->
     <section class="featured-cars">
         <div class="section-title">
-            <h2>Mẫu Xe Nổi Bật</h2>
-            <p>Tuyển tập những siêu phẩm được ưa chuộng nhất tại Auto DreamCars</p>
+            <h2>Featured Cars</h2>
+            <p>A collection of the most popular masterpieces at Auto DreamCars</p>
         </div>
         
         <div class="cars-grid" id="featuredCarsContainer">
             <!-- Loading indicator -->
             <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
                 <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: var(--gold);"></i>
-                <p style="margin-top: 15px; color: var(--text-muted);">Đang tải dữ liệu xe...</p>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading car data...</p>
             </div>
             
             <!-- JavaScript will populate cars here based on API -->
@@ -670,7 +670,7 @@ require_once '../config/db.php';
         
         <div style="text-align: center; margin-top: 50px;">
             <a href="cars.php" class="btn-primary" style="background: transparent; border: 2px solid var(--text-dark); color: var(--text-dark);">
-                Xem Tất Cả Mẫu Xe
+                View All Cars
             </a>
         </div>
     </section>
@@ -678,25 +678,25 @@ require_once '../config/db.php';
     <!-- SERVICES SECTION -->
     <section class="services">
         <div class="section-title">
-            <h2>Dịch Vụ Đẳng Cấp</h2>
-            <p>Cam kết mang lại trải nghiệm hoàn hảo nhất cho khách hàng</p>
+            <h2>Premium Services</h2>
+            <p>Committed to providing the most perfect experience for customers</p>
         </div>
         
         <div class="services-grid">
             <div class="service-card">
                 <div class="service-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <h3>Bảo Hành Toàn Cầu</h3>
-                <p>Chính sách bảo hành chính hãng lên đến 5 năm, mang lại sự an tâm tuyệt đối trên mọi hành trình.</p>
+                <h3>Global Warranty</h3>
+                <p>Genuine warranty policy up to 5 years, bringing absolute peace of mind on every journey.</p>
             </div>
             <div class="service-card">
                 <div class="service-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                <h3>Tài Chính Linh Hoạt</h3>
-                <p>Hỗ trợ vay mua xe với lãi suất ưu đãi, thủ tục nhanh chóng, duyệt hồ sơ trong 24 giờ.</p>
+                <h3>Flexible Financing</h3>
+                <p>Support car loans with preferential interest rates, quick procedures, and profile approval within 24 hours.</p>
             </div>
             <div class="service-card">
                 <div class="service-icon"><i class="fa-solid fa-user-tie"></i></div>
-                <h3>Chăm Sóc VIP 24/7</h3>
-                <p>Đội ngũ chuyên viên tư vấn và kỹ thuật viên sẵn sàng hỗ trợ bạn bất cứ lúc nào, bất cứ nơi đâu.</p>
+                <h3>24/7 VIP Care</h3>
+                <p>A team of specialized consultants and technicians are ready to assist you anytime, anywhere.</p>
             </div>
         </div>
     </section>
@@ -707,7 +707,7 @@ require_once '../config/db.php';
             <div>
                 <div class="footer-logo">AUTO<span>DREAMCARS</span></div>
                 <p class="footer-about">
-                    Auto DreamCars Showroom là điểm đến lý tưởng cho những người đam mê xe hơi siêu sang. Chúng tôi tự hào phân phối các dòng xe cao cấp nhất với chất lượng dịch vụ chuẩn quốc tế.
+                    Auto DreamCars Showroom is the ideal destination for luxury car enthusiasts. We proudly distribute the most premium car models with international standard service quality.
                 </p>
                 <div class="social-links">
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -718,27 +718,27 @@ require_once '../config/db.php';
             </div>
             
             <div>
-                <h4 class="footer-title">Khám Phá</h4>
+                <h4 class="footer-title">Explore</h4>
                 <ul class="footer-links">
-                    <li><a href="index.php">Trang Chủ</a></li>
-                    <li><a href="cars.php">Tất Cả Mẫu Xe</a></li>
-                    <li><a href="compare.php">So Sánh Xe</a></li>
-                    <li><a href="about.php">Về Chúng Tôi</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="cars.php">All Cars</a></li>
+                    <li><a href="compare.php">Compare Cars</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
             
             <div>
-                <h4 class="footer-title">Dịch Vụ</h4>
+                <h4 class="footer-title">Services</h4>
                 <ul class="footer-links">
-                    <li><a href="booking.php">Đặt Lịch Lái Thử</a></li>
-                    <li><a href="#">Bảo Hành & Bảo Dưỡng</a></li>
-                    <li><a href="#">Tư Vấn Tài Chính</a></li>
-                    <li><a href="contact.php">Liên Hệ Hỗ Trợ</a></li>
+                    <li><a href="booking.php">Book a Test Drive</a></li>
+                    <li><a href="#">Warranty & Maintenance</a></li>
+                    <li><a href="#">Financial Consulting</a></li>
+                    <li><a href="contact.php">Contact Support</a></li>
                 </ul>
             </div>
             
             <div>
-                <h4 class="footer-title">Liên Hệ</h4>
+                <h4 class="footer-title">Contact</h4>
                 <ul class="contact-info" style="list-style: none; padding: 0;">
                     <li>
                         <i class="fa-solid fa-location-dot"></i>
@@ -789,7 +789,7 @@ require_once '../config/db.php';
                 .then(data => {
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hà Nội</span>`;
+                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hanoi</span>`;
                     }
                 })
                 .catch(error => {
@@ -827,11 +827,11 @@ require_once '../config/db.php';
                             const html = `
                                 <div class="car-card">
                                     <div class="car-img-wrapper">
-                                        <span class="car-badge">Mới Nhất</span>
+                                        <span class="car-badge">Newest</span>
                                         <img src="${imgUrl}" alt="${car.model_name}" onerror="this.src='../assets/image/cars/Toyota Camry.jpg'">
                                     </div>
                                     <div class="car-info">
-                                        <div class="car-brand">${car.brand_name || 'Hãng Xe'}</div>
+                                        <div class="car-brand">${car.brand_name || 'Brand'}</div>
                                         <h3 class="car-title">${car.model_name}</h3>
                                         
                                         <div class="car-specs">
@@ -845,13 +845,13 @@ require_once '../config/db.php';
                                             </div>
                                             <div class="spec-item">
                                                 <i class="fa-solid fa-gas-pump"></i>
-                                                <span>Tự Động</span>
+                                                <span>Auto</span>
                                             </div>
                                         </div>
                                         
                                         <div class="car-footer">
                                             <div class="car-price">${formatPrice(car.price)}</div>
-                                            <a href="car_detail.php?id=${car.id}" class="btn-details">Chi Tiết</a>
+                                            <a href="car_detail.php?id=${car.id}" class="btn-details">Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -875,7 +875,7 @@ require_once '../config/db.php';
             container.innerHTML = `
                 <div class="car-card">
                     <div class="car-img-wrapper">
-                        <span class="car-badge">Bán Chạy</span>
+                        <span class="car-badge">Best Seller</span>
                         <img src="../assets/image/cars/Porche 911 turbo.jpg" alt="Porsche 911 Turbo">
                     </div>
                     <div class="car-info">
@@ -885,7 +885,7 @@ require_once '../config/db.php';
                         <div class="car-specs">
                             <div class="spec-item">
                                 <i class="fa-solid fa-gauge-high"></i>
-                                <span>Thể thao</span>
+                                <span>Sports</span>
                             </div>
                             <div class="spec-item">
                                 <i class="fa-solid fa-calendar-days"></i>
@@ -893,20 +893,20 @@ require_once '../config/db.php';
                             </div>
                             <div class="spec-item">
                                 <i class="fa-solid fa-gas-pump"></i>
-                                <span>Xăng</span>
+                                <span>Petrol</span>
                             </div>
                         </div>
                         
                         <div class="car-footer">
                             <div class="car-price">15.540.000.000 ₫</div>
-                            <a href="car_detail.php?id=1" class="btn-details">Chi Tiết</a>
+                            <a href="car_detail.php?id=1" class="btn-details">Details</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="car-card">
                     <div class="car-img-wrapper">
-                        <span class="car-badge" style="background: #0f172a;">Độc Quyền</span>
+                        <span class="car-badge" style="background: #0f172a;">Exclusive</span>
                         <img src="../assets/image/cars/maybach.jpg" alt="Mercedes Maybach">
                     </div>
                     <div class="car-info">
@@ -924,20 +924,20 @@ require_once '../config/db.php';
                             </div>
                             <div class="spec-item">
                                 <i class="fa-solid fa-gas-pump"></i>
-                                <span>Xăng</span>
+                                <span>Petrol</span>
                             </div>
                         </div>
                         
                         <div class="car-footer">
                             <div class="car-price">15.990.000.000 ₫</div>
-                            <a href="car_detail.php?id=2" class="btn-details">Chi Tiết</a>
+                            <a href="car_detail.php?id=2" class="btn-details">Details</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="car-card">
                     <div class="car-img-wrapper">
-                        <span class="car-badge">Thể Thao</span>
+                        <span class="car-badge">Sports</span>
                         <img src="../assets/image/cars/lambo.jpg" alt="Lamborghini Aventador">
                     </div>
                     <div class="car-info">
@@ -947,7 +947,7 @@ require_once '../config/db.php';
                         <div class="car-specs">
                             <div class="spec-item">
                                 <i class="fa-solid fa-gauge-high"></i>
-                                <span>Siêu xe</span>
+                                <span>Supercar</span>
                             </div>
                             <div class="spec-item">
                                 <i class="fa-solid fa-calendar-days"></i>
@@ -955,13 +955,13 @@ require_once '../config/db.php';
                             </div>
                             <div class="spec-item">
                                 <i class="fa-solid fa-gas-pump"></i>
-                                <span>Xăng</span>
+                                <span>Petrol</span>
                             </div>
                         </div>
                         
                         <div class="car-footer">
                             <div class="car-price">60.000.000.000 ₫</div>
-                            <a href="car_detail.php?id=3" class="btn-details">Chi Tiết</a>
+                            <a href="car_detail.php?id=3" class="btn-details">Details</a>
                         </div>
                     </div>
                 </div>

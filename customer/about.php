@@ -4,12 +4,12 @@ require_once '../config/db.php';
 
 $currentPage = 'about';
 $navItems = [
-    ['id' => 'home',    'label' => 'Trang Chủ',    'href' => 'index.php',   'icon' => 'home'],
-    ['id' => 'cars',    'label' => 'Khám Phá Xe',  'href' => 'cars.php',    'icon' => 'directions_car'],
-    ['id' => 'compare', 'label' => 'So Sánh',      'href' => 'compare.php', 'icon' => 'compare_arrows'],
-    ['id' => 'about',   'label' => 'Giới Thiệu',  'href' => 'about.php',   'icon' => 'info'],
-    ['id' => 'booking', 'label' => 'Lái Thử',     'href' => 'booking.php', 'icon' => 'event_available'],
-    ['id' => 'contact', 'label' => 'Liên Hệ',    'href' => 'contact.php', 'icon' => 'mail'],
+    ['id' => 'home',    'label' => 'Home',    'href' => 'index.php',   'icon' => 'home'],
+    ['id' => 'cars',    'label' => 'Explore Cars',  'href' => 'cars.php',    'icon' => 'directions_car'],
+    ['id' => 'compare', 'label' => 'Compare',      'href' => 'compare.php', 'icon' => 'compare_arrows'],
+    ['id' => 'about',   'label' => 'About Us',  'href' => 'about.php',   'icon' => 'info'],
+    ['id' => 'booking', 'label' => 'Test Drive',     'href' => 'booking.php', 'icon' => 'event_available'],
+    ['id' => 'contact', 'label' => 'Contact',    'href' => 'contact.php', 'icon' => 'mail'],
 ];
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ $navItems = [
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Auto DreamCars | Về Chúng Tôi</title>
+    <title>Auto DreamCars | About Us</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
@@ -307,7 +307,7 @@ $navItems = [
     <div class="bg-hero-pattern" aria-hidden="true"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 lg:px-margin-desktop py-4 lg:py-5 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/10 transition-all duration-300" id="navbar" role="navigation" aria-label="Điều hướng chính">
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 lg:px-margin-desktop py-4 lg:py-5 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/10 transition-all duration-300" id="navbar" role="navigation" aria-label="Main navigation">
         <div class="max-w-container-max mx-auto flex justify-between items-center gap-4">
             <a href="index.php" class="font-display-lg font-[900] text-[24px] text-on-surface hover:opacity-80 transition-opacity shrink-0 whitespace-nowrap">
                 AUTO <span class="text-primary">DREAMCARS</span>
@@ -333,22 +333,22 @@ $navItems = [
                     <?php if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])): ?>
                         <div class="flex items-center gap-2 text-primary max-w-[140px] truncate">
                             <span class="material-symbols-outlined shrink-0" aria-hidden="true">account_circle</span>
-                            <span class="truncate"><?php echo htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Thành viên'); ?></span>
+                            <span class="truncate"><?php echo htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Member'); ?></span>
                         </div>
-                        <a href="../logout.php" title="Đăng xuất" class="text-error hover:text-red-400 transition-colors flex items-center" aria-label="Đăng xuất">
+                        <a href="../logout.php" title="Logout" class="text-error hover:text-red-400 transition-colors flex items-center" aria-label="Logout">
                             <span class="material-symbols-outlined text-lg">logout</span>
                         </a>
                     <?php else: ?>
                         <a href="../login.php" class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
                             <span class="material-symbols-outlined text-lg" aria-hidden="true">login</span>
-                            <span class="hidden lg:inline">Đăng nhập</span>
+                            <span class="hidden lg:inline">Login</span>
                         </a>
                     <?php endif; ?>
                 </div>
 
 
 
-                <button type="button" id="menuToggle" class="xl:hidden flex items-center justify-center w-11 h-11 rounded-full border border-outline-variant/30 text-on-surface hover:border-primary/40 hover:text-primary transition-colors" aria-expanded="false" aria-controls="mobileMenu" aria-label="Mở menu">
+                <button type="button" id="menuToggle" class="xl:hidden flex items-center justify-center w-11 h-11 rounded-full border border-outline-variant/30 text-on-surface hover:border-primary/40 hover:text-primary transition-colors" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
                     <span class="material-symbols-outlined text-2xl" id="menuIcon">menu</span>
                 </button>
             </div>
@@ -357,10 +357,10 @@ $navItems = [
 
     <!-- Mobile menu overlay -->
     <div id="menuOverlay" class="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm xl:hidden" aria-hidden="true"></div>
-    <aside id="mobileMenu" class="fixed top-0 right-0 z-[70] h-full w-[min(100%,320px)] bg-surface-container-low border-l border-outline-variant/20 shadow-2xl xl:hidden flex flex-col" aria-label="Menu di động" aria-hidden="true">
+    <aside id="mobileMenu" class="fixed top-0 right-0 z-[70] h-full w-[min(100%,320px)] bg-surface-container-low border-l border-outline-variant/20 shadow-2xl xl:hidden flex flex-col" aria-label="Mobile menu" aria-hidden="true">
         <div class="flex items-center justify-between p-6 border-b border-outline-variant/15">
             <span class="text-label-caps font-label-caps text-primary tracking-widest">Menu</span>
-            <button type="button" id="menuClose" class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" aria-label="Đóng menu">
+            <button type="button" id="menuClose" class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" aria-label="Close menu">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
@@ -380,7 +380,7 @@ $navItems = [
             <?php if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id'])): ?>
                 <a href="../login.php" class="w-full flex items-center justify-center gap-2 py-3 rounded-full btn-outline-gold text-sm text-on-surface-variant">
                     <span class="material-symbols-outlined text-lg" aria-hidden="true">login</span>
-                    Đăng nhập
+                    Login
                 </a>
             <?php endif; ?>
         </div>
@@ -389,28 +389,28 @@ $navItems = [
     <!-- Hero -->
     <header class="hero-section relative z-10 w-full" id="top">
         <div class="hero-content reveal-up active">
-            <p class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase mb-4 sm:mb-5">Tuyệt Tác Vượt Thời Gian</p>
+            <p class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase mb-4 sm:mb-5">Timeless Masterpiece</p>
             <h1 class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-display-lg font-bold leading-[1.12] uppercase tracking-wide text-on-surface mb-5 sm:mb-6">
-                Định Hình<br class="hidden sm:block"/>
-                <span class="bg-gradient-to-r from-primary via-[#f5e6c8] to-on-surface-variant bg-clip-text text-transparent">Đẳng Cấp</span>
+                Shaping<br class="hidden sm:block"/>
+                <span class="bg-gradient-to-r from-primary via-[#f5e6c8] to-on-surface-variant bg-clip-text text-transparent">Class</span>
             </h1>
             <p class="text-base sm:text-lg text-on-surface-variant max-w-2xl mx-auto font-light leading-relaxed mb-8 sm:mb-10 px-2">
-                Hơn cả một showroom ô tô — Auto DreamCars là nơi giao thoa giữa nghệ thuật chế tác cơ khí đỉnh cao và phong cách sống thượng lưu độc bản.
+                More than a car showroom — Auto DreamCars is the intersection of top-notch mechanical engineering and unique luxury lifestyle.
             </p>
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none">
                 <a href="#story" class="btn-outline-gold inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide text-on-surface">
                     <span class="material-symbols-outlined text-xl" aria-hidden="true">auto_stories</span>
-                    Câu Chuyện
+                    Story
                 </a>
                 <a href="booking.php" class="btn-glow inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide text-on-primary-fixed">
                     <span class="material-symbols-outlined text-xl" aria-hidden="true">event_available</span>
-                    Đặt Lịch Lái Thử
+                    Test Drive
                 </a>
             </div>
         </div>
 
-        <a href="#story" class="hero-scroll-hint" aria-label="Cuộn xuống nội dung">
-            <span class="hero-scroll-hint__label">Khám phá</span>
+        <a href="#story" class="hero-scroll-hint" aria-label="Explore">
+            <span class="hero-scroll-hint__label">Explore</span>
             <svg class="hero-scroll-hint__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 5v14M5 13l7 7 7-7"/>
             </svg>
@@ -420,10 +420,10 @@ $navItems = [
     <!-- Sub navigation -->
     <div id="subnavBar" class="subnav-bar sticky z-40 bg-surface/95 backdrop-blur-md border-b border-outline-variant/10">
         <div class="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop py-2.5 subnav-scroll overflow-x-auto">
-            <div class="flex items-center gap-2 min-w-max" role="tablist" aria-label="Mục trang Giới thiệu">
-                <a href="#story" class="subnav-link is-active" data-subnav="story">Câu chuyện</a>
-                <a href="#values" class="subnav-link" data-subnav="values">Giá trị</a>
-                <a href="#experience" class="subnav-link" data-subnav="experience">Trải nghiệm</a>
+            <div class="flex items-center gap-2 min-w-max" role="tablist" aria-label="About page sections">
+                <a href="#story" class="subnav-link is-active" data-subnav="story">Story</a>
+                <a href="#values" class="subnav-link" data-subnav="values">Values</a>
+                <a href="#experience" class="subnav-link" data-subnav="experience">Experience</a>
                 <a href="#visit" class="subnav-link" data-subnav="visit">Showroom</a>
 
             </div>
@@ -446,27 +446,27 @@ $navItems = [
                 />
                 <div class="absolute bottom-0 right-0 sm:-bottom-4 lg:right-6 glass-card p-5 sm:p-8 rounded-2xl text-center min-w-[160px] sm:min-w-[180px] z-10">
                     <div class="text-5xl sm:text-6xl font-display-lg font-bold text-primary leading-none counter" data-target="5">0</div>
-                    <div class="text-label-caps font-label-caps tracking-widest text-on-surface-variant mt-2 text-[10px] sm:text-xs">NĂM KIẾN TẠO ĐỈNH CAO</div>
+                    <div class="text-label-caps font-label-caps tracking-widest text-on-surface-variant mt-2 text-[10px] sm:text-xs">YEARS OF CREATING THE PINNACLE</div>
                 </div>
             </div>
 
             <div class="lg:pl-6 mt-8 lg:mt-0 reveal-up delay-200 order-1 lg:order-2">
-                <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase border-b border-primary/30 pb-2 inline-block mb-5">Câu Chuyện Thương Hiệu</span>
+                <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase border-b border-primary/30 pb-2 inline-block mb-5">Brand Story</span>
                 <h2 class="text-3xl sm:text-headline-md font-headline-md text-on-surface leading-[1.2] mb-6">
-                    Hành Trình Tới<br/>
-                    <span class="text-primary italic">Biểu Tượng</span>
+                    Journey to<br/>
+                    <span class="text-primary italic">Icon</span>
                 </h2>
                 <div class="space-y-5 text-on-surface-variant font-light text-base sm:text-lg leading-relaxed">
-                    <p>Khởi nguồn từ niềm đam mê mãnh liệt với những cỗ máy tốc độ và sự hoàn mỹ trong thiết kế, Auto DreamCars được thành lập với tầm nhìn trở thành điểm đến tối thượng cho giới tinh hoa yêu xe tại Việt Nam.</p>
-                    <p>Chúng tôi tự hào sở hữu bộ sưu tập độc bản từ những thương hiệu danh giá bậc nhất thế giới — mỗi chiếc xe là một tác phẩm nghệ thuật và bản tuyên ngôn về vị thế của chủ nhân.</p>
+                    <p>Originating from a burning passion for speed machines and perfection in design, Auto DreamCars was established with the vision of becoming the ultimate destination for car-loving elites in Vietnam.</p>
+                    <p>We proudly own an exclusive collection from the world's most prestigious brands — each car is a work of art and a manifesto of its owner's status.</p>
                 </div>
                 <div class="flex flex-wrap gap-3 mt-8">
                     <a href="cars.php" class="btn-outline-gold inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm text-on-surface-variant">
                         <span class="material-symbols-outlined text-lg" aria-hidden="true">directions_car</span>
-                        Xem bộ sưu tập
+                        View collection
                     </a>
                     <a href="booking.php" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm text-primary hover:underline">
-                        Trải nghiệm lái thử
+                        Test drive experience
                         <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_forward</span>
                     </a>
                 </div>
@@ -476,14 +476,14 @@ $navItems = [
     </section>
 
     <!-- Stats -->
-    <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-margin-desktop bg-surface-container-lowest border-y border-outline-variant/10 relative z-10" aria-label="Thống kê">
+    <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-margin-desktop bg-surface-container-lowest border-y border-outline-variant/10 relative z-10" aria-label="Statistics">
         <div class="max-w-container-max mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             <?php
             $stats = [
-                ['target' => 500, 'suffix' => '+', 'label' => 'SIÊU XE ĐÃ GIAO', 'delay' => ''],
-                ['target' => 100, 'suffix' => '%', 'label' => 'HÀI LÒNG TUYỆT ĐỐI', 'delay' => 'delay-100'],
-                ['target' => 24,  'suffix' => '/7', 'label' => 'DỊCH VỤ ĐẶC QUYỀN', 'delay' => 'delay-200'],
-                ['target' => 15,  'suffix' => '+', 'label' => 'THƯƠNG HIỆU ĐỈNH CAO', 'delay' => 'delay-300'],
+                ['target' => 500, 'suffix' => '+', 'label' => 'SUPER CARS DELIVERED', 'delay' => ''],
+                ['target' => 100, 'suffix' => '%', 'label' => 'ABSOLUTE SATISFACTION', 'delay' => 'delay-100'],
+                ['target' => 24,  'suffix' => '/7', 'label' => 'EXCLUSIVE SERVICES', 'delay' => 'delay-200'],
+                ['target' => 15,  'suffix' => '+', 'label' => 'PREMIUM BRANDS', 'delay' => 'delay-300'],
             ];
             foreach ($stats as $stat):
             ?>
@@ -503,17 +503,17 @@ $navItems = [
         <div class="absolute top-0 right-0 w-2/3 h-full bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06)_0%,transparent_70%)] pointer-events-none" aria-hidden="true"></div>
 
         <div class="max-w-3xl mx-auto text-center mb-14 sm:mb-16 reveal-up">
-            <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase border-b border-primary/30 pb-2 inline-block mb-5">Triết Lý Kinh Doanh</span>
-            <h2 class="text-3xl sm:text-headline-md font-headline-md text-on-surface leading-[1.2] mb-4">Giá Trị Vượt Thời Gian</h2>
-            <p class="text-body-md sm:text-body-lg text-on-surface-variant font-light max-w-2xl mx-auto">Chuẩn mực dịch vụ và cam kết dành cho giới tinh hoa — trải nghiệm không thể sao chép.</p>
+            <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase border-b border-primary/30 pb-2 inline-block mb-5">Business Philosophy</span>
+            <h2 class="text-3xl sm:text-headline-md font-headline-md text-on-surface leading-[1.2] mb-4">Timeless Values</h2>
+            <p class="text-body-md sm:text-body-lg text-on-surface-variant font-light max-w-2xl mx-auto">Service standards and commitment to the elite — an experience that cannot be copied.</p>
         </div>
 
         <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 relative z-10">
             <?php
             $values = [
-                ['icon' => 'diamond', 'title' => 'Độc Bản & Đẳng Cấp', 'desc' => 'Chỉ tuyển chọn những mẫu xe xuất sắc nhất, mang tính biểu tượng và khẳng định vị thế độc tôn trên mọi hành trình.', 'delay' => ''],
-                ['icon' => 'verified_user', 'title' => 'Đặc Quyền Tối Thượng', 'desc' => 'Dịch vụ cá nhân hóa, không gian riêng tư tuyệt đối và đặc quyền chỉ dành cho thành viên Auto DreamCars.', 'delay' => 'delay-100'],
-                ['icon' => 'globe', 'title' => 'Uy Tín Toàn Cầu', 'desc' => 'Minh bạch trong giao dịch, bảo hành và bảo dưỡng theo tiêu chuẩn khắt khe nhất của từng hãng.', 'delay' => 'delay-200'],
+                ['icon' => 'diamond', 'title' => 'Unique & Class', 'desc' => 'Only select the most outstanding car models, which are iconic and assert their unique position on every journey.', 'delay' => ''],
+                ['icon' => 'verified_user', 'title' => 'Ultimate Privilege', 'desc' => 'Personalized service, absolute private space and privileges exclusively for Auto DreamCars members.', 'delay' => 'delay-100'],
+                ['icon' => 'globe', 'title' => 'Global Prestige', 'desc' => 'Transparency in transactions, warranty and maintenance according to the strictest standards of each brand.', 'delay' => 'delay-200'],
             ];
             foreach ($values as $v):
             ?>
@@ -532,11 +532,11 @@ $navItems = [
         <div class="max-w-container-max mx-auto">
             <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 reveal-up">
                 <div>
-                    <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase border-b border-primary/30 pb-2 inline-block mb-4">Trải Nghiệm</span>
-                    <h2 class="text-3xl sm:text-headline-md font-headline-md text-on-surface">Hành Trình Lái Thử Đặc Quyền</h2>
+                    <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase border-b border-primary/30 pb-2 inline-block mb-4">Experience</span>
+                    <h2 class="text-3xl sm:text-headline-md font-headline-md text-on-surface">Exclusive Test Drive Journey</h2>
                 </div>
                 <a href="booking.php" class="btn-glow inline-flex items-center justify-center gap-2 self-start lg:self-auto px-8 py-3.5 rounded-full text-label-caps font-label-caps text-on-primary-fixed">
-                    Bắt đầu ngay
+                    Start now
                     <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_forward</span>
                 </a>
             </div>
@@ -544,9 +544,9 @@ $navItems = [
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 <?php
                 $steps = [
-                    ['step' => '01', 'icon' => 'edit_calendar', 'title' => 'Đặt lịch online', 'desc' => 'Chọn thời gian và mẫu xe quan tâm — xác nhận trong vài phút.'],
-                    ['step' => '02', 'icon' => 'support_agent', 'title' => 'Tư vấn 1:1', 'desc' => 'Chuyên gia riêng giải đáp chi tiết kỹ thuật và cấu hình.'],
-                    ['step' => '03', 'icon' => 'speed', 'title' => 'Lái thử độc quyền', 'desc' => 'Lộ trình tùy chọn trên cung đường riêng — cảm nhận uy lực thực tế.'],
+                    ['step' => '01', 'icon' => 'edit_calendar', 'title' => 'Book online', 'desc' => 'Choose time and car model of interest — confirm in minutes.'],
+                    ['step' => '02', 'icon' => 'support_agent', 'title' => '1:1 Consulting', 'desc' => 'Private expert explains technical details and configuration.'],
+                    ['step' => '03', 'icon' => 'speed', 'title' => 'Exclusive test drive', 'desc' => 'Custom route on private road — feel the real power.'],
                 ];
                 foreach ($steps as $i => $s):
                 ?>
@@ -565,7 +565,7 @@ $navItems = [
         <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch reveal-up">
             <div class="glass-card rounded-2xl p-8 sm:p-10 flex flex-col justify-center">
                 <span class="text-label-caps font-label-caps text-primary tracking-[0.2em] uppercase mb-4">Showroom</span>
-                <h2 class="text-2xl sm:text-headline-sm font-headline-sm text-on-surface mb-6">Ghé Thăm Không Gian Đẳng Cấp</h2>
+                <h2 class="text-2xl sm:text-headline-sm font-headline-sm text-on-surface mb-6">Visit Our Premium Space</h2>
                 <address class="not-italic space-y-4 text-on-surface-variant">
                     <p class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-primary shrink-0 mt-0.5" aria-hidden="true">location_on</span>
@@ -583,11 +583,11 @@ $navItems = [
                 <div class="flex flex-wrap gap-3 mt-8">
                     <a href="booking.php" class="btn-glow inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm text-on-primary-fixed font-semibold tracking-wide">
                         <span class="material-symbols-outlined text-lg" aria-hidden="true">event_available</span>
-                        Đặt lịch thăm quan
+                        Book a visit
                     </a>
                     <a href="https://maps.google.com/?q=178+Đại+Mỗ+Nam+Từ+Liêm+Hà+Nội" target="_blank" rel="noopener noreferrer" class="btn-outline-gold inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm text-on-surface-variant">
                         <span class="material-symbols-outlined text-lg" aria-hidden="true">map</span>
-                        Chỉ đường
+                        Get directions
                     </a>
                 </div>
             </div>
@@ -605,16 +605,16 @@ $navItems = [
     </section>
 
     <!-- CTA -->
-    <section class="relative z-10 px-4 sm:px-6 lg:px-margin-desktop py-16 sm:py-20" aria-label="Đặt lịch lái thử">
+    <section class="relative z-10 px-4 sm:px-6 lg:px-margin-desktop py-16 sm:py-20" aria-label="Test Drive Booking">
         <div class="max-w-container-max mx-auto reveal-up">
             <div class="relative overflow-hidden rounded-3xl border border-primary/25 bg-gradient-to-br from-surface-container via-[#1a1814] to-surface-container-lowest p-10 sm:p-14 text-center">
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(233,193,118,0.12)_0%,transparent_55%)] pointer-events-none" aria-hidden="true"></div>
                 <div class="relative z-10 max-w-2xl mx-auto">
                     <span class="material-symbols-outlined text-5xl text-primary mb-6" data-weight="fill" aria-hidden="true">steering_wheel_heat</span>
-                    <h2 class="text-2xl sm:text-headline-sm font-headline-sm text-on-surface mb-4">Sẵn Sàng Cảm Nhận Sức Mạnh?</h2>
-                    <p class="text-on-surface-variant font-light mb-8 text-sm sm:text-base">Đặt lịch lái thử độc quyền — tư vấn riêng, lộ trình tùy chọn và không gian VIP dành cho bạn.</p>
+                    <h2 class="text-2xl sm:text-headline-sm font-headline-sm text-on-surface mb-4">Ready to Feel the Power?</h2>
+                    <p class="text-on-surface-variant font-light mb-8 text-sm sm:text-base">Book an exclusive test drive — private consultation, custom route, and VIP space just for you.</p>
                     <a href="booking.php" class="btn-glow inline-flex items-center gap-2 px-10 py-4 rounded-full text-label-caps font-label-caps text-on-primary-fixed">
-                        Đến Trang Đặt Lịch
+                        Go to Booking Page
                         <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
                     </a>
                 </div>
@@ -629,12 +629,12 @@ $navItems = [
                 <div class="font-display-lg font-[900] text-[24px] text-on-surface whitespace-nowrap">
                     AUTO <span class="text-primary">DREAMCARS</span>
                 </div>
-                <p class="text-on-surface-variant text-body-md opacity-80 max-w-sm">Định hình tiêu chuẩn mới cho dịch vụ siêu xe đẳng cấp tại Việt Nam.</p>
+                <p class="text-on-surface-variant text-body-md opacity-80 max-w-sm">Shaping new standards for luxury supercar services in Vietnam.</p>
             </div>
 
             <div>
-                <h4 class="text-label-caps font-label-caps text-on-surface mb-5 uppercase tracking-widest">Điều hướng</h4>
-                <nav class="flex flex-col gap-2.5" aria-label="Liên kết chân trang">
+                <h4 class="text-label-caps font-label-caps text-on-surface mb-5 uppercase tracking-widest">Navigation</h4>
+                <nav class="flex flex-col gap-2.5" aria-label="Footer links">
                     <?php foreach ($navItems as $item): ?>
                         <a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="<?php echo htmlspecialchars($item['href']); ?>"><?php echo htmlspecialchars($item['label']); ?></a>
                     <?php endforeach; ?>
@@ -652,7 +652,7 @@ $navItems = [
             </div>
 
             <div>
-                <h4 class="text-label-caps font-label-caps text-on-surface mb-5 uppercase tracking-widest">Kết nối</h4>
+                <h4 class="text-label-caps font-label-caps text-on-surface mb-5 uppercase tracking-widest">Connect</h4>
                 <div class="flex flex-col gap-2.5">
                     <a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Facebook</a>
                     <a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Instagram</a>
@@ -710,7 +710,7 @@ $navItems = [
                     if (data?.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
                         const el = document.getElementById('weatherTemp');
-                        if (el) el.textContent = `${temp}°C Hà Nội`;
+                        if (el) el.textContent = `${temp}°C Hanoi`;
                     }
                 })
                 .catch(() => {});

@@ -24,7 +24,7 @@ if (!$contact) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết liên hệ</title>
+    <title>Contact Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/style.css" rel="stylesheet">
@@ -76,18 +76,18 @@ if (!$contact) {
     <?php include '../includes/topbar.php'; ?>
     <div class="page-body">
         <div class="d-flex align-items-center mb-4">
-            <a href="contacts.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Quay lại</a>
-            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Chi tiết yêu cầu #<?php echo $contact['id']; ?></h4>
+            <a href="contacts.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Contact request details #<?php echo $contact['id']; ?></h4>
         </div>
 
         <div class="detail-glass">
             <div class="mb-4 pb-3 border-bottom" style="border-color: var(--border) !important;">
-                <h5 class="text-gold mb-1"><i class="bi bi-person-lines-fill me-2"></i>Thông Tin Khách Hàng</h5>
-                <p class="text-muted" style="font-size: 13px;">Chi tiết liên hệ từ website</p>
+                <h5 class="text-gold mb-1"><i class="bi bi-person-lines-fill me-2"></i>Customer Information</h5>
+                <p class="text-muted" style="font-size: 13px;">Contact details from website</p>
             </div>
 
             <div class="detail-row pt-0">
-                <div class="detail-label"><i class="bi bi-person text-gold"></i> Họ tên</div>
+                <div class="detail-label"><i class="bi bi-person text-gold"></i> Full Name</div>
                 <div class="detail-value"><strong><?php echo htmlspecialchars($contact['full_name']); ?></strong></div>
             </div>
             
@@ -101,24 +101,24 @@ if (!$contact) {
             </div>
             
             <div class="detail-row">
-                <div class="detail-label"><i class="bi bi-telephone text-gold"></i> Số điện thoại</div>
-                <div class="detail-value"><?php echo htmlspecialchars($contact['phone'] ?: 'Không cung cấp'); ?></div>
+                <div class="detail-label"><i class="bi bi-telephone text-gold"></i> Phone Number</div>
+                <div class="detail-value"><?php echo htmlspecialchars($contact['phone'] ?: 'Not provided'); ?></div>
             </div>
             
             <div class="detail-row">
-                <div class="detail-label"><i class="bi bi-calendar-event text-gold"></i> Ngày gửi</div>
+                <div class="detail-label"><i class="bi bi-calendar-event text-gold"></i> Date Sent</div>
                 <div class="detail-value"><?php echo date('H:i - d/m/Y', strtotime($contact['created_at'])); ?></div>
             </div>
 
             <div class="mt-4 pt-3">
-                <h6 class="text-gold mb-3"><i class="bi bi-chat-left-text me-2"></i>Nội Dung Tin Nhắn</h6>
-                <div class="mb-2"><strong>Chủ đề:</strong> <?php echo htmlspecialchars($contact['subject']); ?></div>
+                <h6 class="text-gold mb-3"><i class="bi bi-chat-left-text me-2"></i>Message Content</h6>
+                <div class="mb-2"><strong>Subject:</strong> <?php echo htmlspecialchars($contact['subject']); ?></div>
                 <div class="message-box"><?php echo nl2br(htmlspecialchars($contact['message'])); ?></div>
             </div>
             
             <div class="mt-4 text-end">
                 <a href="mailto:<?php echo htmlspecialchars($contact['email']); ?>?subject=Re: <?php echo urlencode($contact['subject']); ?>" class="btn btn-gold">
-                    <i class="bi bi-reply-fill"></i> Trả lời qua Email
+                    <i class="bi bi-reply-fill"></i> Reply via Email
                 </a>
             </div>
         </div>

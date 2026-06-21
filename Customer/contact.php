@@ -8,7 +8,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto DreamCars | Liên Hệ</title>
+    <title>Auto DreamCars | Contact</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <!-- FontAwesome -->
@@ -470,11 +470,11 @@ session_start();
         </a>
         
         <ul class="nav-links">
-            <li><a href="index.php">Trang Chủ</a></li>
-            <li><a href="cars.php">Khám Phá Xe</a></li>
-            <li><a href="compare.php">So Sánh</a></li>
-            <li><a href="about.php">Giới Thiệu</a></li>
-            <li><a href="contact.php" class="active">Liên Hệ</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="cars.php">Explore Cars</a></li>
+            <li><a href="compare.php">Compare</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php" class="active">Contact</a></li>
         </ul>
 
         <div style="display: flex; align-items: center; gap: 15px;">
@@ -485,20 +485,20 @@ session_start();
 
             <?php if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])): ?>
                 <span style="font-weight: 600; color: var(--text-dark); font-size: 14px;">
-                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Thành viên'); ?>
+                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Member'); ?>
                 </span>
-                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Đăng nhập</a>
+                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Login</a>
             <?php endif; ?>
-            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Lái Thử</a>
+            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Test Drive</a>
         </div>
     </nav>
 
     <!-- PAGE HEADER -->
     <div class="page-header">
-        <h1>Liên Hệ & Tư Vấn</h1>
-        <p>Đội ngũ chuyên gia của Auto DreamCars luôn sẵn sàng hỗ trợ, giải đáp mọi thắc mắc và mang đến cho bạn trải nghiệm dịch vụ đẳng cấp nhất.</p>
+        <h1>Contact & Consulting</h1>
+        <p>The expert team of Auto DreamCars is always ready to support, answer any questions, and bring you the highest class service experience.</p>
     </div>
 
     <!-- CONTACT SECTION -->
@@ -506,29 +506,29 @@ session_start();
         <div class="contact-container">
             <!-- Left Info -->
             <div class="contact-info">
-                <h2>Thông Tin Showroom</h2>
-                <p>Khám phá bộ sưu tập những siêu phẩm xe hơi và nhận sự tư vấn chuyên sâu từ đội ngũ Auto DreamCars.</p>
+                <h2>Showroom Information</h2>
+                <p>Explore the collection of supercar masterpieces and get in-depth advice from the Auto DreamCars team.</p>
                 
                 <ul class="info-list">
                     <li>
                         <i class="fa-solid fa-location-dot"></i>
                         <div class="info-content">
-                            <h4>Địa chỉ Showroom</h4>
-                            <p>178 Đại Mỗ, Quận Nam Từ Liêm, TP. Hà Nội</p>
+                            <h4>Showroom Address</h4>
+                            <p>178 Dai Mo, Nam Tu Liem District, Hanoi</p>
                         </div>
                     </li>
                     <li>
                         <i class="fa-solid fa-phone"></i>
                         <div class="info-content">
-                            <h4>Hotline CSKH</h4>
+                            <h4>Customer Care Hotline</h4>
                             <p>+84 (0) 356 827 852</p>
-                            <p style="font-size: 0.85rem; margin-top: 5px;">Hỗ trợ 24/7</p>
+                            <p style="font-size: 0.85rem; margin-top: 5px;">24/7 Support</p>
                         </div>
                     </li>
                     <li>
                         <i class="fa-solid fa-envelope"></i>
                         <div class="info-content">
-                            <h4>Email Hỗ Trợ</h4>
+                            <h4>Support Email</h4>
                             <p>nnnam12341@gmail.com</p>
                         </div>
                     </li>
@@ -537,14 +537,14 @@ session_start();
 
             <!-- Right Form -->
             <div class="contact-form">
-                <h3 class="form-title">Gửi Yêu Cầu Cho Chúng Tôi</h3>
+                <h3 class="form-title">Send Us Your Request</h3>
                 
                 <div id="contactAlert" class="alert" style="display: none;"></div>
 
                 <form id="formContact">
                     <div class="form-group">
-                        <label class="form-label">Họ & Tên <span style="color:red">*</span></label>
-                        <input type="text" name="full_name" class="form-control" placeholder="Nhập họ và tên đầy đủ" required>
+                        <label class="form-label">Full Name <span style="color:red">*</span></label>
+                        <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required>
                     </div>
 
                     <div class="form-row">
@@ -553,23 +553,23 @@ session_start();
                             <input type="email" name="email" class="form-control" placeholder="example@email.com" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Số Điện Thoại</label>
+                            <label class="form-label">Phone Number</label>
                             <input type="tel" name="phone" class="form-control" placeholder="09xxxx...">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Chủ Đề <span style="color:red">*</span></label>
-                        <input type="text" name="subject" class="form-control" placeholder="Vấn đề bạn cần hỗ trợ là gì?" required>
+                        <label class="form-label">Subject <span style="color:red">*</span></label>
+                        <input type="text" name="subject" class="form-control" placeholder="What issue do you need support with?" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Nội Dung Yêu Cầu <span style="color:red">*</span></label>
-                        <textarea name="message" class="form-control" rows="5" placeholder="Chi tiết yêu cầu của bạn..." required></textarea>
+                        <label class="form-label">Request Content <span style="color:red">*</span></label>
+                        <textarea name="message" class="form-control" rows="5" placeholder="Details of your request..." required></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit" id="btnSubmitContact">
-                        Gửi Yêu Cầu <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
+                        Send Request <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
                     </button>
                 </form>
             </div>
@@ -582,7 +582,7 @@ session_start();
             <div>
                 <div class="footer-logo">AUTO<span>DREAMCARS</span></div>
                 <p class="footer-about">
-                    Auto DreamCars Showroom là điểm đến lý tưởng cho những người đam mê xe hơi siêu sang. Chúng tôi tự hào phân phối các dòng xe cao cấp nhất với chất lượng dịch vụ chuẩn quốc tế.
+                    Auto DreamCars Showroom is the ideal destination for luxury car enthusiasts. We proudly distribute the most premium car models with international standard service quality.
                 </p>
                 <div class="social-links">
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -593,31 +593,31 @@ session_start();
             </div>
             
             <div>
-                <h4 class="footer-title">Khám Phá</h4>
+                <h4 class="footer-title">Explore</h4>
                 <ul class="footer-links">
-                    <li><a href="index.php">Trang Chủ</a></li>
-                    <li><a href="cars.php">Tất Cả Mẫu Xe</a></li>
-                    <li><a href="compare.php">So Sánh Xe</a></li>
-                    <li><a href="about.php">Về Chúng Tôi</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="cars.php">All Cars</a></li>
+                    <li><a href="compare.php">Compare Cars</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
             
             <div>
-                <h4 class="footer-title">Dịch Vụ</h4>
+                <h4 class="footer-title">Services</h4>
                 <ul class="footer-links">
-                    <li><a href="booking.php">Đặt Lịch Lái Thử</a></li>
-                    <li><a href="#">Bảo Hành & Bảo Dưỡng</a></li>
-                    <li><a href="#">Tư Vấn Tài Chính</a></li>
-                    <li><a href="contact.php">Liên Hệ Hỗ Trợ</a></li>
+                    <li><a href="booking.php">Book a Test Drive</a></li>
+                    <li><a href="#">Warranty & Maintenance</a></li>
+                    <li><a href="#">Financial Consulting</a></li>
+                    <li><a href="contact.php">Contact Support</a></li>
                 </ul>
             </div>
             
             <div>
-                <h4 class="footer-title">Liên Hệ</h4>
+                <h4 class="footer-title">Contact</h4>
                 <ul class="contact-info" style="list-style: none; padding: 0;">
                     <li>
                         <i class="fa-solid fa-location-dot"></i>
-                        <span>178 Đại Mỗ, Quận Nam Từ Liêm, TP. Hà Nội</span>
+                        <span>178 Dai Mo, Nam Tu Liem District, Hanoi</span>
                     </li>
                     <li>
                         <i class="fa-solid fa-phone"></i>
@@ -654,7 +654,7 @@ session_start();
                 .then(data => {
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hà Nội</span>`;
+                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hanoi</span>`;
                     }
                 })
                 .catch(error => {
@@ -674,7 +674,7 @@ session_start();
 
             // Trạng thái Loading
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...';
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...';
             alertBox.style.display = 'none';
             alertBox.className = 'alert';
 
@@ -688,7 +688,7 @@ session_start();
             .then(response => response.json())
             .then(res => {
                 btn.disabled = false;
-                btn.innerHTML = 'Gửi Yêu Cầu <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>';
+                btn.innerHTML = 'Send Request <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>';
                 
                 alertBox.style.display = 'flex';
                 if (res.status === 'success') {
@@ -697,15 +697,15 @@ session_start();
                     form.reset();
                 } else {
                     alertBox.classList.add('alert-error');
-                    alertBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:1.2rem;"></i> ' + (res.message || 'Có lỗi xảy ra, vui lòng thử lại.');
+                    alertBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:1.2rem;"></i> ' + (res.message || 'An error occurred, please try again.');
                 }
             })
             .catch(error => {
                 btn.disabled = false;
-                btn.innerHTML = 'Gửi Yêu Cầu <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>';
+                btn.innerHTML = 'Send Request <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>';
                 alertBox.style.display = 'flex';
                 alertBox.className = 'alert alert-error';
-                alertBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:1.2rem;"></i> Lỗi kết nối tới máy chủ.';
+                alertBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size:1.2rem;"></i> Connection error to the server.';
                 console.error('Error:', error);
             });
         }

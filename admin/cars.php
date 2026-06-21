@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Quản lý xe';
+$pageTitle = 'Car Management';
 
 $perPage = 20;
 $page    = max(1, (int)($_GET['page'] ?? 1));
@@ -40,7 +40,7 @@ $brands = $brandStmt->fetchAll();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý xe – Admin</title>
+<title>Car Management – Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -52,25 +52,25 @@ $brands = $brandStmt->fetchAll();
 
         <div class="page-header">
             <div>
-                <div class="page-title">Quản lý xe</div>
-                <div class="page-subtitle"><?= number_format($totalRows) ?> xe trong hệ thống</div>
+                <div class="page-title">Car Management</div>
+                <div class="page-subtitle"><?= number_format($totalRows) ?> cars in the system</div>
             </div>
             <a href="cars_add.php" class="btn btn-gold">
-                <i class="bi bi-plus-lg"></i> Thêm xe mới
+                <i class="bi bi-plus-lg"></i> Add new car
             </a>
         </div>
 
         <?php if(isset($_GET['deleted'])): ?>
         <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;color:#10b981;font-size:14px">
-            <i class="bi bi-check-circle-fill"></i> Xe đã được xóa thành công.
+            <i class="bi bi-check-circle-fill"></i> Car has been deleted successfully.
         </div>
         <?php elseif(isset($_GET['msg']) && $_GET['msg'] === 'added'): ?>
         <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;color:#10b981;font-size:14px">
-            <i class="bi bi-check-circle-fill"></i> Thêm xe mới thành công!
+            <i class="bi bi-check-circle-fill"></i> New car added successfully!
         </div>
         <?php elseif(isset($_GET['msg']) && $_GET['msg'] === 'updated'): ?>
         <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:10px;padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;color:#3b82f6;font-size:14px">
-            <i class="bi bi-info-circle-fill"></i> Cập nhật thông tin xe thành công.
+            <i class="bi bi-info-circle-fill"></i> Car information updated successfully.
         </div>
         <?php endif; ?>
 
@@ -79,22 +79,22 @@ $brands = $brandStmt->fetchAll();
             <form method="GET" action="" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%">
                 <i class="bi bi-funnel-fill" style="color:var(--gold)"></i>
                 <select name="brand" class="form-select" style="width:200px">
-                    <option value="">-- Tất cả hãng --</option>
+                    <option value="">-- All brands --</option>
                     <?php foreach($brands as $b): ?>
                         <option value="<?= $b['id'] ?>" <?= $brandFilter==$b['id']?'selected':'' ?>>
                             <?= htmlspecialchars($b['name']) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="text" name="search" class="form-control" placeholder="🔍 Tìm kiếm tên xe..." value="<?= htmlspecialchars($searchTerm) ?>" style="max-width:260px">
-                <button type="submit" class="btn btn-outline-gold"><i class="bi bi-search"></i> Lọc</button>
+                <input type="text" name="search" class="form-control" placeholder="🔍 Search car name..." value="<?= htmlspecialchars($searchTerm) ?>" style="max-width:260px">
+                <button type="submit" class="btn btn-outline-gold"><i class="bi bi-search"></i> Filter</button>
                 <?php if($brandFilter||$searchTerm): ?>
                     <a href="cars.php" class="btn btn-sm" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444">
-                        <i class="bi bi-x"></i> Xóa lọc
+                        <i class="bi bi-x"></i> Clear filter
                     </a>
                 <?php endif; ?>
                 <span style="margin-left:auto;font-size:12px;color:var(--text-muted)">
-                    Hiển thị <?= count($cars) ?>/<?= number_format($totalRows) ?> kết quả
+                    Showing <?= count($cars) ?>/<?= number_format($totalRows) ?> results
                 </span>
             </form>
         </div>
@@ -105,13 +105,13 @@ $brands = $brandStmt->fetchAll();
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Hình ảnh</th>
-                        <th>Tên xe</th>
-                        <th>Hãng</th>
-                        <th>Năm</th>
-                        <th>Giá</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th>Image</th>
+                        <th>Car Name</th>
+                        <th>Brand</th>
+                        <th>Year</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,11 +134,11 @@ $brands = $brandStmt->fetchAll();
                         <td style="font-weight:600;color:var(--gold)"><?= number_format($car['price']) ?>₫</td>
                         <td>
                             <?php if($car['status']==='available'): ?>
-                                <span class="badge badge-success"><i class="bi bi-circle-fill" style="font-size:8px"></i> Đang bán</span>
+                                <span class="badge badge-success"><i class="bi bi-circle-fill" style="font-size:8px"></i> Available</span>
                             <?php elseif($car['status']==='sold_out'): ?>
-                                <span class="badge badge-danger"><i class="bi bi-circle-fill" style="font-size:8px"></i> Hết hàng</span>
+                                <span class="badge badge-danger"><i class="bi bi-circle-fill" style="font-size:8px"></i> Sold Out</span>
                             <?php elseif($car['status']==='coming_soon'): ?>
-                                <span class="badge badge-warning"><i class="bi bi-clock-fill" style="font-size:8px"></i> Sắp ra mắt</span>
+                                <span class="badge badge-warning"><i class="bi bi-clock-fill" style="font-size:8px"></i> Coming Soon</span>
                             <?php else: ?>
                                 <span class="badge badge-secondary"><?= $car['status'] ?></span>
                             <?php endif; ?>
@@ -147,7 +147,7 @@ $brands = $brandStmt->fetchAll();
                             <a href="cars_edit.php?id=<?= $car['id'] ?>" class="btn btn-sm btn-outline-gold">
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
-                            <button class="btn btn-sm btn-danger-outline" onclick="if(confirm('Xác nhận xóa xe này?')){ window.location='cars_delete.php?id=<?= $car['id'] ?>'; }">
+                            <button class="btn btn-sm btn-danger-outline" onclick="if(confirm('Confirm delete this car?')){ window.location='cars_delete.php?id=<?= $car['id'] ?>'; }">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
                         </td>
@@ -156,7 +156,7 @@ $brands = $brandStmt->fetchAll();
                 <?php if(empty($cars)): ?>
                     <tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted)">
                         <i class="bi bi-inbox" style="font-size:32px;display:block;margin-bottom:8px"></i>
-                        Không tìm thấy xe nào
+                        No cars found
                     </td></tr>
                 <?php endif; ?>
                 </tbody>

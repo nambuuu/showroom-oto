@@ -36,8 +36,8 @@ $activities = [];
 foreach($recentDrives as $d) {
     $activities[] = [
         'type' => 'booking',
-        'title' => 'Lịch lái thử mới',
-        'desc' => $d['customer_name'] . ' muốn lái thử ' . $d['car_name'],
+        'title' => 'New test drive booking',
+        'desc' => $d['customer_name'] . ' wants to test drive ' . $d['car_name'],
         'time' => $d['created_at'],
         'icon' => 'bi-car-front-fill',
         'color' => '#f59e0b'
@@ -46,7 +46,7 @@ foreach($recentDrives as $d) {
 foreach($recentContacts as $c) {
     $activities[] = [
         'type' => 'contact',
-        'title' => 'Liên hệ mới',
+        'title' => 'New contact',
         'desc' => $c['name'] . ' - ' . $c['subject'],
         'time' => $c['created_at'],
         'icon' => 'bi-envelope-fill',
@@ -67,13 +67,13 @@ function time_elapsed_string($datetime, $full = false) {
     $diff->d -= $diff->w * 7;
 
     $string = array(
-        'y' => 'năm',
-        'm' => 'tháng',
-        'w' => 'tuần',
-        'd' => 'ngày',
-        'h' => 'giờ',
-        'i' => 'phút',
-        's' => 'giây',
+        'y' => 'years',
+        'm' => 'months',
+        'w' => 'weeks',
+        'd' => 'days',
+        'h' => 'hours',
+        'i' => 'minutes',
+        's' => 'seconds',
     );
     foreach ($string as $k => &$v) {
         if ($diff->$k) {
@@ -84,7 +84,7 @@ function time_elapsed_string($datetime, $full = false) {
     }
 
     if (!$full) $string = array_slice($string, 0, 1);
-    return $string ? implode(', ', $string) . ' trước' : 'vừa xong';
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 ?>
 <!DOCTYPE html>
@@ -249,7 +249,7 @@ function time_elapsed_string($datetime, $full = false) {
         <div class="page-header">
             <div>
                 <div class="page-title">Dashboard</div>
-                <div class="page-subtitle">Chào mừng trở lại, <?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin') ?>!</div>
+                <div class="page-subtitle">Welcome back, <?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin') ?>!</div>
             </div>
             <div style="font-size:13px;color:var(--text-muted); display:flex; align-items:center; gap:6px; background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius:20px; border: 1px solid rgba(255,255,255,0.05);">
                 <i class="bi bi-calendar3" style="color:var(--gold);"></i>
@@ -263,28 +263,28 @@ function time_elapsed_string($datetime, $full = false) {
             <div class="stat-card" style="--card-color:#d4a843;">
                 <div class="stat-icon" style="background:rgba(212,168,67,0.1);color:#d4a843;"><i class="bi bi-car-front-fill"></i></div>
                 <div class="stat-value" data-count="<?= $carTotal ?>"><?= number_format($carTotal) ?></div>
-                <div class="stat-label">Tổng số xe</div>
+                <div class="stat-label">Total Cars</div>
                 <span class="stat-change" style="background:rgba(212,168,67,0.1);color:var(--gold)"><i class="bi bi-check-circle"></i> Active</span>
             </div>
 
             <div class="stat-card" style="--card-color:#f59e0b;">
                 <div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#f59e0b;"><i class="bi bi-calendar2-check-fill"></i></div>
                 <div class="stat-value" data-count="<?= $bookingTotal ?>"><?= number_format($bookingTotal) ?></div>
-                <div class="stat-label">Lịch chờ duyệt</div>
+                <div class="stat-label">Pending Bookings</div>
                 <span class="stat-change" style="background:rgba(245,158,11,0.1);color:#f59e0b"><i class="bi bi-clock"></i> Pending</span>
             </div>
 
             <div class="stat-card" style="--card-color:#ef4444;">
                 <div class="stat-icon" style="background:rgba(239,68,68,0.1);color:#ef4444;"><i class="bi bi-envelope-fill"></i></div>
                 <div class="stat-value" data-count="<?= $contactTotal ?>"><?= number_format($contactTotal) ?></div>
-                <div class="stat-label">Liên hệ chưa đọc</div>
-                <span class="stat-change" style="background:rgba(239,68,68,0.1);color:#ef4444"><i class="bi bi-exclamation-circle"></i> Mới</span>
+                <div class="stat-label">Unread Contacts</div>
+                <span class="stat-change" style="background:rgba(239,68,68,0.1);color:#ef4444"><i class="bi bi-exclamation-circle"></i> New</span>
             </div>
 
             <div class="stat-card" style="--card-color:#10b981;">
                 <div class="stat-icon" style="background:rgba(16,185,129,0.1);color:#10b981;"><i class="bi bi-award-fill"></i></div>
                 <div class="stat-value" data-count="<?= $brandTotal ?>"><?= number_format($brandTotal) ?></div>
-                <div class="stat-label">Tổng hãng xe</div>
+                <div class="stat-label">Total Brands</div>
                 <span class="stat-change" style="background:rgba(16,185,129,0.1);color:#10b981"><i class="bi bi-graph-up"></i> Brands</span>
             </div>
 
@@ -295,7 +295,7 @@ function time_elapsed_string($datetime, $full = false) {
 
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-pie-chart-fill me-2"></i> Trạng thái lịch hẹn</h5>
+                    <h5><i class="bi bi-pie-chart-fill me-2"></i> Booking Status</h5>
                 </div>
                 <div class="card-glass-body" style="display:flex;align-items:center;justify-content:center">
                     <div style="position: relative; height:240px; width:100%;">
@@ -306,7 +306,7 @@ function time_elapsed_string($datetime, $full = false) {
 
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-bar-chart-fill me-2"></i> Xe theo hãng</h5>
+                    <h5><i class="bi bi-bar-chart-fill me-2"></i> Cars by Brand</h5>
                 </div>
                 <div class="card-glass-body">
                     <div style="position: relative; height:240px; width:100%;">
@@ -323,12 +323,12 @@ function time_elapsed_string($datetime, $full = false) {
             <!-- Timeline -->
             <div class="card-glass">
                 <div class="card-glass-header">
-                    <h5><i class="bi bi-activity me-2"></i> Hoạt động gần đây</h5>
+                    <h5><i class="bi bi-activity me-2"></i> Recent Activities</h5>
                 </div>
                 <div class="card-glass-body">
                     <div class="timeline">
                         <?php if(empty($activities)): ?>
-                            <div style="color:var(--text-muted); font-size:13px; text-align:center; padding: 20px 0;">Không có hoạt động nào.</div>
+                            <div style="color:var(--text-muted); font-size:13px; text-align:center; padding: 20px 0;">No activities.</div>
                         <?php else: ?>
                             <?php foreach($activities as $act): ?>
                             <div class="timeline-item" style="--t-color: <?= $act['color'] ?>;">
@@ -349,10 +349,10 @@ function time_elapsed_string($datetime, $full = false) {
             <div class="card-glass" style="display:flex; flex-direction:column;">
                 <div class="admin-tabs">
                     <button class="admin-tab active" onclick="switchTab('tab-bookings', this)">
-                        <i class="bi bi-calendar-event me-1"></i> Lịch lái thử mới
+                        <i class="bi bi-calendar-event me-1"></i> New test drives
                     </button>
                     <button class="admin-tab" onclick="switchTab('tab-contacts', this)">
-                        <i class="bi bi-envelope-open me-1"></i> Liên hệ mới
+                        <i class="bi bi-envelope-open me-1"></i> New contacts
                     </button>
                 </div>
                 
@@ -363,16 +363,16 @@ function time_elapsed_string($datetime, $full = false) {
                             <table class="admin-table" style="min-width: 600px;">
                                 <thead>
                                     <tr>
-                                        <th>Khách hàng</th>
-                                        <th>Xe</th>
-                                        <th>Ngày/Giờ hẹn</th>
-                                        <th>Trạng thái</th>
-                                        <th style="text-align:right">Chi tiết</th>
+                                        <th>Customer</th>
+                                        <th>Car</th>
+                                        <th>Appointment Date/Time</th>
+                                        <th>Status</th>
+                                        <th style="text-align:right">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php if(empty($recentDrives)): ?>
-                                    <tr><td colspan="5" style="text-align:center; padding: 30px;">Không có dữ liệu</td></tr>
+                                    <tr><td colspan="5" style="text-align:center; padding: 30px;">No data available</td></tr>
                                 <?php else: ?>
                                     <?php foreach($recentDrives as $row): ?>
                                         <?php
@@ -403,7 +403,7 @@ function time_elapsed_string($datetime, $full = false) {
                             </table>
                         </div>
                         <div style="padding: 15px 24px; border-top: 1px solid var(--border); text-align:right;">
-                            <a href="bookings.php" class="btn btn-gold btn-sm" style="color:#000;">Xem tất cả lịch hẹn <i class="bi bi-arrow-right"></i></a>
+                            <a href="bookings.php" class="btn btn-gold btn-sm" style="color:#000;">View all bookings <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
 
@@ -413,16 +413,16 @@ function time_elapsed_string($datetime, $full = false) {
                             <table class="admin-table" style="min-width: 600px;">
                                 <thead>
                                     <tr>
-                                        <th>Họ tên</th>
+                                        <th>Full Name</th>
                                         <th>Email</th>
-                                        <th>Chủ đề</th>
-                                        <th>Trạng thái</th>
-                                        <th style="text-align:right">Chi tiết</th>
+                                        <th>Subject</th>
+                                        <th>Status</th>
+                                        <th style="text-align:right">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php if(empty($recentContacts)): ?>
-                                    <tr><td colspan="5" style="text-align:center; padding: 30px;">Không có dữ liệu</td></tr>
+                                    <tr><td colspan="5" style="text-align:center; padding: 30px;">No data available</td></tr>
                                 <?php else: ?>
                                     <?php foreach($recentContacts as $c): ?>
                                         <tr>
@@ -440,9 +440,9 @@ function time_elapsed_string($datetime, $full = false) {
                                             </td>
                                             <td>
                                                 <?php if($c['is_read']): ?>
-                                                    <span class="badge badge-success"><i class="bi bi-check2-all"></i> Đã đọc</span>
+                                                    <span class="badge badge-success"><i class="bi bi-check2-all"></i> Read</span>
                                                 <?php else: ?>
-                                                    <span class="badge badge-danger"><i class="bi bi-envelope-exclamation"></i> Mới</span>
+                                                    <span class="badge badge-danger"><i class="bi bi-envelope-exclamation"></i> New</span>
                                                 <?php endif; ?>
                                             </td>
                                             <td style="text-align:right">
@@ -455,7 +455,7 @@ function time_elapsed_string($datetime, $full = false) {
                             </table>
                         </div>
                         <div style="padding: 15px 24px; border-top: 1px solid var(--border); text-align:right;">
-                            <a href="contacts.php" class="btn btn-info-outline btn-sm">Xem tất cả liên hệ <i class="bi bi-arrow-right"></i></a>
+                            <a href="contacts.php" class="btn btn-info-outline btn-sm">View all contacts <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -525,7 +525,7 @@ new Chart(document.getElementById('brandChart'), {
     data: {
         labels: <?= json_encode($brandNames) ?>,
         datasets: [{
-            label: 'Số xe',
+            label: 'Number of cars',
             data: <?= json_encode($brandCnts) ?>,
             backgroundColor: brandGradient,
             borderColor: '#d4a843',

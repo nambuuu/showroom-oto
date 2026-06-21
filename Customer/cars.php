@@ -6,7 +6,7 @@ require_once '../config/db.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto DreamCars | Khám Phá Xe</title>
+    <title>Auto DreamCars | Explore Cars</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -394,48 +394,48 @@ require_once '../config/db.php';
     <nav class="navbar">
         <a href="index.php" class="navbar-brand">AUTO<span>DREAMCARS</span></a>
         <ul class="nav-links">
-            <li><a href="index.php">Trang Chủ</a></li>
-            <li><a href="cars.php" class="active">Khám Phá Xe</a></li>
-            <li><a href="compare.php">So Sánh</a></li>
-            <li><a href="about.php">Giới Thiệu</a></li>
-            <li><a href="contact.php">Liên Hệ</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="cars.php" class="active">Explore Cars</a></li>
+            <li><a href="compare.php">Compare</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <div style="display: flex; align-items: center; gap: 15px;">
-            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Thời tiết Hà Nội hiện tại">
+            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Current Hanoi weather">
                 <i class="fa-solid fa-cloud-sun" style="color: var(--gold); font-size: 16px;"></i> 
                 <span id="weatherTemp">--°C</span>
             </div>
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <span style="font-weight: 600; color: var(--text-dark); font-size: 14px;">
-                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Khách hàng'); ?>
+                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Customer'); ?>
                 </span>
-                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Đăng nhập</a>
+                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Login</a>
             <?php endif; ?>
-            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Lái Thử</a>
+            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Test Drive</a>
         </div>
     </nav>
 
     <!-- HEADER -->
     <div class="page-header">
-        <h1>Khám Phá Bộ Sưu Tập</h1>
-        <p>Tìm kiếm kiệt tác phù hợp với phong cách của bạn</p>
+        <h1>Explore The Collection</h1>
+        <p>Find the masterpiece that fits your style</p>
     </div>
 
     <!-- MAIN LAYOUT -->
     <div class="showroom-layout">
         <!-- FILTER SIDEBAR -->
         <aside class="sidebar-filter">
-            <h3 class="filter-title">Bộ Lọc Tìm Kiếm</h3>
+            <h3 class="filter-title">Search Filters</h3>
             <div class="filter-group">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Tên xe, vd: Porsche...">
+                <input type="text" id="searchInput" placeholder="Car name, e.g. Porsche...">
             </div>
             <div class="filter-group">
                 <i class="fa-solid fa-car"></i>
                 <select id="categoryFilter">
-                    <option value="">Tất cả kiểu dáng</option>
+                    <option value="">All categories</option>
                     <option value="sedan">Sedan</option>
                     <option value="suv">SUV</option>
                     <option value="hatchback">Hatchback</option>
@@ -446,37 +446,37 @@ require_once '../config/db.php';
             <div class="filter-group">
                 <i class="fa-solid fa-building"></i>
                 <select id="brandFilter">
-                    <option value="">Tất cả các hãng</option>
+                    <option value="">All brands</option>
                     <!-- Thêm qua API sau -->
                 </select>
             </div>
             <div class="filter-group">
                 <i class="fa-solid fa-users"></i>
                 <select id="seatingFilter">
-                    <option value="">Tất cả chỗ ngồi</option>
-                    <option value="2">2 chỗ</option>
-                    <option value="4">4 chỗ</option>
-                    <option value="5">5 chỗ</option>
-                    <option value="6">6 chỗ</option>
-                    <option value="7">7 chỗ</option>
-                    <option value="8">8 chỗ</option>
-                    <option value="9">9 chỗ</option>
+                    <option value="">All seating capacities</option>
+                    <option value="2">2 seats</option>
+                    <option value="4">4 seats</option>
+                    <option value="5">5 seats</option>
+                    <option value="6">6 seats</option>
+                    <option value="7">7 seats</option>
+                    <option value="8">8 seats</option>
+                    <option value="9">9 seats</option>
                 </select>
             </div>
             <div class="filter-group">
                 <i class="fa-solid fa-money-bill"></i>
                 <select id="priceFilter">
-                    <option value="">Tất cả mức giá</option>
-                    <option value="1000000000">Dưới 1 tỷ</option>
-                    <option value="5000000000">Dưới 5 tỷ</option>
-                    <option value="10000000000">Dưới 10 tỷ</option>
-                    <option value="20000000000">Dưới 20 tỷ</option>
+                    <option value="">All prices</option>
+                    <option value="1000000000">Under 1 billion</option>
+                    <option value="5000000000">Under 5 billion</option>
+                    <option value="10000000000">Under 10 billion</option>
+                    <option value="20000000000">Under 20 billion</option>
                 </select>
             </div>
             <div class="filter-group">
                 <i class="fa-solid fa-calendar-days"></i>
                 <select id="yearFilter">
-                    <option value="">Tất cả năm SX</option>
+                    <option value="">All years</option>
                     <option value="2026">2026</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
@@ -491,7 +491,7 @@ require_once '../config/db.php';
         <!-- CARS CONTENT -->
         <div class="cars-content">
             <div class="cars-grid" id="carsContainer">
-                <div class="loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><br><br>Đang tải dữ liệu...</div>
+                <div class="loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><br><br>Loading data...</div>
             </div>
             <div class="pagination" id="paginationContainer"></div>
         </div>
@@ -499,9 +499,9 @@ require_once '../config/db.php';
 
     <!-- COMPARE WIDGET -->
     <div class="compare-widget" id="compareWidget">
-        <div>Đã chọn để so sánh:</div>
+        <div>Selected for comparison:</div>
         <div class="compare-count" id="compareCount">0</div>
-        <a href="compare.php" class="btn-compare-go">So Sánh Ngay</a>
+        <a href="compare.php" class="btn-compare-go">Compare Now</a>
         <button class="btn-action" style="color: #fff; border:none; margin-left: 10px;" onclick="clearCompare()"><i class="fa-solid fa-trash"></i></button>
     </div>
 
@@ -541,7 +541,7 @@ require_once '../config/db.php';
                 .then(data => {
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hà Nội</span>`;
+                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hanoi</span>`;
                     }
                 })
                 .catch(error => console.error('Error fetching weather:', error));
@@ -562,7 +562,7 @@ require_once '../config/db.php';
 
         function fetchCars() {
             const container = document.getElementById('carsContainer');
-            container.innerHTML = '<div class="loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><br><br>Đang tải dữ liệu...</div>';
+            container.innerHTML = '<div class="loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><br><br>Loading data...</div>';
             
             const search = document.getElementById('searchInput').value;
             const category = document.getElementById('categoryFilter').value;
@@ -592,24 +592,24 @@ require_once '../config/db.php';
                             const html = `
                                 <div class="car-card">
                                     <div class="car-img-wrapper">
-                                        ${car.is_featured == 1 ? '<span class="car-badge">Nổi Bật</span>' : ''}
+                                        ${car.is_featured == 1 ? '<span class="car-badge">Featured</span>' : ''}
                                         <img src="${imgUrl}" alt="${car.model_name}" onerror="this.src='../assets/image/cars/Toyota Camry.jpg'">
                                     </div>
                                     <div class="car-info">
-                                        <div class="car-brand">${car.brand_name || 'Hãng Xe'}</div>
+                                        <div class="car-brand">${car.brand_name || 'Brand'}</div>
                                         <h3 class="car-title" title="${car.model_name}">${car.model_name}</h3>
                                         <div class="car-specs">
                                             <div class="spec-item"><i class="fa-solid fa-gauge-high"></i><span>${car.category || 'N/A'}</span></div>
                                             <div class="spec-item"><i class="fa-solid fa-calendar-days"></i><span>${car.year || '2024'}</span></div>
-                                            <div class="spec-item"><i class="fa-solid fa-users"></i><span>${car.seating ? car.seating + ' chỗ' : 'N/A'}</span></div>
+                                            <div class="spec-item"><i class="fa-solid fa-users"></i><span>${car.seating ? car.seating + ' seats' : 'N/A'}</span></div>
                                         </div>
                                         <div class="car-footer">
                                             <div class="car-price">${formatPrice}</div>
                                             <div class="action-buttons">
-                                                <button class="btn-action ${isCompared ? 'active' : ''}" onclick="toggleCompare('${car.id}', this)" title="Thêm vào so sánh">
+                                                <button class="btn-action ${isCompared ? 'active' : ''}" onclick="toggleCompare('${car.id}', this)" title="Add to comparison">
                                                     <i class="fa-solid fa-code-compare"></i>
                                                 </button>
-                                                <a href="car_detail.php?id=${car.id}" class="btn-details">Chi Tiết</a>
+                                                <a href="car_detail.php?id=${car.id}" class="btn-details">Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -619,13 +619,13 @@ require_once '../config/db.php';
                         });
                         renderPagination(data.pagination);
                     } else {
-                        container.innerHTML = '<div class="no-results"><i class="fa-solid fa-car-burst fa-3x"></i><br><br>Không tìm thấy mẫu xe nào phù hợp.</div>';
+                        container.innerHTML = '<div class="no-results"><i class="fa-solid fa-car-burst fa-3x"></i><br><br>No suitable cars found.</div>';
                         document.getElementById('paginationContainer').innerHTML = '';
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    container.innerHTML = '<div class="no-results">Đã xảy ra lỗi khi tải dữ liệu.</div>';
+                    container.innerHTML = '<div class="no-results">An error occurred while loading data.</div>';
                 });
         }
 
@@ -649,7 +649,7 @@ require_once '../config/db.php';
             const index = compareList.indexOf(id.toString());
             if (index === -1) {
                 if (compareList.length >= 3) {
-                    alert('Bạn chỉ có thể so sánh tối đa 3 xe cùng lúc.');
+                    alert('You can only compare up to 3 cars at a time.');
                     return;
                 }
                 compareList.push(id.toString());

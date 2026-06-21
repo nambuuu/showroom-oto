@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Quản trị viên';
+$pageTitle = 'Administrators';
 
 if(isset($_GET['del'])){
     $delId=(int)$_GET['del'];
@@ -19,7 +19,7 @@ $users=$pdo->query('SELECT id, username, full_name, email, role, created_at FROM
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản trị viên – Admin</title>
+<title>Administrators – Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -31,11 +31,11 @@ $users=$pdo->query('SELECT id, username, full_name, email, role, created_at FROM
 
         <div class="page-header">
             <div>
-                <div class="page-title">Quản trị viên</div>
-                <div class="page-subtitle"><?= count($users) ?> tài khoản trong hệ thống</div>
+                <div class="page-title">Administrators</div>
+                <div class="page-subtitle"><?= count($users) ?> accounts in the system</div>
             </div>
             <a href="users_add.php" class="btn btn-gold">
-                <i class="bi bi-person-plus-fill"></i> Thêm tài khoản
+                <i class="bi bi-person-plus-fill"></i> Add account
             </a>
         </div>
 
@@ -44,12 +44,12 @@ $users=$pdo->query('SELECT id, username, full_name, email, role, created_at FROM
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Tài khoản</th>
-                        <th>Tên đăng nhập</th>
+                        <th>Account</th>
+                        <th>Username</th>
                         <th>Email</th>
-                        <th>Quyền</th>
-                        <th>Ngày tạo</th>
-                        <th>Hành động</th>
+                        <th>Role</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@ $users=$pdo->query('SELECT id, username, full_name, email, role, created_at FROM
                                     <div style="font-weight:600;font-size:13px">
                                         <?= htmlspecialchars($u['full_name']) ?>
                                         <?php if($isSelf): ?>
-                                            <span class="badge badge-gold" style="margin-left:4px;font-size:9px">BẠN</span>
+                                            <span class="badge badge-gold" style="margin-left:4px;font-size:9px">YOU</span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -101,11 +101,11 @@ $users=$pdo->query('SELECT id, username, full_name, email, role, created_at FROM
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
                             <?php if(!$isSelf): ?>
-                            <button class="btn btn-sm btn-danger-outline" onclick="if(confirm('Xóa tài khoản <?= htmlspecialchars($u['full_name'],ENT_QUOTES) ?>?')){window.location='users.php?del=<?= $u['id'] ?>';}">
+                            <button class="btn btn-sm btn-danger-outline" onclick="if(confirm('Delete account <?= htmlspecialchars($u['full_name'],ENT_QUOTES) ?>?')){window.location='users.php?del=<?= $u['id'] ?>';}">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
                             <?php else: ?>
-                            <button class="btn btn-sm" style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.2);color:var(--text-muted);cursor:not-allowed" disabled title="Không thể tự xóa bản thân">
+                            <button class="btn btn-sm" style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.2);color:var(--text-muted);cursor:not-allowed" disabled title="Cannot delete yourself">
                                 <i class="bi bi-lock-fill"></i>
                             </button>
                             <?php endif; ?>
