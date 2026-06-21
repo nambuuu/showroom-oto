@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $errors     = [];
     
     if ($name === '' || $brand_id === '' || $year <= 0 || $price <= 0) {
-        $errors[] = 'Vui lòng nhập đầy đủ thông tin hợp lệ.';
+        $errors[] = 'Please enter valid and complete information.';
     }
 
     // Specifications
@@ -32,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
         $allowed = ['image/jpeg','image/png','image/webp'];
         if (!in_array($_FILES['thumbnail']['type'], $allowed)) {
-            $errors[] = 'Định dạng ảnh không hợp lệ (chỉ chấp nhận jpg/png/webp).';
+            $errors[] = 'Invalid image format (only jpg/png/webp accepted).';
         }
         
         $max_size = 5 * 1024 * 1024; // 5MB
         if ($_FILES['thumbnail']['size'] > $max_size) {
-            $errors[] = 'Kích thước ảnh không được vượt quá 5MB.';
+            $errors[] = 'Image size must not exceed 5MB.';
         }
 
         if (empty($errors)) {
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $dest = $upload_dir . $newName;
             
             if (!move_uploaded_file($_FILES['thumbnail']['tmp_name'], $dest)) {
-                $errors[] = 'Lỗi khi lưu ảnh.';
+                $errors[] = 'Error saving image.';
             } else {
                 $thumbnailPath = 'assets/image/cars/' . $newName; // relative for frontend
             }
@@ -109,7 +109,7 @@ $brands = $brandStmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm Xe – Admin</title>
+    <title>Add Car – Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/style.css" rel="stylesheet">
@@ -186,8 +186,8 @@ $brands = $brandStmt->fetchAll();
     <div class="page-body">
         
         <div class="d-flex align-items-center mb-4">
-            <a href="cars.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Quay lại</a>
-            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Thêm Xe Mới</h4>
+            <a href="cars.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Add New Car</h4>
         </div>
 
         <?php if (!empty($errors)): ?>
@@ -198,8 +198,8 @@ $brands = $brandStmt->fetchAll();
 
         <div class="form-glass">
             <div class="form-glass-header">
-                <h3><i class="bi bi-car-front-fill me-2"></i>Thông Tin Xe</h3>
-                <p class="text-muted" style="font-size: 14px;">Vui lòng điền đầy đủ và chính xác thông tin để thêm xe mới.</p>
+                <h3><i class="bi bi-car-front-fill me-2"></i>Car Information</h3>
+                <p class="text-muted" style="font-size: 14px;">Please fill in completely and accurately to add a new car.</p>
             </div>
             
             <form method="POST" action="" enctype="multipart/form-data">
@@ -207,17 +207,17 @@ $brands = $brandStmt->fetchAll();
                 
                 <div class="row g-4">
                     <div class="col-md-6">
-                        <div class="section-title">Thông tin cơ bản</div>
+                        <div class="section-title">Basic information</div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Tên xe <span class="text-danger">*</span></label>
-                            <input type="text" name="model_name" class="form-control" required placeholder="VD: S 450 Luxury" value="<?= htmlspecialchars($_POST['model_name'] ?? '') ?>">
+                            <label class="form-label">Car name <span class="text-danger">*</span></label>
+                            <input type="text" name="model_name" class="form-control" required placeholder="Ex: S 450 Luxury" value="<?= htmlspecialchars($_POST['model_name'] ?? '') ?>">
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Hãng sản xuất <span class="text-danger">*</span></label>
+                            <label class="form-label">Brand <span class="text-danger">*</span></label>
                             <select name="brand_id" class="form-select" required>
-                                <option value="">-- Chọn hãng --</option>
+                                <option value="">-- Select brand --</option>
                                 <?php foreach ($brands as $b): ?>
                                     <option value="<?php echo $b['id']; ?>" <?= (isset($_POST['brand_id']) && $_POST['brand_id'] == $b['id']) ? 'selected' : '' ?>>
                                         <?php echo htmlspecialchars($b['name']); ?>
@@ -228,89 +228,89 @@ $brands = $brandStmt->fetchAll();
 
                         <div class="row g-3 mb-3">
                             <div class="col-6">
-                                <label class="form-label">Năm SX <span class="text-danger">*</span></label>
+                                <label class="form-label">Year <span class="text-danger">*</span></label>
                                 <input type="number" name="year" class="form-control" min="1900" max="2099" required placeholder="2024" value="<?= htmlspecialchars($_POST['year'] ?? '') ?>">
                             </div>
                             <div class="col-6">
-                                <label class="form-label">Trạng thái <span class="text-danger">*</span></label>
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
                                 <select name="status" class="form-select" required>
-                                    <option value="available" <?= (isset($_POST['status']) && $_POST['status'] == 'available') ? 'selected' : '' ?>>Đang bán</option>
-                                    <option value="sold_out" <?= (isset($_POST['status']) && $_POST['status'] == 'sold_out') ? 'selected' : '' ?>>Hết hàng</option>
-                                    <option value="coming_soon" <?= (isset($_POST['status']) && $_POST['status'] == 'coming_soon') ? 'selected' : '' ?>>Sắp ra mắt</option>
+                                    <option value="available" <?= (isset($_POST['status']) && $_POST['status'] == 'available') ? 'selected' : '' ?>>Available</option>
+                                    <option value="sold_out" <?= (isset($_POST['status']) && $_POST['status'] == 'sold_out') ? 'selected' : '' ?>>Sold Out</option>
+                                    <option value="coming_soon" <?= (isset($_POST['status']) && $_POST['status'] == 'coming_soon') ? 'selected' : '' ?>>Coming Soon</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Giá niêm yết (VND) <span class="text-danger">*</span></label>
+                            <label class="form-label">Listed Price (VND) <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="number" name="price" class="form-control" min="0" step="1000" required placeholder="VD: 5500000000" value="<?= htmlspecialchars($_POST['price'] ?? '') ?>">
+                                <input type="number" name="price" class="form-control" min="0" step="1000" required placeholder="Ex: 5500000000" value="<?= htmlspecialchars($_POST['price'] ?? '') ?>">
                                 <span class="input-group-text" style="background: var(--bg-secondary); border-color: var(--border); color: var(--gold);">₫</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="section-title">Hình ảnh đại diện</div>
+                        <div class="section-title">Thumbnail image</div>
                         <div class="upload-preview" id="thumbnailPreview">
                             <i class="bi bi-camera"></i>
                         </div>
                         <div>
                             <input type="file" name="thumbnail" id="thumbnailInput" class="form-control mb-2" accept="image/jpeg,image/png,image/webp" required>
-                            <small class="text-muted"><i class="bi bi-info-circle me-1"></i> Định dạng: JPG, PNG, WEBP. Dung lượng tối đa: 5MB.</small>
+                            <small class="text-muted"><i class="bi bi-info-circle me-1"></i> Formats: JPG, PNG, WEBP. Max size: 5MB.</small>
                         </div>
                     </div>
                 </div>
 
                 <div class="row g-4 mt-2">
                     <div class="col-12">
-                        <div class="section-title">Thông số kỹ thuật </div>
+                        <div class="section-title">Specifications </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Động cơ</label>
-                        <input type="text" name="engine" class="form-control" placeholder="VD: 3.0L V6" value="<?= htmlspecialchars($_POST['engine'] ?? '') ?>">
+                        <label class="form-label">Engine</label>
+                        <input type="text" name="engine" class="form-control" placeholder="Ex: 3.0L V6" value="<?= htmlspecialchars($_POST['engine'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Mã lực (HP)</label>
-                        <input type="number" name="horsepower" class="form-control" placeholder="VD: 367" value="<?= htmlspecialchars($_POST['horsepower'] ?? '') ?>">
+                        <label class="form-label">Horsepower (HP)</label>
+                        <input type="number" name="horsepower" class="form-control" placeholder="Ex: 367" value="<?= htmlspecialchars($_POST['horsepower'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Mô-men xoắn</label>
-                        <input type="text" name="torque" class="form-control" placeholder="VD: 500 Nm" value="<?= htmlspecialchars($_POST['torque'] ?? '') ?>">
+                        <label class="form-label">Torque</label>
+                        <input type="text" name="torque" class="form-control" placeholder="Ex: 500 Nm" value="<?= htmlspecialchars($_POST['torque'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Hộp số</label>
-                        <input type="text" name="transmission" class="form-control" placeholder="VD: 9G-TRONIC" value="<?= htmlspecialchars($_POST['transmission'] ?? '') ?>">
+                        <label class="form-label">Transmission</label>
+                        <input type="text" name="transmission" class="form-control" placeholder="Ex: 9G-TRONIC" value="<?= htmlspecialchars($_POST['transmission'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Loại nhiên liệu</label>
-                        <input type="text" name="fuel_type" class="form-control" placeholder="VD: Xăng" value="<?= htmlspecialchars($_POST['fuel_type'] ?? '') ?>">
+                        <label class="form-label">Fuel type</label>
+                        <input type="text" name="fuel_type" class="form-control" placeholder="Ex: Petrol" value="<?= htmlspecialchars($_POST['fuel_type'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Mức tiêu thụ</label>
-                        <input type="text" name="fuel_efficiency" class="form-control" placeholder="VD: 8.5 L/100km" value="<?= htmlspecialchars($_POST['fuel_efficiency'] ?? '') ?>">
+                        <label class="form-label">Fuel efficiency</label>
+                        <input type="text" name="fuel_efficiency" class="form-control" placeholder="Ex: 8.5 L/100km" value="<?= htmlspecialchars($_POST['fuel_efficiency'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Số chỗ ngồi</label>
-                        <input type="number" name="seating" class="form-control" placeholder="VD: 5" value="<?= htmlspecialchars($_POST['seating'] ?? '') ?>">
+                        <label class="form-label">Seating</label>
+                        <input type="number" name="seating" class="form-control" placeholder="Ex: 5" value="<?= htmlspecialchars($_POST['seating'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Hệ dẫn động</label>
-                        <input type="text" name="drive_type" class="form-control" placeholder="VD: 4MATIC" value="<?= htmlspecialchars($_POST['drive_type'] ?? '') ?>">
+                        <label class="form-label">Drive type</label>
+                        <input type="text" name="drive_type" class="form-control" placeholder="Ex: 4MATIC" value="<?= htmlspecialchars($_POST['drive_type'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Tốc độ tối đa (km/h)</label>
-                        <input type="number" name="top_speed" class="form-control" placeholder="VD: 250" value="<?= htmlspecialchars($_POST['top_speed'] ?? '') ?>">
+                        <label class="form-label">Top speed (km/h)</label>
+                        <input type="number" name="top_speed" class="form-control" placeholder="Ex: 250" value="<?= htmlspecialchars($_POST['top_speed'] ?? '') ?>">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Tăng tốc 0-100km/h (s)</label>
-                        <input type="number" step="0.1" name="acceleration" class="form-control" placeholder="VD: 5.1" value="<?= htmlspecialchars($_POST['acceleration'] ?? '') ?>">
+                        <label class="form-label">Acceleration 0-100km/h (s)</label>
+                        <input type="number" step="0.1" name="acceleration" class="form-control" placeholder="Ex: 5.1" value="<?= htmlspecialchars($_POST['acceleration'] ?? '') ?>">
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-5 border-top pt-4" style="border-color: var(--border) !important;">
-                    <a href="cars.php" class="btn btn-secondary" style="background: var(--bg-secondary); border-color: var(--border); color: var(--text);">Hủy bỏ</a>
-                    <button type="submit" class="btn btn-gold"><i class="bi bi-plus-circle me-1"></i> Lưu thông tin xe</button>
+                    <a href="cars.php" class="btn btn-secondary" style="background: var(--bg-secondary); border-color: var(--border); color: var(--text);">Cancel</a>
+                    <button type="submit" class="btn btn-gold"><i class="bi bi-plus-circle me-1"></i> Save car information</button>
                 </div>
             </form>
         </div>

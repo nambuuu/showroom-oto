@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Liên hệ';
+$pageTitle = 'Contacts';
 
 if(isset($_GET['del'])){
     $delId=(int)$_GET['del'];
@@ -39,7 +39,7 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Liên hệ – Admin</title>
+<title>Contacts – Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -51,11 +51,11 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
 
         <div class="page-header">
             <div>
-                <div class="page-title">Yêu cầu liên hệ</div>
+                <div class="page-title">Contact Requests</div>
                 <div class="page-subtitle">
-                    <?= number_format($totalRows) ?> liên hệ
+                    <?= number_format($totalRows) ?> contacts
                     <?php if($unread>0): ?>
-                        &nbsp;·&nbsp; <span style="color:#ef4444;font-weight:600"><?= $unread ?> chưa đọc</span>
+                        &nbsp;·&nbsp; <span style="color:#ef4444;font-weight:600"><?= $unread ?> unread</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -63,13 +63,13 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
 
         <!-- Quick filter tabs -->
         <div style="display:flex;gap:8px;margin-bottom:20px">
-            <a href="contacts.php" class="btn btn-sm <?= $isRead===''?'btn-gold':'btn-outline-gold' ?>">Tất cả</a>
+            <a href="contacts.php" class="btn btn-sm <?= $isRead===''?'btn-gold':'btn-outline-gold' ?>">All</a>
             <a href="contacts.php?is_read=0" class="btn btn-sm <?= $isRead==='0'?'btn-gold':'btn-outline-gold' ?>">
-                <i class="bi bi-envelope-fill"></i> Chưa đọc
+                <i class="bi bi-envelope-fill"></i> Unread
                 <?php if($unread>0): ?><span style="background:#ef4444;color:#fff;border-radius:10px;padding:0 6px;font-size:10px;margin-left:4px"><?=$unread?></span><?php endif; ?>
             </a>
             <a href="contacts.php?is_read=1" class="btn btn-sm <?= $isRead==='1'?'btn-gold':'btn-outline-gold' ?>">
-                <i class="bi bi-envelope-open-fill"></i> Đã đọc
+                <i class="bi bi-envelope-open-fill"></i> Read
             </a>
         </div>
 
@@ -78,10 +78,10 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
             <form method="GET" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;width:100%">
                 <input type="hidden" name="is_read" value="<?= htmlspecialchars($isRead) ?>">
                 <i class="bi bi-search" style="color:var(--gold)"></i>
-                <input type="text" name="search" class="form-control" placeholder="Tìm tên, email, chủ đề..." value="<?= htmlspecialchars($search) ?>" style="max-width:300px">
-                <button type="submit" class="btn btn-outline-gold"><i class="bi bi-search"></i> Tìm</button>
+                <input type="text" name="search" class="form-control" placeholder="Search name, email, subject..." value="<?= htmlspecialchars($search) ?>" style="max-width:300px">
+                <button type="submit" class="btn btn-outline-gold"><i class="bi bi-search"></i> Search</button>
                 <?php if($search): ?>
-                    <a href="contacts.php?is_read=<?=$isRead?>" class="btn btn-sm btn-danger-outline"><i class="bi bi-x"></i> Xóa lọc</a>
+                    <a href="contacts.php?is_read=<?=$isRead?>" class="btn btn-sm btn-danger-outline"><i class="bi bi-x"></i> Clear filter</a>
                 <?php endif; ?>
             </form>
         </div>
@@ -91,12 +91,12 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Họ tên</th>
+                        <th>Full Name</th>
                         <th>Email</th>
-                        <th>Chủ đề</th>
-                        <th>Ngày gửi</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th>Subject</th>
+                        <th>Date Sent</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,14 +120,14 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
                         </td>
                         <td>
                             <?php if($c['is_read']): ?>
-                                <span class="badge badge-success"><i class="bi bi-check2-circle"></i> Đã đọc</span>
+                                <span class="badge badge-success"><i class="bi bi-check2-circle"></i> Read</span>
                             <?php else: ?>
-                                <span class="badge badge-danger"><i class="bi bi-envelope-fill"></i> Chưa đọc</span>
+                                <span class="badge badge-danger"><i class="bi bi-envelope-fill"></i> Unread</span>
                             <?php endif; ?>
                         </td>
                         <td>
                             <a href="contact_view.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-gold"><i class="bi bi-eye-fill"></i></a>
-                            <button class="btn btn-sm btn-danger-outline" onclick="if(confirm('Xóa liên hệ này?')){window.location='contacts.php?del=<?= $c['id'] ?>';}">
+                            <button class="btn btn-sm btn-danger-outline" onclick="if(confirm('Delete this contact?')){window.location='contacts.php?del=<?= $c['id'] ?>';}">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
                         </td>
@@ -136,7 +136,7 @@ $unread=(int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")->fetch
                 <?php if(empty($contacts)): ?>
                     <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">
                         <i class="bi bi-inbox" style="font-size:32px;display:block;margin-bottom:8px"></i>
-                        Không có liên hệ nào
+                        No contacts found
                     </td></tr>
                 <?php endif; ?>
                 </tbody>

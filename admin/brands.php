@@ -21,7 +21,7 @@ if (isset($_GET['del'])) {
             }
         }
     } else {
-        $_SESSION['error'] = 'Không thể xóa hãng xe này vì vẫn còn xe thuộc hãng.';
+        $_SESSION['error'] = 'Cannot delete this brand because there are still cars belonging to it.';
     }
     header('Location: brands.php');
     exit;
@@ -42,7 +42,7 @@ $brands = $brandStmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý hãng xe – Admin</title>
+    <title>Brand Management – Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/style.css" rel="stylesheet">
@@ -75,10 +75,10 @@ $brands = $brandStmt->fetchAll();
         
         <div class="page-header">
             <div>
-                <div class="page-title">Quản lý Hãng Xe</div>
-                <div class="page-subtitle">Thêm, sửa, xóa các thương hiệu xe trong hệ thống</div>
+                <div class="page-title">Brand Management</div>
+                <div class="page-subtitle">Add, edit, delete car brands in the system</div>
             </div>
-            <a href="brands_add.php" class="btn btn-gold"><i class="bi bi-plus-lg"></i> Thêm Hãng Xe</a>
+            <a href="brands_add.php" class="btn btn-gold"><i class="bi bi-plus-lg"></i> Add Brand</a>
         </div>
 
         <?php if (isset($_SESSION['error'])): ?>
@@ -90,26 +90,26 @@ $brands = $brandStmt->fetchAll();
 
         <div class="card-glass">
             <div class="card-glass-header">
-                <h5><i class="bi bi-award-fill me-2"></i>Danh Sách Thương Hiệu</h5>
-                <span class="badge badge-gold"><?= count($brands) ?> hãng</span>
+                <h5><i class="bi bi-award-fill me-2"></i>Brand List</h5>
+                <span class="badge badge-gold"><?= count($brands) ?> brands</span>
             </div>
             <div class="admin-table-wrap" style="border: none; border-radius: 0;">
                 <?php if (empty($brands)): ?>
                     <div class="empty-state">
                         <i class="bi bi-box-seam"></i>
-                        <h5 class="text-gold">Chưa có hãng xe nào</h5>
-                        <p class="text-muted">Hãy thêm hãng xe đầu tiên vào hệ thống.</p>
-                        <a href="brands_add.php" class="btn btn-outline-gold mt-2">Thêm ngay</a>
+                        <h5 class="text-gold">No brands found</h5>
+                        <p class="text-muted">Please add the first brand to the system.</p>
+                        <a href="brands_add.php" class="btn btn-outline-gold mt-2">Add now</a>
                     </div>
                 <?php else: ?>
                     <table class="admin-table">
                         <thead>
                         <tr>
                             <th>Logo</th>
-                            <th>Tên hãng</th>
-                            <th>Quốc gia</th>
-                            <th>Số lượng xe</th>
-                            <th class="text-end">Hành động</th>
+                            <th>Brand name</th>
+                            <th>Country</th>
+                            <th>Number of cars</th>
+                            <th class="text-end">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -135,11 +135,11 @@ $brands = $brandStmt->fetchAll();
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <span class="badge badge-info"><?= $b['car_count'] ?> xe</span>
+                                    <span class="badge badge-info"><?= $b['car_count'] ?> cars</span>
                                 </td>
                                 <td class="text-end">
-                                    <a href="brands_edit.php?id=<?= $b['id']; ?>" class="btn btn-sm btn-outline-gold me-2" title="Sửa"><i class="bi bi-pencil"></i> Sửa</a>
-                                    <button class="btn btn-sm btn-danger-outline" onclick="deleteBrand(<?= $b['id'] ?>, '<?= htmlspecialchars(addslashes($b['name'])) ?>')" title="Xóa"><i class="bi bi-trash"></i> Xóa</button>
+                                    <a href="brands_edit.php?id=<?= $b['id']; ?>" class="btn btn-sm btn-outline-gold me-2" title="Edit"><i class="bi bi-pencil"></i> Edit</a>
+                                    <button class="btn btn-sm btn-danger-outline" onclick="deleteBrand(<?= $b['id'] ?>, '<?= htmlspecialchars(addslashes($b['name'])) ?>')" title="Delete"><i class="bi bi-trash"></i> Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -154,7 +154,7 @@ $brands = $brandStmt->fetchAll();
 
 <script>
 function deleteBrand(id, name) {
-    if (confirm(`Bạn có chắc chắn muốn xóa hãng xe "${name}"? Hành động này không thể hoàn tác.`)) {
+    if (confirm(`Are you sure you want to delete the brand "${name}"? This action cannot be undone.`)) {
         window.location.href = `brands.php?del=${id}`;
     }
 }

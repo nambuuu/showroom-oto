@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Lịch lái thử';
+$pageTitle = 'Test Drive Bookings';
 
 $statusFilter = $_GET['status'] ?? '';
 $searchTerm   = trim($_GET['search'] ?? '');
@@ -32,7 +32,7 @@ $bookings=$stmt->fetchAll();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lịch lái thử – Admin</title>
+<title>Test Drive Bookings – Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -44,8 +44,8 @@ $bookings=$stmt->fetchAll();
 
         <div class="page-header">
             <div>
-                <div class="page-title">Lịch lái thử</div>
-                <div class="page-subtitle"><?= number_format($totalRows) ?> lịch hẹn</div>
+                <div class="page-title">Test Drive Bookings</div>
+                <div class="page-subtitle"><?= number_format($totalRows) ?> appointments</div>
             </div>
         </div>
 
@@ -55,10 +55,10 @@ $bookings=$stmt->fetchAll();
         $statusMap = [];
         foreach($allStatus as $r) $statusMap[$r['status']] = $r['cnt'];
         $statuses = [
-            ['pending',  'Chờ duyệt',  'warning', 'clock'],
-            ['approved', 'Đã duyệt',   'success', 'check-circle-fill'],
-            ['rejected', 'Từ chối',    'danger',  'x-circle-fill'],
-            ['done',     'Hoàn thành', 'info',    'flag-fill'],
+            ['pending',  'Pending',  'warning', 'clock'],
+            ['approved', 'Approved',   'success', 'check-circle-fill'],
+            ['rejected', 'Rejected',    'danger',  'x-circle-fill'],
+            ['done',     'Done', 'info',    'flag-fill'],
         ];
         ?>
         <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
@@ -73,7 +73,7 @@ $bookings=$stmt->fetchAll();
             <?php endforeach; ?>
             <?php if($statusFilter): ?>
                 <a href="bookings.php" class="btn btn-sm btn-danger-outline" style="align-self:center;white-space:nowrap">
-                    <i class="bi bi-x"></i> Bỏ lọc
+                    <i class="bi bi-x"></i> Clear filter
                 </a>
             <?php endif; ?>
         </div>
@@ -83,9 +83,9 @@ $bookings=$stmt->fetchAll();
             <form method="GET" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;width:100%">
                 <input type="hidden" name="status" value="<?= htmlspecialchars($statusFilter) ?>">
                 <i class="bi bi-search" style="color:var(--gold)"></i>
-                <input type="text" name="search" class="form-control" placeholder="Tìm khách hàng hoặc xe..." value="<?= htmlspecialchars($searchTerm) ?>" style="max-width:280px">
-                <button type="submit" class="btn btn-outline-gold"><i class="bi bi-search"></i> Tìm</button>
-                <span style="margin-left:auto;font-size:12px;color:var(--text-muted)"><?= count($bookings) ?>/<?= number_format($totalRows) ?> kết quả</span>
+                <input type="text" name="search" class="form-control" placeholder="Search customer or car..." value="<?= htmlspecialchars($searchTerm) ?>" style="max-width:280px">
+                <button type="submit" class="btn btn-outline-gold"><i class="bi bi-search"></i> Search</button>
+                <span style="margin-left:auto;font-size:12px;color:var(--text-muted)"><?= count($bookings) ?>/<?= number_format($totalRows) ?> results</span>
             </form>
         </div>
 
@@ -94,12 +94,12 @@ $bookings=$stmt->fetchAll();
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Khách hàng</th>
-                        <th>Xe đăng ký</th>
-                        <th>Ngày hẹn</th>
-                        <th>Giờ</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th>Customer</th>
+                        <th>Registered car</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,7 +107,7 @@ $bookings=$stmt->fetchAll();
                     <?php
                     $bdgMap = ['pending'=>'warning','approved'=>'success','rejected'=>'danger','done'=>'info'];
                     $bdg = $bdgMap[$b['status']] ?? 'secondary';
-                    $lblMap = ['pending'=>'Chờ duyệt','approved'=>'Đã duyệt','rejected'=>'Từ chối','done'=>'Hoàn thành'];
+                    $lblMap = ['pending'=>'Pending','approved'=>'Approved','rejected'=>'Rejected','done'=>'Done'];
                     $lbl = $lblMap[$b['status']] ?? ucfirst($b['status']);
                     ?>
                     <tr>
@@ -137,7 +137,7 @@ $bookings=$stmt->fetchAll();
                         <td><span class="badge badge-<?= $bdg ?>"><?= $lbl ?></span></td>
                         <td>
                             <a href="booking_detail.php?id=<?= $b['id'] ?>" class="btn btn-sm btn-outline-gold">
-                                <i class="bi bi-eye-fill"></i> Xem
+                                <i class="bi bi-eye-fill"></i> View
                             </a>
                         </td>
                     </tr>
@@ -145,7 +145,7 @@ $bookings=$stmt->fetchAll();
                 <?php if(empty($bookings)): ?>
                     <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">
                         <i class="bi bi-calendar-x" style="font-size:32px;display:block;margin-bottom:8px"></i>
-                        Không có lịch hẹn nào
+                        No appointments found
                     </td></tr>
                 <?php endif; ?>
                 </tbody>

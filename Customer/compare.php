@@ -6,7 +6,7 @@ require_once '../config/db.php';
 <head>
     <meta charset="UTF-8">
     <meta name="Viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto DreamCars | So Sánh Xe</title>
+    <title>Auto DreamCars | Compare Cars</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -140,33 +140,33 @@ require_once '../config/db.php';
     <nav class="navbar">
         <a href="index.php" class="navbar-brand">AUTO<span>DREAMCARS</span></a>
         <ul class="nav-links">
-            <li><a href="index.php">Trang Chủ</a></li>
-            <li><a href="cars.php">Khám Phá Xe</a></li>
-            <li><a href="compare.php" class="active">So Sánh</a></li>
-            <li><a href="about.php">Giới Thiệu</a></li>
-            <li><a href="contact.php">Liên Hệ</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="cars.php">Explore Cars</a></li>
+            <li><a href="compare.php" class="active">Compare</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <div style="display: flex; align-items: center; gap: 15px;">
-            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Thời tiết Hà Nội hiện tại">
+            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Current Hanoi weather">
                 <i class="fa-solid fa-cloud-sun" style="color: var(--gold); font-size: 16px;"></i> 
                 <span id="weatherTemp">--°C</span>
             </div>
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <span style="font-weight: 600; color: var(--text-dark); font-size: 14px;">
-                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Khách hàng'); ?>
+                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Customer'); ?>
                 </span>
-                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Đăng nhập</a>
+                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Login</a>
             <?php endif; ?>
-            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Lái Thử</a>
+            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Test Drive</a>
         </div>
     </nav>
 
     <!-- HEADER -->
     <div class="page-header">
-        <h1>So Sánh Mẫu Xe</h1>
-        <p>Chọn ra chiếc xe phù hợp nhất với nhu cầu và phong cách của bạn</p>
+        <h1>Compare Car Models</h1>
+        <p>Choose the car that best fits your needs and style</p>
     </div>
 
     <!-- COMPARE CONTENT -->
@@ -174,25 +174,25 @@ require_once '../config/db.php';
         
         <div id="loadingLayer">
             <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: var(--gold); margin-bottom: 20px;"></i>
-            <h3 style="color: var(--text-muted);">Đang chuẩn bị dữ liệu so sánh...</h3>
+            <h3 style="color: var(--text-muted);">Preparing comparison data...</h3>
         </div>
 
         <div class="empty-state" id="emptyState" style="display: none;">
             <i class="fa-solid fa-code-compare"></i>
-            <h2>Chưa Có Xe Trong Danh Sách So Sánh</h2>
-            <p>Hãy duyệt qua bộ sưu tập của chúng tôi và chọn tối đa 3 xe để so sánh chi tiết.</p>
-            <a href="cars.php" class="btn-add-cars">Khám Phá Các Mẫu Xe</a>
+            <h2>No Cars in Comparison List</h2>
+            <p>Browse our collection and select up to 3 cars for detailed comparison.</p>
+            <a href="cars.php" class="btn-add-cars">Explore Car Models</a>
         </div>
 
         <div class="compare-table-wrapper" id="compareTableWrapper">
             <div style="padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);">
-                <span style="font-weight: 600; font-size: 14px; color: var(--text-muted);"><i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Bảng so sánh thông số chi tiết</span>
-                <a href="cars.php" style="color: var(--gold); font-size: 13px; font-weight: 600; text-decoration: underline;"><i class="fa-solid fa-plus"></i> Thêm xe khác</a>
+                <span style="font-weight: 600; font-size: 14px; color: var(--text-muted);"><i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Detailed specifications comparison table</span>
+                <a href="cars.php" style="color: var(--gold); font-size: 13px; font-weight: 600; text-decoration: underline;"><i class="fa-solid fa-plus"></i> Add another car</a>
             </div>
             <table class="compare-table">
                 <thead>
                     <tr id="compareHeaders">
-                        <td class="feature-label">Thông Tin Cơ Bản</td>
+                        <td class="feature-label">Basic Information</td>
                         <!-- Populated dynamically -->
                     </tr>
                 </thead>
@@ -229,7 +229,7 @@ require_once '../config/db.php';
                 .then(data => {
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hà Nội</span>`;
+                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hanoi</span>`;
                     }
                 })
                 .catch(error => console.error('Error fetching weather:', error));
@@ -261,8 +261,8 @@ require_once '../config/db.php';
                     renderCompareTable(validCars);
                 })
                 .catch(err => {
-                    console.error("Lỗi khi tải dữ liệu so sánh:", err);
-                    alert("Có lỗi xảy ra khi tải dữ liệu xe.");
+                    console.error("Error loading comparison data:", err);
+                    alert("An error occurred while loading car data.");
                 });
         }
 
@@ -274,7 +274,7 @@ require_once '../config/db.php';
             const tbody = document.getElementById('compareBody');
             
             // Generate Headers
-            let headersHTML = '<td class="feature-label">Mẫu Xe</td>';
+            let headersHTML = '<td class="feature-label">Car Model</td>';
             carsData.forEach((data, index) => {
                 const car = data.car;
                 let mainImg = data.images.find(img => img.is_main == 1) || data.images[0];
@@ -284,14 +284,14 @@ require_once '../config/db.php';
                 headersHTML += `
                     <td>
                         <div class="car-header">
-                            <button class="remove-btn" onclick="removeFromCompare('${car.id}')" title="Xóa khỏi so sánh"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="remove-btn" onclick="removeFromCompare('${car.id}')" title="Remove from comparison"><i class="fa-solid fa-xmark"></i></button>
                             <div class="car-img-box"><img src="${imgUrl}" onerror="this.src='../assets/image/cars/Toyota Camry.jpg'"></div>
                             <div>
-                                <div class="car-brand">${car.brand_name || 'Hãng Xe'}</div>
+                                <div class="car-brand">${car.brand_name || 'Brand'}</div>
                                 <div class="car-name">${car.model_name}</div>
                             </div>
                             <div class="car-price">${formatPrice}</div>
-                            <button class="btn-buy" onclick="window.location.href='booking.php?car_id=${car.id}'">Đặt Lái Thử</button>
+                            <button class="btn-buy" onclick="window.location.href='booking.php?car_id=${car.id}'">Book Test Drive</button>
                         </div>
                     </td>
                 `;
@@ -304,7 +304,7 @@ require_once '../config/db.php';
                     <td>
                         <div style="height: 100%; display:flex; flex-direction:column; align-items:center; justify-content:center; color: var(--border);">
                             <i class="fa-solid fa-car" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                            <a href="cars.php" class="btn-buy" style="background:var(--bg-secondary); color:var(--text-muted); border: 1px dashed var(--text-muted);">Thêm xe</a>
+                            <a href="cars.php" class="btn-buy" style="background:var(--bg-secondary); color:var(--text-muted); border: 1px dashed var(--text-muted);">Add car</a>
                         </div>
                     </td>
                 `;
@@ -313,18 +313,18 @@ require_once '../config/db.php';
 
             // Prepare spec rows
             const specLabels = [
-                { key: 'category', label: 'Kiểu Dáng', isFromCarTable: true },
-                { key: 'year', label: 'Năm Sản Xuất', isFromCarTable: true },
-                { key: 'engine', label: 'Động Cơ', isFromCarTable: false },
-                { key: 'horsepower', label: 'Công Suất (HP)', isFromCarTable: false },
-                { key: 'torque', label: 'Mô-men Xoắn', isFromCarTable: false },
-                { key: 'transmission', label: 'Hộp Số', isFromCarTable: false },
-                { key: 'fuel_type', label: 'Nhiên Liệu', isFromCarTable: false },
-                { key: 'fuel_efficiency', label: 'Tiêu Thụ Nhiên Liệu', isFromCarTable: false },
-                { key: 'drive_type', label: 'Hệ Dẫn Động', isFromCarTable: false },
-                { key: 'seating', label: 'Số Chỗ Ngồi', isFromCarTable: false },
-                { key: 'top_speed', label: 'Tốc Độ Tối Đa (km/h)', isFromCarTable: false },
-                { key: 'acceleration', label: 'Tăng Tốc 0-100 km/h (s)', isFromCarTable: false }
+                { key: 'category', label: 'Category', isFromCarTable: true },
+                { key: 'year', label: 'Year', isFromCarTable: true },
+                { key: 'engine', label: 'Engine', isFromCarTable: false },
+                { key: 'horsepower', label: 'Horsepower (HP)', isFromCarTable: false },
+                { key: 'torque', label: 'Torque', isFromCarTable: false },
+                { key: 'transmission', label: 'Transmission', isFromCarTable: false },
+                { key: 'fuel_type', label: 'Fuel Type', isFromCarTable: false },
+                { key: 'fuel_efficiency', label: 'Fuel Efficiency', isFromCarTable: false },
+                { key: 'drive_type', label: 'Drive Type', isFromCarTable: false },
+                { key: 'seating', label: 'Seating Capacity', isFromCarTable: false },
+                { key: 'top_speed', label: 'Top Speed (km/h)', isFromCarTable: false },
+                { key: 'acceleration', label: 'Acceleration 0-100 km/h (s)', isFromCarTable: false }
             ];
 
             let bodyHTML = '';

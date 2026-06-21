@@ -4,12 +4,12 @@ require_once '../config/db.php';
 
 $currentPage = 'booking';
 $navItems = [
-    ['id' => 'home',    'label' => 'Trang Chủ',    'href' => 'index.php'],
-    ['id' => 'cars',    'label' => 'Khám Phá Xe',  'href' => 'cars.php'],
-    ['id' => 'compare', 'label' => 'So Sánh',      'href' => 'compare.php'],
-    ['id' => 'about',   'label' => 'Giới Thiệu',  'href' => 'about.php'],
-    ['id' => 'booking', 'label' => 'Lái Thử',     'href' => 'booking.php'],
-    ['id' => 'contact', 'label' => 'Liên Hệ',    'href' => 'contact.php'],
+    ['id' => 'home',    'label' => 'Home',         'href' => 'index.php'],
+    ['id' => 'cars',    'label' => 'Explore Cars', 'href' => 'cars.php'],
+    ['id' => 'compare', 'label' => 'Compare',      'href' => 'compare.php'],
+    ['id' => 'about',   'label' => 'About Us',     'href' => 'about.php'],
+    ['id' => 'booking', 'label' => 'Test Drive',   'href' => 'booking.php'],
+    ['id' => 'contact', 'label' => 'Contact',      'href' => 'contact.php'],
 ];
 
 $user_name = '';
@@ -36,7 +36,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Auto DreamCars | Đặt Lịch Lái Thử</title>
+    <title>Auto DreamCars | Book a Test Drive</title>
     
     <!-- TailwindCSS & Config -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -267,11 +267,11 @@ if (isset($_SESSION['user_id'])) {
                 <?php if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])): ?>
                     <div class="flex items-center gap-2 text-primary">
                         <span class="material-symbols-outlined">account_circle</span>
-                        <?php echo htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Thành viên'); ?>
+                        <?php echo htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Member'); ?>
                     </div>
-                    <a href="../logout.php" title="Đăng xuất" class="text-error hover:text-red-400 transition-colors flex items-center"><span class="material-symbols-outlined text-lg">logout</span></a>
+                    <a href="../logout.php" title="Logout" class="text-error hover:text-red-400 transition-colors flex items-center"><span class="material-symbols-outlined text-lg">logout</span></a>
                 <?php else: ?>
-                    <a href="../login.php" class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-lg">login</span> Đăng nhập</a>
+                    <a href="../login.php" class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-lg">login</span> Login</a>
                 <?php endif; ?>
             </div>
 
@@ -300,20 +300,20 @@ if (isset($_SESSION['user_id'])) {
                         Exclusive<br/><span class="text-on-surface">Experience</span>
                     </h1>
                     <p class="text-body-lg font-body-lg text-on-surface-variant max-w-md">
-                        Đặt trước dịch vụ lái thử để cảm nhận trọn vẹn uy lực và đẳng cấp của Auto DreamCars.
+                        Pre-book an exclusive test drive to fully experience the power and prestige of Auto DreamCars.
                     </p>
                 </div>
                 
                 <div class="space-y-6">
-                    <h3 class="text-label-caps font-label-caps text-primary tracking-widest uppercase border-b border-outline-variant/30 pb-2 inline-block">Đặc Quyền Thượng Lưu</h3>
+                    <h3 class="text-label-caps font-label-caps text-primary tracking-widest uppercase border-b border-outline-variant/30 pb-2 inline-block">Luxury Privileges</h3>
                     <ul class="space-y-6 text-on-surface-variant">
                         <li class="flex items-start gap-4 group">
                             <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors shrink-0">
                                 <span class="material-symbols-outlined text-primary text-xl" data-weight="fill">diamond</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-on-surface mb-1">Tư vấn chuyên sâu 1:1</h4>
-                                <p class="text-sm opacity-70">Chuyên gia sản phẩm riêng biệt hỗ trợ giải đáp mọi thắc mắc.</p>
+                                <h4 class="font-bold text-on-surface mb-1">In-depth 1:1 Consulting</h4>
+                                <p class="text-sm opacity-70">A dedicated product expert to answer all your questions.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-4 group">
@@ -321,8 +321,8 @@ if (isset($_SESSION['user_id'])) {
                                 <span class="material-symbols-outlined text-primary text-xl" data-weight="fill">route</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-on-surface mb-1">Lộ trình thử xe tùy chọn</h4>
-                                <p class="text-sm opacity-70">Thiết kế cung đường riêng để thử nghiệm đa dạng chế độ lái.</p>
+                                <h4 class="font-bold text-on-surface mb-1">Custom Test Drive Route</h4>
+                                <p class="text-sm opacity-70">A bespoke private road designed to test every driving mode.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-4 group">
@@ -330,8 +330,8 @@ if (isset($_SESSION['user_id'])) {
                                 <span class="material-symbols-outlined text-primary text-xl" data-weight="fill">wine_bar</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-on-surface mb-1">Dịch vụ VIP Lounge</h4>
-                                <p class="text-sm opacity-70">Thưởng thức champagne và đồ uống cao cấp trước khi trải nghiệm.</p>
+                                <h4 class="font-bold text-on-surface mb-1">VIP Lounge Service</h4>
+                                <p class="text-sm opacity-70">Enjoy champagne and premium beverages before your experience.</p>
                             </div>
                         </li>
                     </ul>
@@ -346,8 +346,8 @@ if (isset($_SESSION['user_id'])) {
                         <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
                         
                         <div class="flex justify-between items-end mb-8 relative z-10">
-                            <h2 class="text-headline-sm font-headline-sm text-on-surface">Đặt Lịch Lái Thử</h2>
-                            <span class="text-primary font-label-caps tracking-widest text-sm" id="stepIndicator">BƯỚC 1/3</span>
+                            <h2 class="text-headline-sm font-headline-sm text-on-surface">Book a Test Drive</h2>
+                            <span class="text-primary font-label-caps tracking-widest text-sm" id="stepIndicator">STEP 1/3</span>
                         </div>
 
                         <!-- Progress Bar -->
@@ -358,11 +358,11 @@ if (isset($_SESSION['user_id'])) {
                         <form id="formBooking" class="relative z-10 min-h-[350px]">
                             <!-- STEP 1: SELECT CAR -->
                             <div class="step active" id="step1">
-                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Lựa chọn Siêu xe</h3>
+                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Select Your Car</h3>
                                 <div class="custom-select-wrapper" id="carSelectWrapper">
                                     <div class="custom-select">
                                         <div class="custom-select__trigger">
-                                            <span id="carSelectDisplay">-- Đang tải danh sách xe --</span>
+                                            <span id="carSelectDisplay">-- Loading car list --</span>
                                             <span class="material-symbols-outlined text-on-surface-variant transition-transform" id="carSelectIcon">expand_more</span>
                                         </div>
                                         <div class="custom-options" id="carOptions">
@@ -374,49 +374,49 @@ if (isset($_SESSION['user_id'])) {
                                 
                                 <div class="pt-10 flex justify-end">
                                     <button type="button" id="btnNext1" class="btn-glow px-8 py-3 text-label-caps font-label-caps text-on-primary-fixed rounded-xl font-bold tracking-widest">
-                                        TIẾP TỤC <span class="material-symbols-outlined align-middle ml-1 text-sm">arrow_forward</span>
+                                        CONTINUE <span class="material-symbols-outlined align-middle ml-1 text-sm">arrow_forward</span>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- STEP 2: DATE & TIME -->
                             <div class="step" id="step2">
-                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Thời gian Dự kiến</h3>
+                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Preferred Date & Time</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div class="relative group">
                                         <input name="preferred_date" id="preferred_date" class="w-full bg-transparent text-on-surface input-line" type="date" required />
-                                        <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Ngày dự kiến *</span>
+                                        <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Preferred Date *</span>
                                         <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">calendar_today</span>
                                     </div>
                                     <div class="relative group">
                                         <input name="preferred_time" id="preferred_time" class="w-full bg-transparent text-on-surface input-line" type="time" required />
-                                        <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Giờ dự kiến *</span>
+                                        <span class="absolute left-0 -top-6 text-xs text-on-surface-variant tracking-wider uppercase">Preferred Time *</span>
                                         <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-focus-within:text-primary transition-colors">schedule</span>
                                     </div>
                                 </div>
                                 
                                 <div class="pt-10 flex justify-between items-center mt-4">
                                     <button type="button" id="btnPrev1" class="text-on-surface-variant hover:text-primary transition-colors flex items-center font-label-caps tracking-widest text-sm">
-                                        <span class="material-symbols-outlined mr-1 text-sm">arrow_back</span> QUAY LẠI
+                                        <span class="material-symbols-outlined mr-1 text-sm">arrow_back</span> BACK
                                     </button>
                                     <button type="button" id="btnNext2" class="btn-glow px-8 py-3 text-label-caps font-label-caps text-on-primary-fixed rounded-xl font-bold tracking-widest">
-                                        TIẾP TỤC <span class="material-symbols-outlined align-middle ml-1 text-sm">arrow_forward</span>
+                                        CONTINUE <span class="material-symbols-outlined align-middle ml-1 text-sm">arrow_forward</span>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- STEP 3: PERSONAL INFO -->
                             <div class="step" id="step3">
-                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Thông tin Cá nhân</h3>
+                                <h3 class="text-xl text-on-surface-variant mb-6 font-display-lg">Personal Information</h3>
                                 <div class="space-y-6">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div class="relative group">
-                                            <input name="full_name" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="fullname" placeholder="Họ & Tên" type="text" value="<?php echo htmlspecialchars($user_name); ?>" required />
-                                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="fullname">Họ & Tên *</label>
+                                            <input name="full_name" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="fullname" placeholder="Full Name" type="text" value="<?php echo htmlspecialchars($user_name); ?>" required />
+                                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="fullname">Full Name *</label>
                                         </div>
                                         <div class="relative group">
-                                            <input name="phone" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="phone" placeholder="Số Điện Thoại" type="tel" value="<?php echo htmlspecialchars($user_phone); ?>" required />
-                                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="phone">Số Điện Thoại *</label>
+                                            <input name="phone" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" id="phone" placeholder="Phone Number" type="tel" value="<?php echo htmlspecialchars($user_phone); ?>" required />
+                                            <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="phone">Phone Number *</label>
                                         </div>
                                     </div>
                                     <div class="relative group">
@@ -424,17 +424,17 @@ if (isset($_SESSION['user_id'])) {
                                         <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="email">Email</label>
                                     </div>
                                     <div class="relative group mt-8">
-                                        <textarea name="message" id="message" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" rows="2" placeholder="Yêu cầu bổ sung (Tùy chọn)"></textarea>
-                                        <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="message">Yêu cầu bổ sung (Tùy chọn)</label>
+                                        <textarea name="message" id="message" class="w-full bg-transparent text-on-surface input-line peer placeholder-transparent" rows="2" placeholder="Additional requests (Optional)"></textarea>
+                                        <label class="absolute left-0 -top-3.5 text-sm text-on-surface-variant transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-primary pointer-events-none" for="message">Additional Requests (Optional)</label>
                                     </div>
                                 </div>
                                 
                                 <div class="pt-10 flex justify-between items-center mt-4">
                                     <button type="button" id="btnPrev2" class="text-on-surface-variant hover:text-primary transition-colors flex items-center font-label-caps tracking-widest text-sm">
-                                        <span class="material-symbols-outlined mr-1 text-sm">arrow_back</span> QUAY LẠI
+                                        <span class="material-symbols-outlined mr-1 text-sm">arrow_back</span> BACK
                                     </button>
                                     <button id="btnSubmitBooking" class="btn-glow px-8 py-3 text-label-caps font-label-caps text-on-primary-fixed rounded-xl font-bold tracking-widest shadow-2xl" type="submit">
-                                        HOÀN TẤT
+                                        SUBMIT
                                     </button>
                                 </div>
                             </div>
@@ -452,15 +452,15 @@ if (isset($_SESSION['user_id'])) {
                 <div class="font-display-lg font-[900] text-[24px] text-on-surface whitespace-nowrap">
                     AUTO <span class="text-primary">DREAMCARS</span>
                 </div>
-                <p class="text-on-surface-variant text-body-md opacity-70 max-w-xs">Định hình tiêu chuẩn mới cho dịch vụ siêu xe đẳng cấp tại Việt Nam.</p>
+                <p class="text-on-surface-variant text-body-md opacity-70 max-w-xs">Shaping new standards for luxury supercar services in Vietnam.</p>
             </div>
             
             <div>
                 <h4 class="text-label-caps font-label-caps text-on-surface mb-6 uppercase tracking-widest">Showroom</h4>
                 <p class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer leading-relaxed">
-                    178 Đại Mỗ<br/>
-                    Nam Từ Liêm, Hà Nội<br/>
-                    Việt Nam
+                    178 Dai Mo<br/>
+                    Nam Tu Liem, Hanoi<br/>
+                    Vietnam
                 </p>
                 <p class="text-on-surface-variant mt-4 font-bold text-primary">
                     <span class="material-symbols-outlined text-sm align-middle mr-1">call</span> +84 (0) 356 827 852
@@ -468,7 +468,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
             
             <div>
-                <h4 class="text-label-caps font-label-caps text-on-surface mb-6 uppercase tracking-widest">Kết Nối</h4>
+                <h4 class="text-label-caps font-label-caps text-on-surface mb-6 uppercase tracking-widest">Connect</h4>
                 <div class="flex flex-col gap-3">
                     <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2" href="#">
                         <span class="w-1 h-1 bg-primary rounded-full opacity-0 hover:opacity-100 transition-opacity"></span> Facebook
@@ -483,10 +483,10 @@ if (isset($_SESSION['user_id'])) {
             </div>
             
             <div>
-                <h4 class="text-label-caps font-label-caps text-on-surface mb-6 uppercase tracking-widest">Pháp Lý</h4>
+                <h4 class="text-label-caps font-label-caps text-on-surface mb-6 uppercase tracking-widest">Legal</h4>
                 <div class="flex flex-col gap-3">
-                    <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Điều khoản sử dụng</a>
-                    <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Chính sách bảo mật</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Use</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
                 </div>
             </div>
         </div>
@@ -537,7 +537,7 @@ if (isset($_SESSION['user_id'])) {
                     progressFill.style.width = ((currentStep / totalSteps) * 100) + '%';
                 }
                 if (stepIndicator) {
-                    stepIndicator.textContent = 'BƯỚC ' + currentStep + '/' + totalSteps;
+                    stepIndicator.textContent = 'STEP ' + currentStep + '/' + totalSteps;
                 }
             }
 
@@ -548,8 +548,8 @@ if (isset($_SESSION['user_id'])) {
                     const carId = document.getElementById('car_id').value;
                     if (!carId) {
                         Swal.fire({
-                            icon: 'warning', title: 'Chưa chọn xe',
-                            text: 'Vui lòng chọn một dòng xe trước khi tiếp tục.',
+                            icon: 'warning', title: 'No Car Selected',
+                            text: 'Please select a car before continuing.',
                             customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                             buttonsStyling: false
                         });
@@ -567,8 +567,8 @@ if (isset($_SESSION['user_id'])) {
                     const time = document.getElementById('preferred_time').value;
                     if (!date || !time) {
                         Swal.fire({
-                            icon: 'warning', title: 'Thiếu thông tin',
-                            text: 'Vui lòng chọn ngày và giờ dự kiến.',
+                            icon: 'warning', title: 'Missing Information',
+                            text: 'Please select a preferred date and time.',
                             customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                             buttonsStyling: false
                         });
@@ -662,10 +662,10 @@ if (isset($_SESSION['user_id'])) {
                 .then(data => {
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weatherTemp').innerHTML = `${temp}°C Hà Nội`;
+                        document.getElementById('weatherTemp').innerHTML = `${temp}°C Hanoi`;
                     }
                 })
-                .catch(error => console.error('Lỗi khi tải thời tiết:', error));
+                .catch(error => console.error('Error loading weather:', error));
         }
 
         // ============================
@@ -683,7 +683,7 @@ if (isset($_SESSION['user_id'])) {
                 .then(res => {
                     if (res.status === 'success' && res.data && res.data.length > 0) {
                         optionsContainer.innerHTML = '';
-                        selectDisplay.textContent = '-- Lựa chọn dòng xe bạn muốn --';
+                        selectDisplay.textContent = '-- Select the car you want --';
 
                         res.data.forEach(car => {
                             const name = car.brand_name ? `${car.brand_name} ${car.model_name}` : car.model_name;
@@ -709,12 +709,12 @@ if (isset($_SESSION['user_id'])) {
                             optionsContainer.appendChild(option);
                         });
                     } else {
-                        selectDisplay.textContent = 'Không tải được danh sách xe';
+                        selectDisplay.textContent = 'Could not load car list';
                     }
                 })
                 .catch(err => {
-                    console.error('Lỗi khi tải danh sách xe:', err);
-                    if (selectDisplay) selectDisplay.textContent = 'Lỗi kết nối';
+                    console.error('Error loading car list:', err);
+                    if (selectDisplay) selectDisplay.textContent = 'Connection error';
                 });
         }
 
@@ -736,8 +736,8 @@ if (isset($_SESSION['user_id'])) {
 
             if (!carId || !fullName || !phone || !preferredDate || !preferredTime) {
                 Swal.fire({
-                    icon: 'warning', title: 'Thiếu thông tin',
-                    text: 'Vui lòng điền đầy đủ các trường bắt buộc (*) trước khi gửi.',
+                    icon: 'warning', title: 'Missing Information',
+                    text: 'Please fill in all required fields (*) before submitting.',
                     customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                     buttonsStyling: false
                 });
@@ -755,7 +755,7 @@ if (isset($_SESSION['user_id'])) {
             };
 
             // Trạng thái Loading
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">autorenew</span> ĐANG XỬ LÝ...';
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">autorenew</span> PROCESSING...';
             btn.style.pointerEvents = 'none';
             btn.classList.add('opacity-80');
 
@@ -773,8 +773,8 @@ if (isset($_SESSION['user_id'])) {
                 if (res.status === 'success') {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Đăng Ký Thành Công',
-                        text: res.message || 'Chuyên viên của chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.',
+                        title: 'Booking Successful',
+                        text: res.message || 'Our specialist will contact you as soon as possible.',
                         customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                         buttonsStyling: false
                     });
@@ -790,8 +790,8 @@ if (isset($_SESSION['user_id'])) {
 
                 } else {
                     Swal.fire({
-                        icon: 'error', title: 'Rất tiếc...',
-                        text: res.message || 'Có lỗi xảy ra, vui lòng thử lại.',
+                        icon: 'error', title: 'Something went wrong...',
+                        text: res.message || 'An error occurred, please try again.',
                         customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                         buttonsStyling: false
                     });
@@ -803,20 +803,20 @@ if (isset($_SESSION['user_id'])) {
                 btn.classList.remove('opacity-80');
 
                 Swal.fire({
-                    icon: 'error', title: 'Lỗi Kết Nối',
-                    text: 'Không thể kết nối tới máy chủ. Vui lòng thử lại sau.',
+                    icon: 'error', title: 'Connection Error',
+                    text: 'Unable to connect to the server. Please try again later.',
                     customClass: { popup: 'swal-premium-popup', title: 'swal-premium-title', confirmButton: 'swal-premium-confirm' },
                     buttonsStyling: false
                 });
-                console.error('Lỗi khi gửi form:', error);
+                console.error('Error submitting form:', error);
             });
         }
     </script>
     <!-- Floating Test Drive Button -->
-    <a href="#formBooking" class="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] btn-glow flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-[0_10px_30px_rgba(212,168,67,0.4)] hover:scale-110 transition-transform duration-300 group" aria-label="Đặt lịch lái thử">
+    <a href="#formBooking" class="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] btn-glow flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-[0_10px_30px_rgba(212,168,67,0.4)] hover:scale-110 transition-transform duration-300 group" aria-label="Book a test drive">
         <span class="material-symbols-outlined text-on-primary-fixed text-2xl sm:text-3xl">steering_wheel_heat</span>
         <span class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-surface-container-highest text-on-surface px-4 py-2 rounded-lg text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl border border-outline-variant/20 hidden sm:block">
-            Đặt Lái Thử
+            Book Test Drive
         </span>
     </a>
 

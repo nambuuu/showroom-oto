@@ -2,7 +2,7 @@
 require_once '../config/auth_guard.php';
 require_once '../config/db.php';
 
-$pageTitle = 'Sửa hãng xe';
+$pageTitle = 'Edit Brand';
 $error = '';
 $success = '';
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $logo = $brand['logo']; // Giữ logo cũ mặc định
 
     if (empty($name)) {
-        $error = 'Vui lòng nhập tên hãng xe.';
+        $error = 'Please enter brand name.';
     } else {
         // Upload logo if new file provided
         if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
@@ -47,20 +47,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     unlink($uploadDir . $brand['logo']);
                 }
             } else {
-                $error = 'Lỗi upload ảnh.';
+                $error = 'Image upload error.';
             }
         }
 
         if (empty($error)) {
             $stmt = $pdo->prepare('UPDATE brands SET name = ?, country = ?, logo = ? WHERE id = ?');
             if ($stmt->execute([$name, $country, $logo, $id])) {
-                $success = 'Cập nhật hãng xe thành công.';
+                $success = 'Brand updated successfully.';
                 // Cập nhật lại thông tin hiển thị
                 $brand['name'] = $name;
                 $brand['country'] = $country;
                 $brand['logo'] = $logo;
             } else {
-                $error = 'Có lỗi xảy ra khi lưu vào CSDL.';
+                $error = 'Database error occurred.';
             }
         }
     }
@@ -138,8 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="page-body">
         
         <div class="d-flex align-items-center mb-4">
-            <a href="brands.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Quay lại</a>
-            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Cập Nhật Hãng Xe</h4>
+            <a href="brands.php" class="btn btn-outline-gold me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h4 class="mb-0 text-gold" style="font-family: 'Orbitron', sans-serif;">Update Brand</h4>
         </div>
 
         <?php if ($error): ?>
@@ -156,13 +156,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="form-glass">
             <div class="form-glass-header">
-                <h3><i class="bi bi-pencil-square me-2"></i>Sửa Thông Tin</h3>
-                <p class="text-muted" style="font-size: 14px;">Cập nhật thông tin cho hãng xe <strong><?= htmlspecialchars($brand['name']) ?></strong>.</p>
+                <h3><i class="bi bi-pencil-square me-2"></i>Edit Information</h3>
+                <p class="text-muted" style="font-size: 14px;">Update information for brand <strong><?= htmlspecialchars($brand['name']) ?></strong>.</p>
             </div>
             
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
-                    <label class="form-label">Tên hãng xe <span class="text-danger">*</span></label>
+                    <label class="form-label">Brand name <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text" style="background: var(--bg-secondary); border-color: var(--border); color: var(--gold);"><i class="bi bi-tag-fill"></i></span>
                         <input type="text" name="name" class="form-control" required value="<?= htmlspecialchars($brand['name']) ?>">
@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Quốc gia</label>
+                    <label class="form-label">Country</label>
                     <div class="input-group">
                         <span class="input-group-text" style="background: var(--bg-secondary); border-color: var(--border); color: var(--gold);"><i class="bi bi-globe"></i></span>
                         <input type="text" name="country" class="form-control" value="<?= htmlspecialchars($brand['country']) ?>">
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Logo hãng xe</label>
+                    <label class="form-label">Brand Logo</label>
                     <div class="d-flex align-items-center gap-3">
                         <div class="upload-preview" id="logoPreview">
                             <?php if ($brand['logo']): ?>
@@ -189,13 +189,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div>
                             <input type="file" name="logo" id="logoInput" class="form-control mb-2" accept="image/*">
-                            <small class="text-muted">Định dạng hỗ trợ: JPG, PNG, WEBP. Tối đa 2MB.<br><em>Để trống nếu không muốn thay đổi logo.</em></small>
+                            <small class="text-muted">Supported formats: JPG, PNG, WEBP. Max 2MB.<br><em>Leave blank if you do not want to change the logo.</em></small>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-5">
-                    <button type="submit" class="btn btn-gold"><i class="bi bi-save me-1"></i> Lưu thay đổi</button>
+                    <button type="submit" class="btn btn-gold"><i class="bi bi-save me-1"></i> Save changes</button>
                 </div>
             </form>
         </div>

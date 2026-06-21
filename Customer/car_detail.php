@@ -11,7 +11,7 @@ if ($car_id === 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto DreamCars | Chi Tiết Xe</title>
+    <title>Auto DreamCars | Car Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -199,33 +199,33 @@ if ($car_id === 0) {
 
     <div id="loadingLayer">
         <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: var(--gold); margin-bottom: 20px;"></i>
-        <h2 style="color: var(--text-dark);">Đang Tải Dữ Liệu Xe...</h2>
+        <h2 style="color: var(--text-dark);">Loading Car Data...</h2>
     </div>
 
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="index.php" class="navbar-brand">AUTO<span>DREAMCARS</span></a>
         <ul class="nav-links">
-            <li><a href="index.php">Trang Chủ</a></li>
-            <li><a href="cars.php">Khám Phá Xe</a></li>
-            <li><a href="compare.php">So Sánh</a></li>
-            <li><a href="about.php">Giới Thiệu</a></li>
-            <li><a href="contact.php">Liên Hệ</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="cars.php">Explore Cars</a></li>
+            <li><a href="compare.php">Compare</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <div style="display: flex; align-items: center; gap: 15px;">
-            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Thời tiết Hà Nội hiện tại">
+            <div id="weatherWidget" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-right: 10px; padding-right: 15px; border-right: 1px solid var(--border);" title="Current Hanoi weather">
                 <i class="fa-solid fa-cloud-sun" style="color: var(--gold); font-size: 16px;"></i> 
                 <span id="weatherTemp">--°C</span>
             </div>
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <span style="font-weight: 600; color: var(--text-dark); font-size: 14px;">
-                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Khách hàng'); ?>
+                    <i class="fa-solid fa-user-circle"></i> <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Customer'); ?>
                 </span>
-                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+                <a href="../logout.php" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Đăng nhập</a>
+                <a href="../login.php" style="color: var(--text-dark); font-weight: 600; text-decoration: none; font-size: 14px;"><i class="fa-solid fa-user"></i> Login</a>
             <?php endif; ?>
-            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Lái Thử</a>
+            <a href="booking.php" class="btn-nav"><i class="fa-solid fa-calendar-check" style="margin-right: 8px;"></i> Test Drive</a>
         </div>
     </nav>
 
@@ -249,38 +249,38 @@ if ($car_id === 0) {
             <div class="car-price" id="carPrice">...</div>
 
             <button class="btn-large btn-book" onclick="window.location.href='booking.php?car_id=<?php echo $car_id; ?>'">
-                <i class="fa-solid fa-calendar-check"></i> Đặt Lịch Lái Thử
+                <i class="fa-solid fa-calendar-check"></i> Book Test Drive
             </button>
             <button class="btn-large btn-compare" onclick="addToCompare()">
-                <i class="fa-solid fa-code-compare"></i> Thêm Vào So Sánh
+                <i class="fa-solid fa-code-compare"></i> Add to Compare
             </button>
 
             <div class="quick-specs">
                 <div class="q-spec">
                     <i class="fa-solid fa-gauge-high"></i>
                     <div class="q-spec-info">
-                        <span>Tốc Độ Tối Đa</span>
+                        <span>Top Speed</span>
                         <strong id="qsSpeed">-- km/h</strong>
                     </div>
                 </div>
                 <div class="q-spec">
                     <i class="fa-solid fa-bolt"></i>
                     <div class="q-spec-info">
-                        <span>Tăng Tốc 0-100</span>
+                        <span>0-100 Accel</span>
                         <strong id="qsAccel">-- s</strong>
                     </div>
                 </div>
                 <div class="q-spec">
                     <i class="fa-solid fa-horse-head"></i>
                     <div class="q-spec-info">
-                        <span>Công Suất</span>
+                        <span>Horsepower</span>
                         <strong id="qsHp">-- HP</strong>
                     </div>
                 </div>
                 <div class="q-spec">
                     <i class="fa-solid fa-gas-pump"></i>
                     <div class="q-spec-info">
-                        <span>Nhiên Liệu</span>
+                        <span>Fuel</span>
                         <strong id="qsFuel">--</strong>
                     </div>
                 </div>
@@ -290,12 +290,12 @@ if ($car_id === 0) {
         <!-- TABS CONTENT -->
         <div class="content-tabs">
             <div class="tabs-header">
-                <button class="tab-btn active" onclick="switchTab('desc')">Tổng Quan</button>
-                <button class="tab-btn" onclick="switchTab('specs')">Thông Số Kỹ Thuật</button>
+                <button class="tab-btn active" onclick="switchTab('desc')">Overview</button>
+                <button class="tab-btn" onclick="switchTab('specs')">Specifications</button>
             </div>
             
             <div id="tab-desc" class="tab-content active">
-                <div id="carDescription" style="white-space: pre-line;">Đang tải mô tả...</div>
+                <div id="carDescription" style="white-space: pre-line;">Loading description...</div>
             </div>
             
             <div id="tab-specs" class="tab-content">
@@ -329,7 +329,7 @@ if ($car_id === 0) {
                 .then(data => {
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hà Nội</span>`;
+                        document.getElementById('weatherTemp').innerHTML = `${temp}°C <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">Hanoi</span>`;
                     }
                 })
                 .catch(error => console.error('Error fetching weather:', error));
@@ -343,13 +343,13 @@ if ($car_id === 0) {
                     if (data.status === 'success') {
                         renderCarData(data.data);
                     } else {
-                        alert('Không tìm thấy dữ liệu xe!');
+                        alert('Car data not found!');
                         window.location.href = 'cars.php';
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    alert('Lỗi khi tải dữ liệu xe!');
+                    alert('Error loading car data!');
                 });
         }
 
@@ -359,9 +359,9 @@ if ($car_id === 0) {
             const images = data.images || [];
 
             // Title and basic info
-            document.getElementById('carBrandBadge').textContent = car.brand_name || 'Hãng Xe';
+            document.getElementById('carBrandBadge').textContent = car.brand_name || 'Brand';
             document.getElementById('carTitle').textContent = car.model_name;
-            document.getElementById('carDescription').textContent = car.description || 'Chưa có thông tin mô tả chi tiết cho mẫu xe này.';
+            document.getElementById('carDescription').textContent = car.description || 'No detailed description available for this car model.';
             document.title = car.model_name + ' | Auto DreamCars';
 
             const formatPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(car.price);
@@ -398,16 +398,16 @@ if ($car_id === 0) {
             // Full Specs Table
             const tbody = document.getElementById('specsTableBody');
             tbody.innerHTML = `
-                <tr><th>Động Cơ</th><td>${specs.engine || '--'}</td></tr>
-                <tr><th>Công Suất</th><td>${specs.horsepower ? specs.horsepower + ' HP' : '--'}</td></tr>
-                <tr><th>Mô-men Xoắn</th><td>${specs.torque || '--'}</td></tr>
-                <tr><th>Hộp Số</th><td>${specs.transmission || '--'}</td></tr>
-                <tr><th>Loại Nhiên Liệu</th><td>${specs.fuel_type || '--'}</td></tr>
-                <tr><th>Tiêu Thụ Nhiên Liệu</th><td>${specs.fuel_efficiency || '--'}</td></tr>
-                <tr><th>Hệ Dẫn Động</th><td>${specs.drive_type || '--'}</td></tr>
-                <tr><th>Số Chỗ Ngồi</th><td>${specs.seating || '--'}</td></tr>
-                <tr><th>Tốc Độ Tối Đa</th><td>${specs.top_speed ? specs.top_speed + ' km/h' : '--'}</td></tr>
-                <tr><th>Khả năng tăng tốc (0-100 km/h)</th><td>${specs.acceleration ? specs.acceleration + ' s' : '--'}</td></tr>
+                <tr><th>Engine</th><td>${specs.engine || '--'}</td></tr>
+                <tr><th>Horsepower</th><td>${specs.horsepower ? specs.horsepower + ' HP' : '--'}</td></tr>
+                <tr><th>Torque</th><td>${specs.torque || '--'}</td></tr>
+                <tr><th>Transmission</th><td>${specs.transmission || '--'}</td></tr>
+                <tr><th>Fuel Type</th><td>${specs.fuel_type || '--'}</td></tr>
+                <tr><th>Fuel Efficiency</th><td>${specs.fuel_efficiency || '--'}</td></tr>
+                <tr><th>Drive Type</th><td>${specs.drive_type || '--'}</td></tr>
+                <tr><th>Seating Capacity</th><td>${specs.seating || '--'}</td></tr>
+                <tr><th>Top Speed</th><td>${specs.top_speed ? specs.top_speed + ' km/h' : '--'}</td></tr>
+                <tr><th>Acceleration (0-100 km/h)</th><td>${specs.acceleration ? specs.acceleration + ' s' : '--'}</td></tr>
             `;
         }
 
@@ -431,14 +431,14 @@ if ($car_id === 0) {
             
             if (!compareList.includes(idStr)) {
                 if (compareList.length >= 3) {
-                    alert('Bạn chỉ có thể so sánh tối đa 3 xe cùng lúc.');
+                    alert('You can only compare up to 3 cars at a time.');
                     return;
                 }
                 compareList.push(idStr);
                 localStorage.setItem('compareList', JSON.stringify(compareList));
-                alert('Đã thêm xe vào danh sách so sánh!');
+                alert('Added car to comparison list!');
             } else {
-                alert('Xe này đã có trong danh sách so sánh.');
+                alert('This car is already in the comparison list.');
             }
             // Navigate to compare page
             window.location.href = 'compare.php';
